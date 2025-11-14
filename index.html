@@ -9,40 +9,33 @@
 </head>
 <body>
     <div class="background"></div>
-
     <!-- === ЦЕНТРАЛЬНЫЙ БАННЕР 1350×100, КЛИКАБЕЛЬНЫЙ, ЗАКРЕПЛЁННЫЙ === -->
     <div class="centered-banner">
       <a href="#" onclick="location.reload(); return false;" class="banner-link"></a>
     </div>
-
     <div class="container">
-
         <!-- === WELCOME SECTION === -->
         <div class="welcome-section">
             <h1>WELCOME!</h1>
-            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
-            <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
+            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1951903018464772103" target="_blank">Ritual Community</a>.</p>
+            <p>If your posts are not published through <a href="https://x.com/i/communities/1951903018464772103" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
             <p>By clicking on any participant, you can view their works directly on the website.</p>
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
             <p><span style="color: #90EE90;"><b>Updates happen every day. Activity data is loaded gradually.</b></span></p>
-
             <div class="team-box">
                 <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
             </div>
         </div>
-
         <!-- Общая статистика -->
         <div class="stats">
             <div class="stat-box" id="total-posts">Total Posts: 0</div>
             <div class="stat-box" id="total-users">Total Users: 0</div>
             <div class="stat-box" id="total-views">Total Views: 0</div>
         </div>
-
         <!-- 🔍 Поиск -->
         <div class="search-box">
             <input type="text" id="search" placeholder="Search user...">
         </div>
-
         <!-- Фильтр по времени -->
         <div class="time-filter">
             <label for="time-select">Filter by time:</label>
@@ -54,14 +47,12 @@
                 <option value="all" selected>All time</option>
             </select>
         </div>
-
         <!-- === ГРАФИК АКТИВНОСТИ === -->
         <div class="chart-section">
             <h2>📈 Активность сообщества</h2>
-            <p>Количество постов, опубликованных за каждый день.</p>
+            <p>Количество постов, опубликованных за каждый день (за последние 60 дней).</p>
             <canvas id="activityChart" width="800" height="400"></canvas>
         </div>
-
         <!-- Таблица лидеров -->
         <table id="leaderboard">
             <thead>
@@ -76,7 +67,6 @@
             </thead>
             <tbody id="leaderboard-body"></tbody>
         </table>
-
         <!-- Пагинация -->
         <div class="pagination">
             <button id="prev-page">Previous</button>
@@ -84,12 +74,10 @@
             <button id="next-page">Next</button>
         </div>
     </div>
-
     <!-- Твиты выбранного пользователя -->
     <div id="tweets-container" style="margin-top: 20px;">
         <ul id="tweets-list"></ul>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
