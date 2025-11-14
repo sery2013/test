@@ -3,39 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ritual Community</title>
+    <title>Rialo Club Leaderboard</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Подключаем Chart.js -->
 </head>
 <body>
     <div class="background"></div>
+
     <!-- === ЦЕНТРАЛЬНЫЙ БАННЕР 1350×100, КЛИКАБЕЛЬНЫЙ, ЗАКРЕПЛЁННЫЙ === -->
     <div class="centered-banner">
       <a href="#" onclick="location.reload(); return false;" class="banner-link"></a>
     </div>
+
     <div class="container">
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
+            <button class="tab-btn" data-tab="analytics">Analytics</button>
+        </div>
+        <!-- wrapper for leaderboard content so we can toggle visibility -->
+        <div id="leaderboard-wrapper">
+
+        <div class="music-player">
+        <img src="orca.jpg" alt="Track cover" class="track-cover">
+        <div class="controls">
+            <h3 class="track-title">anthem of ORCA</h3>
+            <div class="buttons">
+            <button id="play-btn">▶️</button>
+            </div>
+        </div>
+        <audio id="player" src="hardbass.mp3"></audio>
+        </div>
+
+
+
+
         <!-- === WELCOME SECTION === -->
         <div class="welcome-section">
             <h1>WELCOME!</h1>
-            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1951903018464772103" target="_blank">Ritual Community</a>.</p>
-            <p>If your posts are not published through <a href="https://x.com/i/communities/1951903018464772103" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
+            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1951903018464772103" target="_blank">Rialo Club</a>.</p>
+            <p>If your posts are not published through <a href="https://x.com/i/communities/1951903018464772103" target="_blank">Rialo Club</a>, they will not be visible on the leaderboard.</p>
             <p>By clicking on any participant, you can view their works directly on the website.</p>
-            <p>By clicking on any metric (for example, views), you can filter by it.</p>
-            <p><span style="color: #90EE90;"><b>Updates happen every day. Activity data is loaded gradually.</b></span></p>
+            <p>By clicking on any metric (for example, Views), you can filter by it.</p>
+            <p>Updated every day.</p>
+            <p>Support us on Twitter!</p>
+
             <div class="team-box">
-                <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+                <p>Developer - <a href="https://x.com/makssay_eth" target="_blank">@makssay_eth</a></p>
+                <p>Art Creator - <a href="https://x.com/marrr_marina" target="_blank">@marrr_marina</a></p>
+                <p>Contributor - <a href="https://x.com/maysonkiller23" target="_blank">@maysonkiller23</a></p>
             </div>
         </div>
+
         <!-- Общая статистика -->
         <div class="stats">
             <div class="stat-box" id="total-posts">Total Posts: 0</div>
             <div class="stat-box" id="total-users">Total Users: 0</div>
             <div class="stat-box" id="total-views">Total Views: 0</div>
         </div>
+
         <!-- 🔍 Поиск -->
         <div class="search-box">
             <input type="text" id="search" placeholder="Search user...">
         </div>
+
         <!-- Фильтр по времени -->
         <div class="time-filter">
             <label for="time-select">Filter by time:</label>
@@ -43,16 +73,10 @@
                 <option value="7">Last 7 days</option>
                 <option value="14">Last 14 days</option>
                 <option value="30">Last 30 days</option>
-                <option value="60">Last 60 days</option> <!-- Добавлено -->
                 <option value="all" selected>All time</option>
             </select>
         </div>
-        <!-- === ГРАФИК АКТИВНОСТИ (встроенный как на rialo-club-leaderboard.xyz) === -->
-        <div class="chart-section">
-            <h2>📈 Community Activity Chart</h2>
-            <p>Number of posts published each day.</p>
-            <canvas id="analytics-chart" height="120"></canvas>
-        </div>
+
         <!-- Таблица лидеров -->
         <table id="leaderboard">
             <thead>
@@ -67,17 +91,99 @@
             </thead>
             <tbody id="leaderboard-body"></tbody>
         </table>
+
         <!-- Пагинация -->
         <div class="pagination">
             <button id="prev-page">Previous</button>
             <span id="page-info"></span>
             <button id="next-page">Next</button>
         </div>
+        </div> <!-- /#leaderboard-wrapper -->
+
+        <!-- Analytics tab content (hidden by default) -->
+        <div id="tab-analytics" class="tab-content" style="display:none; text-align:left;">
+            <h2>Analytics</h2>
+
+            <!-- Time filter for analytics -->
+            <div class="analytics-time-filter" style="display:flex; gap:10px; align-items:center; margin-bottom:18px; background: rgba(255,255,255,0.02); padding:12px; border-radius:12px;">
+                <label for="analytics-time-select" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by time:</label>
+                <select id="analytics-time-select" style="flex:1; max-width:180px;">
+                    <option value="all">All time</option>
+                    <option value="30">Last 30 days</option>
+                    <option value="14">Last 14 days</option>
+                    <option value="7">Last 7 days</option>
+                </select>
+            </div>
+
+            <!-- Nested tabs for analytics sections -->
+            <div class="analytics-nested-tabs">
+                <button class="analytics-tab-btn active" data-analytics-tab="averages">Avg metrics</button>
+                <button class="analytics-tab-btn" data-analytics-tab="authors">Top 10 authors</button>
+                <button class="analytics-tab-btn" data-analytics-tab="posts">Top 10 posts</button>
+            </div>
+
+            <!-- 1) Average metrics per user -->
+            <section class="analytics-nested-content active" id="analytics-averages-section" data-analytics-section="averages">
+                <div class="analytics-block" id="analytics-averages">
+                    <h3>Average metrics per user</h3>
+                    <div class="analytics-row" style="display:flex; gap:12px; flex-wrap:wrap;">
+                        <div class="stat-box" id="avg-posts">Avg Posts: -</div>
+                        <div class="stat-box" id="avg-likes">Avg Likes: -</div>
+                        <div class="stat-box" id="avg-views">Avg Views: -</div>
+                    </div>
+                    <!-- Chart: tweets per day -->
+                    <div style="margin-top:16px;">
+                        <canvas id="analytics-chart" height="120"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2) Top 10 authors with filter -->
+            <section class="analytics-nested-content" id="analytics-authors-section" data-analytics-section="authors">
+                <div class="analytics-block" id="analytics-top-authors-block">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                        <h3 style="margin:0;">Top 10 authors</h3>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <label for="author-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
+                            <select id="author-metric-select">
+                                <option value="posts">Posts</option>
+                                <option value="likes">Likes</option>
+                                <option value="views">Views</option>
+                            </select>
+                        </div>
+                    </div>
+                    <ol id="top-authors-list" style="margin-top:12px;"></ol>
+                </div>
+            </section>
+
+            <!-- 3) Top 10 posts with filter -->
+            <section class="analytics-nested-content" id="analytics-posts-section" data-analytics-section="posts">
+                <div class="analytics-block" id="analytics-top-posts-block">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+                        <h3 style="margin:0;">Top 10 posts</h3>
+                        <div style="display:flex; gap:8px; align-items:center;">
+                            <label for="post-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
+                            <select id="post-metric-select">
+                                <option value="likes">Likes</option>
+                                <option value="views">Views</option>
+                            </select>
+                        </div>
+                    </div>
+                    <ol id="top-posts-list" style="margin-top:12px;"></ol>
+                </div>
+            </section>
+        </div>
     </div>
-    <!-- Твиты выбранного пользователя -->
-    <div id="tweets-container" style="margin-top: 20px;">
-        <ul id="tweets-list"></ul>
-    </div>
+
+
+    <!-- Chart.js CDN for analytics charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
+        <!-- Твиты выбранного пользователя -->
+    <div id="tweets-container" style="margin-top: 20px;">
+        
+        <ul id="tweets-list"></ul>
+    </div>
+</html> 
