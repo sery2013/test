@@ -3,7 +3,6 @@ import json
 import time
 import logging
 import os
-from datetime import datetime, timedelta, timezone # Импортируем для работы с датами
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 
@@ -14,8 +13,6 @@ HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
 TWEETS_FILE = "all_tweets.json"
 LEADERBOARD_FILE = "leaderboard.json"
-
-# УДАЛЯЕМ функцию is_within_last_n_days, так как НЕ фильтруем при сборе
 
 def load_json(path):
     try:
@@ -39,44 +36,50 @@ def fetch_tweets(cursor=None, limit=50):
 def collect_all_tweets():
     all_tweets = []
     seen_ids = set()
+
     cursor = None
     total_new = 0
     while True:
         data = fetch_tweets(cursor)
         tweets = data.get("tweets", [])
         cursor = data.get("next_cursor")
+
         if not tweets:
             break
-        # --- ИЗМЕНЕНИЕ: Фильтрация по ID (для избежания дубликатов в рамках одного запуска) ---
-        # НЕТ фильтрации по дате при сборе. Собираем все "Latest", насколько позволяет API.
+
+        # Фильтрация по ID для избежания дубликатов в рамках одного запуска
         new_tweets = [t for t in tweets if t["id_str"] not in seen_ids]
-        # --- КОНЕЦ ИЗМЕНЕНИЯ ---
         if not new_tweets:
             logging.info("Нет новых твитов для добавления, остановка сбора.")
             break
+
         all_tweets.extend(new_tweets)
         seen_ids.update(t["id_str"] for t in new_tweets)
         total_new += len(new_tweets)
+
         logging.info(f"✅ Загружено {len(new_tweets)} новых твитов (всего: {len(all_tweets)})")
+
         if not cursor:
             break
+
         time.sleep(3)
 
-    # --- ИЗМЕНЕНИЕ: Сохраняем ВСЕ собранные твиты (всё, что API предоставил как Latest) ---
+    # Сохраняем ВСЕ собранные твиты (как на rialo-club-leaderboard.xyz)
     save_json(TWEETS_FILE, all_tweets)
-    # --- КОНЕЦ ИЗМЕНЕНИЯ ---
     logging.info(f"Сбор завершён. Всего твитов: {len(all_tweets)}")
     return all_tweets
 
 def build_leaderboard(tweets):
     leaderboard = {}
-    for t in tweets: # Обрабатываем все твиты, переданные в функцию (все собранные)
+
+    for t in tweets: # Обрабатываем все твиты из all_tweets.json (как на rialo-club-leaderboard.xyz)
         user = t.get("user")
         if not user:
             continue
         name = user.get("screen_name")
         if not name:
             continue
+
         stats = leaderboard.setdefault(name, {
             "posts": 0,
             "likes": 0,
@@ -85,51 +88,22 @@ def build_leaderboard(tweets):
             "quotes": 0,
             "views": 0
         })
+
         stats["posts"] += 1
         stats["likes"] += t.get("favorite_count", 0)
         stats["retweets"] += t.get("retweet_count", 0)
         stats["comments"] += t.get("reply_count", 0)
         stats["quotes"] += t.get("quote_count", 0)
         stats["views"] += t.get("views_count", 0)
+
     leaderboard_list = [[user, stats] for user, stats in leaderboard.items()]
     save_json(LEADERBOARD_FILE, leaderboard_list)
     logging.info(f"🏆 Лидерборд обновлён ({len(leaderboard_list)} участников).")
 
-# --- НОВЫЙ БЛОК: СОЗДАНИЕ ДАННЫХ ДЛЯ ГРАФИКА ---
-def build_daily_stats(tweets):
-    """
-    Собирает статистику по дням: сколько постов было опубликовано в каждый день
-    (на основе всех твитов, собранных в текущем запуске).
-    """
-    daily_stats = {}
-    for t in tweets:
-        # Попробуем найти дату в нескольких возможных полях
-        # Проверяем, что хотя бы одно из полей не None и не пустая строка
-        created_at_str = t.get("created_at") or t.get("tweet_created_at") or t.get("created")
-        # --- ИЗМЕНЕНИЕ: Явно проверяем на None и пустую строку ---
-        if created_at_str is None or created_at_str == "":
-            # Если дата не найдена или равна null/пустой строке, пропускаем твит
-            # logging.warning(f"Твит не содержит даты создания: {t.get('id_str', 'unknown')}")
-            continue
-        # --- КОНЕЦ ИЗМЕНЕНИЯ ---
-        # Парсим дату
-        try:
-            # Предполагаем формат ISO 8601
-            tweet_date = datetime.fromisoformat(created_at_str.replace("Z", "+00:00")).date()
-        except ValueError:
-            # Если формат даты неправильный, пропускаем твит
-            logging.warning(f"Неверный формат даты: {created_at_str}")
-            continue
-        # Увеличиваем счётчик для этого дня
-        daily_stats[tweet_date] = daily_stats.get(tweet_date, 0) + 1
-    # Преобразуем в список для удобства (дата -> количество)
-    daily_list = [{"date": str(date), "posts": count} for date, count in sorted(daily_stats.items())]
-    # Сохраняем в файл
-    save_json("daily_posts.json", daily_list)
-    logging.info(f"📊 График активности обновлён ({len(daily_list)} дней).")
+# Эта функция НЕ создает daily_posts.json, как раньше
+# График будет строиться в script.js из all_tweets.json (как на rialo-club-leaderboard.xyz)
 
 if __name__ == "__main__":
     tweets = collect_all_tweets()
     build_leaderboard(tweets)
-    build_daily_stats(tweets)  # Запускаем новую функцию
-
+    # build_daily_stats(tweets) # Закомментировано, как у rialo-club
