@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone # Импортируем дл
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 
 API_KEY = os.getenv("API_KEY")
-COMMUNITY_ID = "1951903018464772103"
+COMMUNITY_ID = "1902883093062574425"
 BASE_URL = f"https://api.socialdata.tools/twitter/community/{COMMUNITY_ID}/tweets"
 HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 
@@ -103,14 +103,19 @@ def build_daily_stats(tweets):
     """
     daily_stats = {}
     for t in tweets:
-        created_at_str = t.get("created_at")
+        # Попробуем найти дату в нескольких возможных полях
+        # Проверяем, что хотя бы одно из полей не None
+        created_at_str = t.get("created_at") or t.get("tweet_created_at") or t.get("created")
         if not created_at_str:
+            # Если дата не найдена ни в одном из полей, пропускаем твит
+            # logging.warning(f"Твит не содержит даты создания: {t.get('id_str', 'unknown')}")
             continue
         # Парсим дату
         try:
             # Предполагаем формат ISO 8601
             tweet_date = datetime.fromisoformat(created_at_str.replace("Z", "+00:00")).date()
         except ValueError:
+            # Если формат даты неправильный, пропускаем твит
             logging.warning(f"Неверный формат даты: {created_at_str}")
             continue
         # Увеличиваем счётчик для этого дня
