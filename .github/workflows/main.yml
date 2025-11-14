@@ -27,7 +27,7 @@ jobs:
         pip install requests # Установите все библиотеки, которые использует ваш скрипт
 
     - name: Run update script
-      run: python apdate/update_leaderboard.py # Путь к вашему скрипту
+      run: python update_leaderboard.py # <-- ИСПРАВЛЕНО: путь к скрипту в корне
       env:
         API_KEY: ${{ secrets.API_KEY }} # Передаём секрет API_KEY из настроек репозитория
 
