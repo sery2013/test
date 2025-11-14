@@ -15,7 +15,7 @@ HEADERS = {"Authorization": f"Bearer {API_KEY}"}
 TWEETS_FILE = "all_tweets.json"
 LEADERBOARD_FILE = "leaderboard.json"
 
-# УДАЛЯЕМ функцию is_within_last_n_days, она больше не нужна для фильтрации при сборе
+# УДАЛЯЕМ функцию is_within_last_n_days, так как НЕ фильтруем при сборе
 
 def load_json(path):
     try:
@@ -48,7 +48,7 @@ def collect_all_tweets():
         if not tweets:
             break
         # --- ИЗМЕНЕНИЕ: Фильтрация по ID (для избежания дубликатов в рамках одного запуска) ---
-        # Убираем фильтрацию по дате при сборе. Собираем все "Latest", насколько позволяет API.
+        # НЕТ фильтрации по дате при сборе. Собираем все "Latest", насколько позволяет API.
         new_tweets = [t for t in tweets if t["id_str"] not in seen_ids]
         # --- КОНЕЦ ИЗМЕНЕНИЯ ---
         if not new_tweets:
@@ -62,7 +62,7 @@ def collect_all_tweets():
             break
         time.sleep(3)
 
-    # --- ИЗМЕНЕНИЕ: Сохраняем ВСЕ собранные твиты ---
+    # --- ИЗМЕНЕНИЕ: Сохраняем ВСЕ собранные твиты (всё, что API предоставил как Latest) ---
     save_json(TWEETS_FILE, all_tweets)
     # --- КОНЕЦ ИЗМЕНЕНИЯ ---
     logging.info(f"Сбор завершён. Всего твитов: {len(all_tweets)}")
@@ -70,7 +70,7 @@ def collect_all_tweets():
 
 def build_leaderboard(tweets):
     leaderboard = {}
-    for t in tweets: # Обрабатываем все твиты, переданные в функцию
+    for t in tweets: # Обрабатываем все твиты, переданные в функцию (все собранные)
         user = t.get("user")
         if not user:
             continue
@@ -108,6 +108,7 @@ def build_daily_stats(tweets):
             continue
         # Парсим дату
         try:
+            # Предполагаем формат ISO 8601
             tweet_date = datetime.fromisoformat(created_at_str.replace("Z", "+00:00")).date()
         except ValueError:
             logging.warning(f"Неверный формат даты: {created_at_str}")
