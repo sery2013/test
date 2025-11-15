@@ -611,13 +611,14 @@ tr.active-row:hover {
 
 /* Analytics blocks */
 .analytics-block { 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.06), rgba(47, 79, 79, 0.02)); /* изменен фон */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
   padding: 12px; 
   border-radius: 7.5%; /* скругление 5-10% */
   margin-bottom: 12px; 
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff; /* гарантирован белый цвет текста */
 }
 /* Полупрозрачные магические символы для analytics-block */
 .analytics-block::before {
@@ -635,8 +636,8 @@ tr.active-row:hover {
 }
 .analytics-row { display:flex; gap:12px; }
 .analytics-block select { 
-  background:linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)); /* изменен фон селекта */
-  color:#fff; 
+  background:linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон селекта - повысил непрозрачность */
+  color:#fff !important; /* гарантирован белый цвет текста */
   border:1px solid rgba(255,255,255,0.08); 
   padding:6px 8px; 
   border-radius: 7.5%; /* скругление 5-10% */
@@ -646,12 +647,13 @@ tr.active-row:hover {
   padding:8px 10px; 
   border-radius: 7.5%; /* скругление 5-10% */
   margin-bottom:8px; 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.04), rgba(47, 79, 79, 0.01)); /* изменен фон */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
   display:flex; 
   justify-content:space-between; 
   align-items:center; 
   position: relative;
   overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
 }
 /* Полупрозрачные магические символы для top-post-item */
 .top-post-item::before {
@@ -667,8 +669,8 @@ tr.active-row:hover {
   pointer-events: none;
   z-index: -1;
 }
-.top-post-item .excerpt { max-width:70%; color:#fff; /* белый цвет текста */ }
-.top-post-item .meta { color:#fff; /* белый цвет текста */
+.top-post-item .excerpt { max-width:70%; color:#fff !important; /* гарантирован белый цвет текста */ }
+.top-post-item .meta { color:#fff !important; /* гарантирован белый цвет текста */
   font-weight:600; }
 
 /* --- UI polish for analytics --- */
@@ -676,9 +678,9 @@ tr.active-row:hover {
   --bg: #0d1117;
   --muted: #fff; /* изменен цвет muted */
   --accent: #6fe3d1;
-  --card-bg: linear-gradient(180deg, rgba(47, 79, 79, 0.06), rgba(47, 79, 79, 0.02)); /* изменен цвет card-bg */
-  --glass: linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)); /* изменен цвет glass */
-  --glass-strong: linear-gradient(180deg, rgba(47, 79, 79, 0.1), rgba(47, 79, 79, 0.06)); /* изменен цвет glass-strong */
+  --card-bg: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)); /* изменен цвет card-bg - повысил непрозрачность */
+  --glass: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)); /* изменен цвет glass - повысил непрозрачность */
+  --glass-strong: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.1)); /* изменен цвет glass-strong - повысил непрозрачность */
   --radius: 7.5%; /* изменен радиус */
 }
 
@@ -689,9 +691,10 @@ tr.active-row:hover {
 .analytics-block { 
   box-shadow: 0 6px 18px rgba(2,6,23,0.6); 
   border: 1px solid rgba(255,255,255,0.08); /* изменена обводка */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.06), rgba(47, 79, 79, 0.02)); /* изменен фон */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
   padding:18px; 
   border-radius: 7.5%; /* скругление 5-10% */
+  color: #fff; /* гарантирован белый цвет текста */
 }
 
 .analytics-row .stat-box { 
@@ -699,10 +702,11 @@ tr.active-row:hover {
   padding:14px; 
   text-align:center; 
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); /* изменен фон */
+  background: linear-gradient(90deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
   box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2); 
   position: relative;
   overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
 }
 /* Полупрозрачные магические символы для аналитических stat-box */
 .analytics-row .stat-box::before {
@@ -718,11 +722,11 @@ tr.active-row:hover {
   pointer-events: none;
   z-index: -1;
 }
-.analytics-row .stat-box h4 { margin:0; font-size:0.9rem; color:#fff; /* белый цвет текста */ }
+.analytics-row .stat-box h4 { margin:0; font-size:0.9rem; color:#fff !important; /* гарантирован белый цвет текста */ }
 
 .analytics-block h3 { 
   margin:0 0 8px 0; 
-  color:#fff; /* белый цвет текста */
+  color:#fff !important; /* гарантирован белый цвет текста */
   font-size:1.05rem; 
 }
 
@@ -737,11 +741,12 @@ tr.active-row:hover {
   align-items:center; 
   padding:10px; 
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.02), rgba(47, 79, 79, 0.01)); /* изменен фон */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
   margin-bottom:8px; 
   border:1px solid rgba(255,255,255,0.02); 
   position: relative;
   overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
 }
 /* Полупрозрачные магические символы для элементов списка */
 #top-authors-list li::before {
@@ -757,7 +762,7 @@ tr.active-row:hover {
   pointer-events: none;
   z-index: -1;
 }
-#top-authors-list li strong { color:#fff; /* белый цвет текста */ }
+#top-authors-list li strong { color:#fff !important; /* гарантирован белый цвет текста */ }
 
 .top-post-item { 
   display:flex; 
@@ -765,10 +770,11 @@ tr.active-row:hover {
   align-items:center; 
   padding:12px; 
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.04), rgba(47, 79, 79, 0.02)); /* изменен фон */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
   border:1px solid rgba(255,255,255,0.02); 
   position: relative;
   overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
 }
 /* Полупрозрачные магические символы для top-post-item */
 .top-post-item::before {
@@ -784,15 +790,15 @@ tr.active-row:hover {
   pointer-events: none;
   z-index: -1;
 }
-.top-post-item .excerpt a { color: #fff; /* белый цвет текста */
+.top-post-item .excerpt a { color: #fff !important; /* гарантирован белый цвет текста */
   text-decoration:none; }
 .top-post-item .excerpt a:hover { text-decoration:underline; }
 .top-post-item .meta { display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
-.top-post-item .meta .author { font-weight:700; color:#fff; /* белый цвет текста */
+.top-post-item .meta .author { font-weight:700; color:#fff !important; /* гарантирован белый цвет текста */
  }
 .top-post-item .meta .metric { 
-  background: linear-gradient(90deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05)); /* изменен фон метрики */
-  color:#fff; /* белый цвет текста */
+  background: linear-gradient(90deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05)) !important; /* изменен фон метрики - повысил непрозрачность */
+  color:#fff !important; /* гарантирован белый цвет текста */
   padding:6px 8px; 
   border-radius: 7.5%; /* скругление 5-10% */
   font-weight:700; 
@@ -806,8 +812,8 @@ tr.active-row:hover {
   padding:8px 12px; 
   border-radius: 7.5%; /* скругление 5-10% */
   border:1px solid rgba(255,255,255,0.06); 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)); /* изменен фон селекта */
-  color:#fff; 
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон селекта - повысил непрозрачность */
+  color:#fff !important; /* гарантирован белый цвет текста */
 }
 .analytics-block select:focus { 
   box-shadow: 0 6px 18px rgba(111,227,209,0.07); 
@@ -857,12 +863,13 @@ select {
 
 /* period filter styling */
 .analytics-time-filter {
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)) !important; /* изменен фон */
-  border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  border: 1px solid rgba(255,255,255, 0.15) !important; /* изменена обводка */
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
   border-radius: 7.5%; /* скругление 5-10% */
   position: relative;
   overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
 }
 /* Полупрозрачные магические символы для analytics-time-filter */
 .analytics-time-filter::before {
@@ -880,9 +887,9 @@ select {
 }
 
 .analytics-time-filter select {
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.12), rgba(47, 79, 79, 0.08)) !important; /* изменен фон селекта */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.1)) !important; /* изменен фон селекта - повысил непрозрачность */
   border: 1px solid rgba(255,255,255,0.2) !important; /* изменена обводка */
-  color: #fff; /* белый цвет текста */
+  color: #fff !important; /* гарантирован белый цвет текста */
   font-weight: 600;
   padding: 10px 32px 10px 12px;
   border-radius: 7.5%; /* скругление 5-10% */
@@ -891,14 +898,14 @@ select {
 }
 
 .analytics-time-filter select:hover {
-  border-color: rgba(255,255,255,0.4) !important; /* изменена обводка при наведении */
-  box-shadow: 0 6px 16px rgba(255,255,255,0.1); /* изменена тень при наведении */
+  border-color: rgba(255,255,255, 0.4) !important; /* изменена обводка при наведении */
+  box-shadow: 0 6px 16px rgba(255,255,255, 0.1); /* изменена тень при наведении */
 }
 
 .analytics-time-filter select:focus {
   outline: none;
   border-color: #fff !important; /* изменена обводка при фокусе */
-  box-shadow: 0 8px 24px rgba(255,255,255,0.15); /* изменена тень при фокусе */
+  box-shadow: 0 8px 24px rgba(255,255,255, 0.15); /* изменена тень при фокусе */
   transform: translateY(-2px);
 }
 
@@ -911,9 +918,9 @@ select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.12), rgba(47, 79, 79, 0.06)) !important; /* изменен фон селекта */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.1)) !important; /* изменен фон селекта - повысил непрозрачность */
   border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
-  color: #fff; /* белый цвет текста */
+  color: #fff !important; /* гарантирован белый цвет текста */
   font-weight: 600;
   padding: 10px 12px;
   border-radius: 7.5%; /* скругление 5-10% */
@@ -924,7 +931,7 @@ select {
 
 .analytics-block select:hover {
   border-color: rgba(255,255,255,0.3) !important; /* изменена обводка при наведении */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.16), rgba(47, 79, 79, 0.1)) !important; /* изменен фон при наведении */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.25), rgba(47, 79, 79, 0.15)) !important; /* изменен фон при наведении - повысил непрозрачность */
   box-shadow: 0 6px 16px rgba(255,255,255,0.08); /* изменена тень при наведении */
 }
 
@@ -933,27 +940,26 @@ select {
   border-color: #fff !important; /* изменена обводка при фокусе */
   box-shadow: 0 8px 20px rgba(255,255,255,0.12); /* изменена тень при фокусе */
   transform: translateY(-1px);
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.12)) !important; /* изменен фон при фокусе */
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.3), rgba(47, 79, 79, 0.2)) !important; /* изменен фон при фокусе - повысил непрозрачность */
 }
 
 /* Dropdown options styling */
 select option {
-  background: #0d1117;
-  color: #fff; /* белый цвет текста */
+  background: #2F4F4F !important; /* изменен фон опций - теперь темно-серый */
+  color: #fff !important; /* белый цвет текста */
   padding: 8px;
   border: none;
   border-radius: 7.5%; /* скругление 5-10% для опций */
 }
 
 select option:hover {
-  background: rgba(255, 255, 255, 0.2); /* изменен фон при наведении */
-  color: #fff; /* белый цвет текста */
+  background: #3a5f5f !important; /* изменен фон при наведении */
+  color: #fff !important; /* белый цвет текста */
 }
 
 select option:checked {
-  background: linear-gradient(#fff, #fff); /* изменен фон выбранной опции */
-  background-color: #fff !important; /* изменен цвет фона */
-  color: #0d1117 !important; /* изменен цвет текста */
+  background: #fff !important; /* изменен фон выбранной опции */
+  color: #2F4F4F !important; /* изменен цвет текста */
   border-radius: 7.5%; /* скругление 5-10% для выбранной опции */
 }
 
@@ -968,7 +974,7 @@ select option:checked {
   padding:10px 16px; 
   border: none; 
   background: transparent; 
-  color:#fff; /* белый цвет текста */
+  color:#fff !important; /* белый цвет текста */
   font-weight:600; 
   cursor:pointer; 
   border-bottom:3px solid transparent; 
@@ -976,15 +982,20 @@ select option:checked {
   border-radius: 7.5% 7.5% 0 0; /* скругление только сверху для вкладок */
 }
 .analytics-tab-btn:hover { 
-  color:#fff; /* белый цвет текста */
+  color:#fff !important; /* белый цвет текста */
 }
 .analytics-tab-btn.active { 
-  color:#fff; /* белый цвет текста */
+  color:#fff !important; /* белый цвет текста */
   border-bottom-color:#fff; /* изменен цвет нижней границы активной вкладки */
 }
 .analytics-nested-content { 
   display: none !important; 
   animation: fadeIn 250ms ease; 
+  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  color: #fff !important; /* гарантирован белый цвет текста */
+  border-radius: 7.5%; /* скругление 5-10% */
+  padding: 10px; /* добавлен внутренний отступ */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* добавлена тонкая граница */
 }
 .analytics-nested-content.active { 
   display: block !important; 
@@ -1083,4 +1094,3 @@ select option:checked {
   /* Курсор указывает на возможность клика */
   cursor: pointer;
 }
-
