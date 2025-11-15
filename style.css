@@ -114,6 +114,7 @@ body {
   justify-content: center;
   margin-bottom: 18px;
 }
+
 .tab-btn {
   padding: 8px 14px;
   border-radius: 7.5%; /* скругление 5-10% */
@@ -123,17 +124,14 @@ body {
   cursor: pointer;
   font-weight: 700;
   position: relative; /* Для позиционирования псевдоэлемента */
-  overflow: hidden;   /* Чтобы руны не выходили за границы при анимации */
+  overflow: hidden;   /* Чтобы руны не выходили за границы */
   transition: all 0.3s ease; /* Плавный переход для основных свойств */
-}
-/* Убираем предыдущий ::before, если он был для "магических символов" */
-.tab-btn::before {
-  display: none;
+  /* Убираем любые предыдущие ::before или ::after стили, если они были для рун */
 }
 
-/* Псевдоэлемент для рун при наведении */
+/* Псевдоэлемент для рун при НАВЕДЕНИИ */
 .tab-btn::after {
-  content: "✦✧✦✧"; /* Магические руны */
+  content: "✦✦✦ ✧✧✧"; /* Магические руны (можно изменить на другие символы) */
   position: absolute;
   top: 0;
   left: 0;
@@ -142,41 +140,25 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(255, 255, 255, 0.1); /* Полупрозрачный белый цвет */
-  font-size: 1.5em; /* Размер рун */
+  color: rgba(255, 255, 255, 0.2); /* Полупрозрачный белый цвет (очень тусклый по умолчанию) */
+  font-size: 1.2em; /* Размер рун */
   opacity: 0; /* Сначала скрыты */
   transition: opacity 0.3s ease; /* Плавное появление/исчезновение */
   pointer-events: none; /* Не мешаем кликам */
-  z-index: 1; /* Поверх текста */
-  animation: runesAppearAndFade 1.5s ease-in-out forwards; /* Анимация появления и исчезновения */
-  /* Альтернативная анимация (бесконечная пульсация): animation: runesPulse 2s infinite; */
-}
-
-/* Анимация для появления и исчезновения рун */
-@keyframes runesAppearAndFade {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { opacity: 0.3; transform: scale(1.1); } /* Максимальная видимость и размер */
-  100% { opacity: 0.1; transform: scale(1); } /* Конечное состояние при наведении */
-}
-
-/* Альтернативная анимация: пульсация */
-@keyframes runesPulse {
-  0% { opacity: 0.05; transform: scale(0.95); }
-  50% { opacity: 0.2; transform: scale(1.05); }
-  100% { opacity: 0.05; transform: scale(0.95); }
+  z-index: 1; /* Поверх фона, но под текстом (если текст имеет z-index по умолчанию или 0) */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); /* Лёгкая тень для рун */
 }
 
 /* Показываем руны при наведении */
 .tab-btn:hover::after {
-  opacity: 0.2; /* Увеличиваем видимость */
-  animation: runesPulse 2s infinite; /* Запускаем анимацию пульсации */
+  opacity: 0.4; /* Увеличиваем видимость до 40% */
 }
 
-/* Изменения при нажатии */
+/* Увеличиваем яркость рун при нажатии */
 .tab-btn:active::after {
-  opacity: 0.3; /* Ещё более заметные руны при нажатии */
-  animation: runesPulse 1.5s infinite; /* Можно изменить скорость анимации */
-  color: rgba(255, 255, 255, 0.3); /* Можно сделать руны чуть ярче */
+  opacity: 0.6; /* Ещё более заметные руны при нажатии */
+  color: rgba(255, 255, 255, 0.6); /* Можно немного изменить цвет */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6); /* Усиливаем тень */
 }
 
 /* Основные эффекты при наведении (без рун) */
@@ -198,6 +180,10 @@ body {
   color: #fff;
   border-color: rgba(255,255,255,0.6);
 }
+
+/* Убираем стиль для .tab-content, если он был определён ранее и мешает */
+/* .tab-content { display: none; } */
+/* .tab-content.active { display: block; } */
 
 /* === STATS === */
 .stats {
@@ -1293,6 +1279,7 @@ select option:checked {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block; /* Убедимся, что рамка применяется */
 }
+
 
 
 
