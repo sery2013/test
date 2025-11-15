@@ -129,7 +129,7 @@ body {
   color: #fff; /* белый цвет текста */
 }
 
-/* Полупрозрачные магические символы для stat-box (всегда видны) */
+/* Полупрозрачные руны для stat-box (всегда видны) */
 .stat-box::before {
   content: "";
   position: absolute;
@@ -137,20 +137,21 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  /* Используем руны (например, ᚠ, ᚢ, ᚦ, ᚨ, ᚷ, ᚹ, ᛚ, ᛟ) */
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">ᚠᚢᚦᚨᚷᚹᛚᛟ</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
   z-index: -1;
 }
 
-/* Эффект градиента с *новыми* магическими символами при наведении */
+/* Эффект градиента с рунами при наведении */
 .stat-box:hover::before {
-  /* Добавляем градиентный оверлей с новыми символами */
+  /* Добавляем градиентный оверлей с рунами */
   background-image: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
-    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.15">✦✧✪✦✧✪</text></svg>');
-  background-blend-mode: overlay; /* Смешиваем градиент с фоном и символами */
+    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.15">ᚠᚢᚦᚨᚷᚹᛚᛟ</text></svg>');
+  background-blend-mode: overlay; /* Смешиваем градиент с фоном и рунами */
   opacity: 1;
 }
 
@@ -160,13 +161,13 @@ body {
   transform: scale(1.03);
 }
 
-/* Эффект градиента с *новыми* магическими символами при нажатии */
+/* Эффект градиента с рунами при нажатии */
 .stat-box:active::before {
-  /* Более насыщенный градиент и *новые* символы при нажатии */
+  /* Более насыщенный градиент и руны при нажатии */
   background-image: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1)),
-    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.25">✦✧✪✦✧✪</text></svg>');
-  background-blend-mode: overlay; /* Смешиваем градиент с фоном и символами */
+    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.25">ᚠᚢᚦᚨᚷᚹᛚᛟ</text></svg>');
+  background-blend-mode: overlay; /* Смешиваем градиент с фоном и рунами */
   opacity: 1;
 }
 
@@ -1203,5 +1204,6 @@ select option:checked {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block; /* Убедимся, что рамка применяется */
 }
+
 
 
