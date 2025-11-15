@@ -1,18 +1,3 @@
-Хорошо, я вижу, что в предоставленном фрагменте `script.js` из файла `Pasted_Text_1763245472049.txt` есть **незакрытый вызов `renderAnalytics()`** и **незакрытый `try` блок**, что приведёт к синтаксической ошибке и остановке выполнения скрипта. Это, вероятно, и является причиной, по которой у вас пропала статистика и перестали работать вкладки после добавления новых функций.
-
-Вот **исправленная и полная версия** `script.js`, включающая все ваши функции (индикатор обновления, кнопка обновления, переключатель языков), но с **исправленной критической синтаксической ошибкой** и **восстановленной логикой переключения вкладок**.
-
-**Что было исправлено:**
-
-1.  **Закрытие `try` блока:** Добавлен недостающий `catch` и `finally` (или просто `}`) для блока `try`, начатого в функции `renderAnalytics`.
-2.  **Логика вкладок:** Возвращена функция `setupTabs`, которая правильно переключает видимость `#leaderboard-wrapper` и `#tab-analytics`, используя `style.display`.
-3.  **Функция `bindExportButtons`:** Исправлена, чтобы использовать `e.stopPropagation()` для предотвращения нежелательного поведения при клике на кнопки экспорта.
-4.  **Функция `renderAnalytics`:** Исправлена ошибка дублирования `data:` в конфигурации Chart.js и синтаксическая ошибка с `counts`.
-5.  **Индикатор обновления:** Теперь обновляется корректно при загрузке данных.
-
-Пожалуйста, замените **весь** код в вашем `script.js` на следующий:
-
-```javascript
 // === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
 let rawData = [];
 let data = [];
@@ -25,7 +10,6 @@ let timeFilter = "all";
 let analyticsChart = null;
 let analyticsPeriod = "all"; // filter for analytics: 'all', '7', '14', '30'
 let analyticsHourFilter = "all"; // filter for heatmap hour: 'all', '0', '1', ... '23'
-let currentLang = 'en'; // en или ru
 
 // --- Fetch leaderboard data ---
 async function fetchData() {
@@ -38,8 +22,6 @@ async function fetchData() {
     renderTable();
     updateArrows();
     updateTotals();
-    // === ОБНОВЛЕНИЕ ИНДИКАТОРА ОБНОВЛЕНИЯ ===
-    document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleString()}`;
   } catch (err) {
     console.error("Failed to fetch leaderboard:", err);
   }
@@ -589,20 +571,11 @@ function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
   if (csvBtn && !csvBtn._bound) {
-    csvBtn.addEventListener('click', function(e) {
-      e.preventDefault(); // Останавливаем стандартное поведение (если есть)
-      e.stopPropagation(); // Останавливаем всплытие события
-      exportToCSV();
-    });
+    csvBtn.addEventListener('click', exportToCSV);
     csvBtn._bound = true;
   }
-
   if (jsonBtn && !jsonBtn._bound) {
-    jsonBtn.addEventListener('click', function(e) {
-      e.preventDefault(); // Останавливаем стандартное поведение (если есть)
-      e.stopPropagation(); // Останавливаем всплытие события
-      exportToJSON();
-    });
+    jsonBtn.addEventListener('click', exportToJSON);
     jsonBtn._bound = true;
   }
 }
@@ -752,7 +725,7 @@ function renderAnalytics() {
     counts.push(perDay[key] || 0);
   }
 
- // render/update Chart.js chart
+  // render/update Chart.js chart
 try {
   const ctx = document.getElementById('analytics-chart');
   if (ctx) {
@@ -763,13 +736,13 @@ try {
     } else if (window.Chart) {
       analyticsChart = new Chart(ctx.getContext('2d'), {
         type: 'bar',
-        data: { // <-- Одно 'data:' на уровне конфигурации
+        data: {
           labels: labels,
           datasets: [{
             label: 'Tweets per day',
             backgroundColor: 'rgba(255, 255, 255, 0.9)', // Цвет заливки столбцов
             borderColor: 'rgba(0, 255, 255, 1)',     // Цвет обводки столбцов
-            data: counts // <-- counts теперь правильно внутри datasets[0].data
+             counts
           }]
         },
         options: {
@@ -918,107 +891,3 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
-
-
-// === LANGUAGE SWITCHER ===
-const langEn = document.getElementById('lang-en');
-const langRu = document.getElementById('lang-ru');
-
-function setLanguage(lang) {
-  currentLang = lang;
-  langEn.classList.toggle('active', lang === 'en');
-  langRu.classList.toggle('active', lang === 'ru');
-
-  // Обновляем текст на странице
-  if (lang === 'en') {
-    document.querySelector('h1').textContent = 'WELCOME RITUALISTS!';
-    document.querySelector('.welcome-section p:nth-of-type(1)').textContent = 'This leaderboard is generated based on all posts in the ';
-    document.querySelector('.welcome-section p:nth-of-type(2)').textContent = 'If your posts are not published through ';
-    document.querySelector('.welcome-section p:nth-of-type(3)').textContent = 'By clicking on any participant, you can view their works directly on the website.';
-    document.querySelector('.welcome-section p:nth-of-type(4)').textContent = 'By clicking on any metric (for example, views), you can filter by it.';
-    document.querySelector('.welcome-section p:nth-of-type(5)').innerHTML = '<b><span style="color:#90EE90;">Updated every 2 days</span></b>';
-    document.querySelector('.welcome-section p:nth-of-type(7)').textContent = 'Support us on Twitter!';
-    document.querySelector('.team-box p').innerHTML = 'Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a>';
-    document.querySelector('#time-select').options[0].textContent = 'Last 7 days';
-    document.querySelector('#time-select').options[1].textContent = 'Last 14 days';
-    document.querySelector('#time-select').options[2].textContent = 'Last 30 days';
-    document.querySelector('#time-select').options[3].textContent = 'All time';
-    document.querySelector('#search').placeholder = 'Search user...';
-    document.querySelector('#prev-page').textContent = 'Previous';
-    document.querySelector('#next-page').textContent = 'Next';
-    document.querySelector('#refresh-btn').textContent = '🔄 Refresh';
-    document.querySelector('#tab-analytics h2').textContent = 'Analytics';
-    document.querySelector('#analytics-time-select').options[0].textContent = 'All time';
-    document.querySelector('#analytics-time-select').options[1].textContent = 'Last 30 days';
-    document.querySelector('#analytics-time-select').options[2].textContent = 'Last 14 days';
-    document.querySelector('#analytics-time-select').options[3].textContent = 'Last 7 days';
-    document.querySelector('.analytics-tab-btn[data-analytics-tab="averages"]').textContent = 'Avg metrics';
-    document.querySelector('.analytics-tab-btn[data-analytics-tab="authors"]').textContent = 'Top 10 authors';
-    document.querySelector('.analytics-tab-btn[data-analytics-tab="posts"]').textContent = 'Top 10 posts';
-    document.querySelector('#export-csv').textContent = 'Export CSV';
-    document.querySelector('#export-json').textContent = 'Export JSON';
-    document.querySelector('#name-header').textContent = 'User';
-    document.querySelector('#posts-header').textContent = 'Posts';
-    document.querySelector('#likes-header').textContent = 'Likes';
-    document.querySelector('#retweets-header').textContent = 'Retweets';
-    document.querySelector('#comments-header').textContent = 'Comments';
-    document.querySelector('#views-col-header').textContent = 'Views';
-  } else {
-    document.querySelector('h1').textContent = 'ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!';
-    document.querySelector('.welcome-section p:nth-of-type(1)').textContent = 'Этот лидерборд генерируется на основе всех постов в сообществе ';
-    document.querySelector('.welcome-section p:nth-of-type(2)').textContent = 'Если ваши посты не публикуются через ';
-    document.querySelector('.welcome-section p:nth-of-type(3)').textContent = 'Щёлкнув по любому участнику, вы можете просмотреть его работы на сайте.';
-    document.querySelector('.welcome-section p:nth-of-type(4)').textContent = 'Щёлкнув по любой метрике (например, просмотры), вы можете отфильтровать по ней.';
-    document.querySelector('.welcome-section p:nth-of-type(5)').innerHTML = '<b><span style="color:#90EE90;">Обновляется каждые 2 дня</span></b>';
-    document.querySelector('.welcome-section p:nth-of-type(7)').textContent = 'Поддержите нас в Twitter!';
-    document.querySelector('.team-box p').innerHTML = 'Разработчик - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a>';
-    document.querySelector('#time-select').options[0].textContent = 'Последние 7 дней';
-    document.querySelector('#time-select').options[1].textContent = 'Последние 14 дней';
-    document.querySelector('#time-select').options[2].textContent = 'Последние 30 дней';
-    document.querySelector('#time-select').options[3].textContent = 'Все время';
-    document.querySelector('#search').placeholder = 'Поиск пользователя...';
-    document.querySelector('#prev-page').textContent = 'Назад';
-    document.querySelector('#next-page').textContent = 'Вперёд';
-    document.querySelector('#refresh-btn').textContent = '🔄 Обновить';
-    document.querySelector('#tab-analytics h2').textContent = 'Аналитика';
-    document.querySelector('#analytics-time-select').options[0].textContent = 'Все время';
-    document.querySelector('#analytics-time-select').options[1].textContent = 'Последние 30 дней';
-    document.querySelector('#analytics-time-select').options[2].textContent = 'Последние 14 дней';
-    document.querySelector('#analytics-time-select').options[3].textContent = 'Последние 7 дней';
-    document.querySelector('.analytics-tab-btn[data-analytics-tab="averages"]').textContent = 'Средние метрики';
-    document.querySelector('.analytics-tab-btn[data-analytics-tab="authors"]').textContent = 'Топ-10 авторов';
-    document.querySelector('.analytics-tab-btn[data-analytics-tab="posts"]').textContent = 'Топ-10 постов';
-    document.querySelector('#export-csv').textContent = 'Экспорт CSV';
-    document.querySelector('#export-json').textContent = 'Экспорт JSON';
-    document.querySelector('#name-header').textContent = 'Пользователь';
-    document.querySelector('#posts-header').textContent = 'Посты';
-    document.querySelector('#likes-header').textContent = 'Лайки';
-    document.querySelector('#retweets-header').textContent = 'Ретвиты';
-    document.querySelector('#comments-header').textContent = 'Комментарии';
-    document.querySelector('#views-col-header').textContent = 'Просмотры';
-  }
-}
-
-// Инициализация языка
-if (localStorage.getItem('lang')) {
-  currentLang = localStorage.getItem('lang');
-  setLanguage(currentLang);
-}
-
-langEn.addEventListener('click', () => {
-  setLanguage('en');
-  localStorage.setItem('lang', 'en');
-});
-
-langRu.addEventListener('click', () => {
-  setLanguage('ru');
-  localStorage.setItem('lang', 'ru');
-});
-
-// === MANUAL UPDATE BUTTON ===
-document.getElementById('refresh-btn').addEventListener('click', () => {
-  fetchData();
-  fetchTweets();
-});
-```
-
