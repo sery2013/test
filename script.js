@@ -570,12 +570,22 @@ function exportToJSON() {
 function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
+
   if (csvBtn && !csvBtn._bound) {
-    csvBtn.addEventListener('click', exportToCSV);
+    csvBtn.addEventListener('click', function(e) {
+      e.preventDefault(); // Останавливаем любое стандартное поведение
+      e.stopPropagation(); // Останавливаем всплытие, чтобы не повлиять на родителей
+      exportToCSV();
+    });
     csvBtn._bound = true;
   }
+
   if (jsonBtn && !jsonBtn._bound) {
-    jsonBtn.addEventListener('click', exportToJSON);
+    jsonBtn.addEventListener('click', function(e) {
+      e.preventDefault(); // Останавливаем любое стандартное поведение
+      e.stopPropagation(); // Останавливаем всплытие, чтобы не повлиять на родителей
+      exportToJSON();
+    });
     jsonBtn._bound = true;
   }
 }
@@ -891,3 +901,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
