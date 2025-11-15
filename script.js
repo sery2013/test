@@ -571,62 +571,48 @@ function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
 
-  // Вспомогательная функция для блокировки кликов
-  let clickBlockerActive = false;
-  function temporarilyBlockClicks() {
-    if (clickBlockerActive) return; // Уже заблокировано
-    clickBlockerActive = true;
-    document.addEventListener('click', blockClickHandler, { capture: true, once: true, passive: false });
-    setTimeout(() => { clickBlockerActive = false; }, 100); // Разблокируем через 100мс
-  }
-
-  function blockClickHandler(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation(); // Останавливает ВСЕ обработчики на этом элементе и всплытие
-  }
-
   if (csvBtn && !csvBtn._bound) {
     csvBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      temporarilyBlockClicks(); // Включаем блокировку
+      e.preventDefault(); // Предотвращаем стандартное поведение браузера для кнопки
+      e.stopPropagation(); // Останавливаем всплытие события
+      e.stopImmediatePropagation(); // Останавливаем все остальные обработчики на этом элементе
       exportToCSV();
+      // Дополнительно: на всякий случай отменяем возможную навигацию
+      // путем отмены действия по умолчанию на уровне документа на короткое время
+      const blockNav = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+      };
+      document.addEventListener('click', blockNav, { capture: true, once: true });
+      setTimeout(() => {
+          document.removeEventListener('click', blockNav, { capture: true });
+      }, 100); // Блокируем на 100 мс
     });
     csvBtn._bound = true;
   }
 
   if (jsonBtn && !jsonBtn._bound) {
     jsonBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      temporarilyBlockClicks(); // Включаем блокировку
+      e.preventDefault(); // Предотвращаем стандартное поведение браузера для кнопки
+      e.stopPropagation(); // Останавливаем всплытие события
+      e.stopImmediatePropagation(); // Останавливаем все остальные обработчики на этом элементе
       exportToJSON();
+      // Дополнительно: на всякий случай отменяем возможную навигацию
+      // путем отмены действия по умолчанию на уровне документа на короткое время
+      const blockNav = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+      };
+      document.addEventListener('click', blockNav, { capture: true, once: true });
+      setTimeout(() => {
+          document.removeEventListener('click', blockNav, { capture: true });
+      }, 100); // Блокируем на 100 мс
     });
     jsonBtn._bound = true;
   }
 }
-
-
-function renderAnalytics() {
-  // Filter tweets by the selected analytics period
-  let tweets = Array.isArray(allTweets) ? allTweets : [];
-  const now = new Date();
-  const period = analyticsPeriod;
-
-  if (period !== 'all') {
-    const days = Number(period);
-    if (days > 0) {
-      tweets = tweets.filter(t => {
-        const created = t.tweet_created_at || t.created_at || t.created || null;
-        if (!created) return false;
-        const d = new Date(created);
-        if (isNaN(d)) return false;
-        const diffDays = (now - d) / (1000 * 60 * 60 * 24);
-        return diffDays <= days;
-      });
-    }
-  }
 
   // --- НОВЫЙ ФИЛЬТР: Фильтрация по часу ---
   if (analyticsHourFilter !== 'all') {
@@ -918,5 +904,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
 
 
