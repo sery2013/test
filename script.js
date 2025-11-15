@@ -9,6 +9,7 @@ const perPage = 15;
 let timeFilter = "all";
 let analyticsChart = null;
 let analyticsPeriod = "all"; // filter for analytics: 'all', '7', '14', '30'
+let analyticsHourFilter = "all"; // filter for heatmap hour: 'all', '0', '1', ... '23'
 
 // --- Fetch leaderboard data ---
 async function fetchData() {
@@ -600,6 +601,22 @@ function renderAnalytics() {
     }
   }
 
+  // --- НОВЫЙ ФИЛЬТР: Фильтрация по часу ---
+  if (analyticsHourFilter !== 'all') {
+      const targetHour = Number(analyticsHourFilter);
+      if (!isNaN(targetHour) && targetHour >= 0 && targetHour <= 23) {
+          tweets = tweets.filter(t => {
+              const created = t.tweet_created_at || t.created_at || t.created || null;
+              if (!created) return false;
+              const d = new Date(created);
+              if (isNaN(d)) return false;
+              const hour = d.getUTCHours();
+              return hour === targetHour;
+          });
+      }
+  }
+  // --- КОНЕЦ НОВОГО ФИЛЬТРА ---
+
   // build per-user aggregates: posts, likes, views (from FILTERED tweets)
   const users = {}; // {uname: {posts, likes, views}}
   tweets.forEach(t => {
@@ -786,6 +803,16 @@ if (analyticsTimeSelect) {
     renderAnalytics();
   });
 }
+
+// --- НОВЫЙ ОБРАБОТЧИК: Фильтр по часам ---
+const hourSelect = document.getElementById('hour-select');
+if (hourSelect) {
+    hourSelect.addEventListener('change', e => {
+        analyticsHourFilter = e.target.value || 'all';
+        renderAnalytics();
+    });
+}
+// --- КОНЕЦ НОВОГО ОБРАБОТЧИКА ---
 
 // Nested analytics tabs setup
 function setupAnalyticsTabs() {
