@@ -1,1048 +1,633 @@
-/* === GLOBAL STYLES === */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", sans-serif;
-  background: #0d1117;
-  color: #fff;
-  overflow-x: hidden;
-}
+// === ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===
+let rawData = [];
+let data = [];
+let allTweets = [];
+let sortKey = "posts";
+let sortOrder = "desc";
+let currentPage = 1;
+const perPage = 15;
+let timeFilter = "all";
+let analyticsChart = null;
+let analyticsPeriod = "all"; // filter for analytics: 'all', '7', '14', '30'
 
-/* === BACKGROUND === */
-.background {
-  position: fixed;
-  inset: 0;
-  background: url("back.jpg") no-repeat center center / cover;
-  z-index: -1;
-  filter: brightness(0.35) blur(2px);
-}
-
-/* === CENTERED BANNER (1350×100, по центру, кликабельный) === */
-.centered-banner {
-  width: 100%;
-  height: 100px; /* высота 100px */
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: center; /* центрирует содержимое по горизонтали */
-  align-items: center;     /* центрирует содержимое по вертикали */
-  background: #0d1117; /* фон, если изображение не загрузится */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.banner-link {
-  display: block;
-  width: 1350px;   /* фиксированная ширина изображения */
-  height: 100px;   /* фиксированная высота */
-  background: url("https://i.yapx.ru/cInFv.png") no-repeat center center; /* <-- ССЫЛКА НА ИЗОБРАЖЕНИЕ БАННЕРА */
-  background-size: 1350px 100px; /* точный размер изображения */
-  text-decoration: none;
-  color: inherit;
-}
-
-/* === CONTAINER === */
-.container {
-  max-width: 1000px;
-  margin: 160px auto 60px; /* увеличено с 140px до 160px, чтобы учесть высоту баннера */
-  padding: 20px;
-  text-align: center;
-}
-
-/* === WELCOME SECTION === */
-.welcome-section {
-  text-align: center;
-  margin-bottom: 30px;
-  color: #fff; /* изменен цвет текста */
-}
-
-.welcome-section h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 15px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* изменена тень текста */
-}
-
-.welcome-section p {
-  font-size: 1.1rem;
-  margin: 8px 0;
-}
-
-.welcome-section a {
-  color: #fff;
-  text-decoration: underline;
-}
-
-/* === TEAM BOX === */
-.team-box {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.5); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для team-box */
-.team-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.team-box p {
-  margin: 5px 0;
-  font-weight: 600;
-  color: #fff; /* белый цвет текста */
-}
-
-/* === STATS === */
-.stats {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 25px;
-}
-
-.stat-box {
-  flex: 1;
-  padding: 15px;
-  font-size: 1.1rem;
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-  color: #fff; /* белый цвет текста */
-}
-
-/* Полупрозрачные магические символы для stat-box */
-.stat-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.stat-box:hover {
-  border-color: #fff; /* изменен цвет обводки при наведении */
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); /* изменена тень при наведении */
-  transform: scale(1.03);
-}
-
-/* === SEARCH BOX === */
-.search-box {
-  margin-bottom: 25px;
-}
-
-#search {
-  width: 60%;
-  padding: 10px 15px;
-  font-size: 1rem;
-  color: #fff; /* изменен цвет текста */
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
-  outline: none;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
-  transition: all 0.3s ease;
-}
-
-#search:focus {
-  border-color: #fff; /* изменен цвет обводки при фокусе */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); /* изменена тень при фокусе */
-  transform: scale(1.02);
-}
-
-/* === TABLE === */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-radius: 7.5%; /* скругление 5-10% */
-  overflow: hidden;
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  backdrop-filter: blur(5px);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для таблицы */
-table::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-thead th {
-  padding: 12px 15px;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #fff; /* изменен цвет текста */
-  border-bottom: 2px solid rgba(255, 255, 255, 0.3); /* изменена обводка */
-  cursor: pointer;
-  user-select: none;
-  position: relative;
-  transition: 0.2s;
-}
-
-thead th:hover {
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень при наведении */
-}
-
-thead th.active {
-  color: #fff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень активного заголовка */
-}
-
-.sort-arrow {
-  font-size: 0.8rem;
-  margin-left: 5px;
-  opacity: 0.7;
-}
-
-tbody td {
-  padding: 10px 15px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: #fff; /* белый цвет текста */
-}
-
-tbody tr:hover {
-  background: rgba(255, 255, 255, 0.1); /* изменен цвет фона при наведении */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* изменена тень при наведении */
-}
-
-/* === PAGINATION === */
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.pagination button {
-  padding: 8px 15px;
-  color: #fff; /* изменен цвет текста */
-  font-weight: 500;
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.5); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для кнопок пагинации */
-.pagination button::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.pagination button:hover {
-  background: linear-gradient(135deg, #3a5f5f, #2a3a3a); /* изменен градиент при наведении */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* изменена тень при наведении */
-  transform: scale(1.05);
-}
-
-#page-info {
-  font-weight: 600;
-  color: #fff; /* изменен цвет текста */
-}
-
-.time-filter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px auto;
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  padding: 10px 20px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05); /* изменена тень */
-  width: fit-content;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для time-filter */
-.time-filter::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.time-filter label {
-  font-weight: 600;
-  color: #fff; /* изменен цвет текста */
-  font-size: 16px;
-  letter-spacing: 0.3px;
-}
-
-.time-filter select {
-  background: #1c1c1c;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 7.5%; /* скругление 5-10% */
-  padding: 8px 14px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
-}
-
-.time-filter select:hover {
-  background: #2a2a2a;
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-.time-filter select:focus {
-  background: #2f2f2f;
-  border-color: #4a90e2;
-  box-shadow: 0 0 10px rgba(74, 144, 226, 0.4);
-}
-
-/* === ACCORDION (TWEETS SECTION) === */
-.tweets-row td {
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border-top: 2px solid rgba(255, 255, 255, 0.3); /* изменена обводка */
-  padding: 25px;
-  animation: fadeInAccordion 0.4s ease;
-  border-radius: 7.5%; /* скругление 5-10% */
-  color: #fff; /* белый цвет текста */
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для tweets-row */
-.tweets-row td::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes fadeInAccordion {
-  from {
-    opacity: 0;
-    transform: translateY(-5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+// --- Fetch leaderboard data ---
+async function fetchData() {
+  try {
+    const response = await fetch("leaderboard.json"); // <-- путь к файлу в репо
+    const json = await response.json();
+    rawData = json;
+    normalizeData(rawData);
+    sortData();
+    renderTable();
+    updateArrows();
+    updateTotals();
+  } catch (err) {
+    console.error("Failed to fetch leaderboard:", err);
   }
 }
 
-/* Контейнер для карточек твитов */
-.tweet-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: flex-start;
-  align-items: flex-start;
+// --- Fetch all tweets ---
+async function fetchTweets() {
+  try {
+    const response = await fetch("all_tweets.json"); // <-- путь к файлу в репо
+    const json = await response.json();
+    if (Array.isArray(json)) {
+      allTweets = json;
+    } else if (json && typeof json === "object") {
+      if (Array.isArray(json.tweets)) {
+        allTweets = json.tweets;
+      } else if (Array.isArray(json.data)) {
+        allTweets = json.data;
+      } else {
+        allTweets = [json];
+      }
+    } else {
+      allTweets = [];
+    }
+    // если есть функция рендера аналитики — обновим её
+    if (typeof renderAnalytics === "function") renderAnalytics();
+  } catch (err) {
+    console.error("Failed to fetch all tweets:", err);
+    allTweets = [];
+  }
 }
 
-/* Карточка твита */
-.tweet-card {
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.3); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15); /* изменена тень */
-  width: 445px;
-  color: #fff; /* белый цвет текста */
-  padding: 15px 18px;
-  text-align: left;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.25s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
+// стартовые загрузки
+fetchTweets().then(() => fetchData());
+setInterval(() => {
+  fetchTweets();
+  fetchData();
+}, 3600000); // обновлять каждый час
+
+// --- Normalize leaderboard data ---
+function normalizeData(json) {
+  data = [];
+
+  if (Array.isArray(json) && json.length > 0 && !Array.isArray(json[0])) {
+    data = json.map(item => extractBaseStatsFromItem(item));
+  } else if (Array.isArray(json) && json.length > 0 && Array.isArray(json[0])) {
+    data = json.map(([name, stats]) => {
+      const base = extractBaseStatsFromItem(stats || {});
+      base.username = name || base.username || "";
+      return applyTimeFilterIfNeeded(base);
+    });
+  } else if (json && typeof json === "object") {
+    data = Object.entries(json).map(([name, stats]) => {
+      const base = extractBaseStatsFromItem(stats || {});
+      base.username = name || base.username || "";
+      return applyTimeFilterIfNeeded(base);
+    });
+  }
+
+  data = data.map(d => applyTimeFilterIfNeeded(d));
+
+  function extractBaseStatsFromItem(item) {
+    const username = item.username || item.user || item.name || item.screen_name || "";
+    const posts = Number(item.posts || item.tweets || 0);
+    const likes = Number(item.likes || item.favorite_count || 0);
+    const retweets = Number(item.retweets || item.retweet_count || 0);
+    const comments = Number(item.comments || item.reply_count || 0);
+    const views = Number(item.views || item.views_count || 0);
+    return { username, posts, likes, retweets, comments, views };
+  }
+
+  function applyTimeFilterIfNeeded(base) {
+    if (!base || !base.username) return base;
+    if (timeFilter === "all") return base;
+
+    const days = Number(timeFilter);
+    if (!days || days <= 0) return base;
+
+    const now = new Date();
+    const uname = String(base.username).toLowerCase().replace(/^@/, "");
+
+    const userTweets = allTweets.filter(t => {
+      const candidate = (t.user && (t.user.screen_name || t.user.name)) || "";
+      return String(candidate).toLowerCase().replace(/^@/, "") === uname;
+    });
+
+    let posts = 0, likes = 0, retweets = 0, comments = 0, views = 0;
+
+    userTweets.forEach(tweet => {
+      const created = tweet.tweet_created_at || tweet.created_at || tweet.created || null;
+      if (!created) return;
+      const tweetDate = new Date(created);
+      if (isNaN(tweetDate)) return;
+      const diffDays = (now - tweetDate) / (1000 * 60 * 60 * 24);
+      if (diffDays <= days) {
+        posts += 1;
+        likes += Number(tweet.favorite_count || 0);
+        retweets += Number(tweet.retweet_count || 0);
+        comments += Number(tweet.reply_count || 0);
+        views += Number(tweet.views_count || 0);
+      }
+    });
+
+    return { username: base.username, posts, likes, retweets, comments, views };
+  }
 }
 
-/* Полупрозрачные магические символы для tweet-card */
-.tweet-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
+// --- Update totals ---
+function updateTotals() {
+  const totalPosts = data.reduce((sum, s) => sum + (Number(s.posts) || 0), 0);
+  const totalViews = data.reduce((sum, s) => sum + (Number(s.views) || 0), 0);
+  document.getElementById("total-posts").textContent = `Total Posts: ${totalPosts}`;
+  document.getElementById("total-users").textContent = `Total Users: ${data.length}`;
+  document.getElementById("total-views").textContent = `Total Views: ${totalViews}`;
 }
 
-.tweet-card:hover {
-  transform: translateY(-5px);
-  border-color: #fff; /* изменен цвет обводки при наведении */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* изменена тень при наведении */
+// --- Sort, Filter, Render ---
+function sortData() {
+  data.sort((a, b) => {
+    const valA = Number(a[sortKey] || 0);
+    const valB = Number(b[sortKey] || 0);
+    return sortOrder === "asc" ? valA - valB : valB - valA;
+  });
 }
 
-/* Текст твита */
-.tweet-card p {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.4rem;
-  white-space: pre-line;
+function filterData() {
+  const query = document.getElementById("search").value.toLowerCase();
+  return data.filter(item => (item.username || "").toLowerCase().includes(query));
 }
 
-/* Изображение внутри твита */
-.tweet-card img {
-  width: 100%;
-  border-radius: 7.5%; /* скругление 5-10% */
-  margin-top: 10px;
-  object-fit: cover;
+function renderTable() {
+  const tbody = document.getElementById("leaderboard-body");
+  tbody.innerHTML = "";
+
+  const filtered = filterData();
+  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * perPage;
+  const pageData = filtered.slice(start, start + perPage);
+
+  pageData.forEach(stats => {
+    const name = stats.username || "";
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${escapeHtml(name)}</td>
+      <td>${Number(stats.posts || 0)}</td>
+      <td>${Number(stats.likes || 0)}</td>
+      <td>${Number(stats.retweets || 0)}</td>
+      <td>${Number(stats.comments || 0)}</td>
+      <td>${Number(stats.views || 0)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
+
+  // Добавляем обработчики клика
+  addUserClickHandlers();
 }
 
-/* Дата */
-.tweet-card .tweet-date {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: #fff; /* белый цвет текста */
-  opacity: 0.8;
-  text-align: right;
-  font-style: italic;
+function escapeHtml(str) {
+  return String(str).replace(/&/g, "&amp;").replace(/</g, "<").replace(/>/g, ">");
 }
 
-/* Короткие твиты (автоматическая адаптация) */
-.tweet-card.short {
-  padding: 10px 14px;
-  font-size: 0.9rem;
-  text-align: center;
-  justify-content: center;
+// --- Sorting headers ---
+function updateSort(key) {
+  if (sortKey === key) sortOrder = sortOrder === "asc" ? "desc" : "asc";
+  else { sortKey = key; sortOrder = "desc"; }
+  sortData();
+  renderTable();
+  updateArrows();
 }
 
-/* === ACTIVE ROW (User opened) === */
-tr.active-row {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)) !important; /* изменен фон */
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); /* изменена тень */
-  transition: all 0.3s ease;
+function updateArrows() {
+  document.querySelectorAll(".sort-arrow").forEach(el => el.textContent = "");
+  const active = document.querySelector(`#${sortKey}-header .sort-arrow`) || document.querySelector(`#${sortKey}-col-header .sort-arrow`);
+  if (active) active.textContent = sortOrder === "asc" ? "▲" : "▼";
+  document.querySelectorAll("thead th").forEach(th => th.classList.remove("active"));
+  const headerId = sortKey + (["views", "retweets", "comments"].includes(sortKey) ? "-col-header" : "-header");
+  const headerEl = document.getElementById(headerId);
+  if (headerEl) headerEl.classList.add("active");
 }
 
-tr.active-row:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important; /* изменен фон при наведении */
+// --- Pagination ---
+document.getElementById("prev-page").onclick = () => { if (currentPage > 1) { currentPage--; renderTable(); } };
+document.getElementById("next-page").onclick = () => {
+  const total = Math.ceil(filterData().length / perPage);
+  if (currentPage < total) { currentPage++; renderTable(); }
+};
+
+// --- Search ---
+document.getElementById("search").addEventListener("input", () => { currentPage = 1; renderTable(); });
+
+// --- Sorting headers click ---
+["posts","likes","retweets","comments","views"].forEach(key => {
+  const el = document.getElementById(key === "views" ? "views-col-header" : key+"-header");
+  if(el) el.addEventListener("click", () => updateSort(key));
+});
+
+// --- Time filter ---
+document.getElementById("time-select").addEventListener("change", e => {
+  timeFilter = e.target.value || "all";
+  currentPage = 1;
+  normalizeData(rawData);
+  sortData();
+  renderTable();
+  updateTotals();
+});
+
+// --- Отображение твитов при клике на пользователя ---
+function showTweets(username) {
+    const container = document.getElementById("tweets-list");
+    const title = document.getElementById("tweets-title");
+    container.innerHTML = "";
+
+    const userTweets = allTweets.filter(tweet => {
+        const candidate = (tweet.user && (tweet.user.screen_name || tweet.user.name)) || "";
+        return candidate.toLowerCase().replace(/^@/, "") === username.toLowerCase().replace(/^@/, "");
+    });
+
+    title.textContent = `Посты пользователя: ${username}`;
+
+    if(userTweets.length === 0) {
+        container.innerHTML = "<li>У пользователя нет постов</li>";
+        return;
+    }
+
+    userTweets.forEach(tweet => {
+        const li = document.createElement("li");
+        const content = tweet.text || tweet.content || "(no content)";
+        const url = tweet.url || (tweet.id_str ? `https://twitter.com/${username}/status/${tweet.id_str}` : "#");
+        li.innerHTML = `<a href="${url}" target="_blank">${escapeHtml(content)}</a>`;
+        container.appendChild(li);
+    });
 }
 
-.music-player {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border-radius: 7.5%; /* скругление 5-10% */
-  padding: 10px 20px;
-  margin-bottom: 20px;
-  backdrop-filter: blur(6px);
-  position: relative;
-  overflow: hidden;
+// --- Добавляем обработчики клика на строки таблицы после рендера ---
+function addUserClickHandlers() {
+    const tbody = document.getElementById("leaderboard-body");
+    tbody.querySelectorAll("tr").forEach(tr => {
+        tr.addEventListener("click", () => {
+            const username = tr.children[0].textContent.trim();
+            showTweets(username);
+        });
+    });
 }
 
-/* Полупрозрачные магические символы для music-player */
-.music-player::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
+// --- Обновляем renderTable, чтобы добавлять клики ---
+function renderTable() {
+    const tbody = document.getElementById("leaderboard-body");
+    tbody.innerHTML = "";
+
+    const filtered = filterData();
+    const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+    if (currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage - 1) * perPage;
+    const pageData = filtered.slice(start, start + perPage);
+
+    pageData.forEach(stats => {
+        const name = stats.username || "";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${escapeHtml(name)}</td>
+          <td>${Number(stats.posts || 0)}</td>
+          <td>${Number(stats.likes || 0)}</td>
+          <td>${Number(stats.retweets || 0)}</td>
+          <td>${Number(stats.comments || 0)}</td>
+          <td>${Number(stats.views || 0)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
+
+    // Добавляем обработчики клика
+    addUserClickHandlers();
 }
 
-.track-cover {
-  width: 150px;
-  height: 150px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  object-fit: cover;
+// --- Создание аккордеона твитов ---
+function toggleTweetsRow(tr, username) {
+    // Если уже есть раскрытая строка под этим пользователем — удаляем её
+    const nextRow = tr.nextElementSibling;
+    if (nextRow && nextRow.classList.contains("tweets-row")) {
+        nextRow.remove();
+        return;
+    }
+
+    // Удаляем все остальные раскрытые строки
+    document.querySelectorAll(".tweets-row").forEach(row => row.remove());
+
+    // Создаем новую строку
+    const tweetsRow = document.createElement("tr");
+    tweetsRow.classList.add("tweets-row");
+    const td = document.createElement("td");
+    td.colSpan = 6; // охватывает все колонки таблицы
+    td.style.background = "#f9f9f9";
+    td.style.padding = "10px";
+
+    const userTweets = allTweets.filter(tweet => {
+        const candidate = (tweet.user && (tweet.user.screen_name || tweet.user.name)) || "";
+        return candidate.toLowerCase().replace(/^@/, "") === username.toLowerCase().replace(/^@/, "");
+    });
+
+    if (userTweets.length === 0) {
+        td.innerHTML = "<i>У пользователя нет постов</i>";
+    } else {
+        const ul = document.createElement("ul");
+        ul.style.margin = "0";
+        ul.style.padding = "0 0 0 20px";
+        userTweets.forEach(tweet => {
+            const li = document.createElement("li");
+            const content = tweet.text || tweet.content || "(no content)";
+            const url = tweet.url || (tweet.id_str ? `https://twitter.com/${username}/status/${tweet.id_str}` : "#");
+            li.innerHTML = `<a href="${url}" target="_blank">${escapeHtml(content)}</a>`;
+            ul.appendChild(li);
+        });
+        td.appendChild(ul);
+    }
+
+    tweetsRow.appendChild(td);
+    tr.parentNode.insertBefore(tweetsRow, tr.nextElementSibling);
 }
 
-.controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #fff; /* белый цвет текста */
+// --- Обновляем обработчики клика ---
+function addUserClickHandlers() {
+    const tbody = document.getElementById("leaderboard-body");
+    tbody.querySelectorAll("tr").forEach(tr => {
+        tr.addEventListener("click", () => {
+            const username = tr.children[0].textContent.trim();
+            toggleTweetsRow(tr, username);
+        });
+    });
 }
 
-.track-title {
-  font-size: 1rem;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #fff; /* белый цвет текста */
+// --- renderTable остаётся как раньше, addUserClickHandlers вызывается в конце ---
+
+const player = document.getElementById('player');
+const playBtn = document.getElementById('play-btn');
+const nextBtn = document.getElementById('next-btn');
+
+
+let isPlaying = false;
+
+player.volume = 0.5; // стартовая громкость
+
+if (playBtn) {
+  playBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      player.pause();
+      playBtn.textContent = '▶️';
+    } else {
+      player.play().then(() => {
+        playBtn.textContent = '⏸️';
+      }).catch(err => console.log('Autoplay blocked:', err));
+    }
+    isPlaying = !isPlaying;
+  });
 }
 
-.buttons {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+if (nextBtn) {
+  nextBtn.addEventListener('click', () => {
+    player.currentTime = 0;
+    player.play();
+    if (playBtn) playBtn.textContent = '⏸️';
+    isPlaying = true;
+  });
 }
 
-#play-btn, #next-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  color: #fff; /* белый цвет текста */
-  cursor: pointer;
-  transition: transform 0.2s;
+// --- Tabs setup and Analytics rendering ---
+function setupTabs() {
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // 1. Снимаем активность со всех кнопок
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      // 2. Делаем нажатую кнопку активной
+      btn.classList.add('active');
+      // 3. Получаем ID вкладки
+      const tab = btn.dataset.tab;
+      // 4. Скрываем оба контейнера
+      const lb = document.getElementById('leaderboard-wrapper');
+      const an = document.getElementById('tab-analytics');
+      if (lb) lb.style.display = 'none';
+      if (an) an.style.display = 'none';
+
+      // 5. Показываем нужный контейнер
+      if (tab === 'analytics') {
+        if (an) an.style.display = 'block';
+        // Вызываем рендер аналитики при активации вкладки
+        if (typeof renderAnalytics === "function") {
+            renderAnalytics();
+        }
+      } else { // tab === 'leaderboard'
+        if (lb) lb.style.display = 'block';
+      }
+    });
+  });
 }
 
-#play-btn:hover, #next-btn:hover {
-  transform: scale(1.2);
+function renderAnalytics() {
+  // Filter tweets by the selected analytics period
+  let tweets = Array.isArray(allTweets) ? allTweets : [];
+  const now = new Date();
+  const period = analyticsPeriod;
+
+  if (period !== 'all') {
+    const days = Number(period);
+    if (days > 0) {
+      tweets = tweets.filter(t => {
+        const created = t.tweet_created_at || t.created_at || t.created || null;
+        if (!created) return false;
+        const d = new Date(created);
+        if (isNaN(d)) return false;
+        const diffDays = (now - d) / (1000 * 60 * 60 * 24);
+        return diffDays <= days;
+      });
+    }
+  }
+
+  // build per-user aggregates: posts, likes, views (from FILTERED tweets)
+  const users = {}; // {uname: {posts, likes, views}}
+  tweets.forEach(t => {
+    const u = (t.user && (t.user.screen_name || t.user.name)) || t.username || "";
+    const uname = String(u).toLowerCase().replace(/^@/, "");
+    if (!uname) return;
+    const likes = Number(t.favorite_count || t.likes || t.like_count || 0) || 0;
+    const views = Number(t.views_count || t.views || 0) || 0;
+    if (!users[uname]) users[uname] = { posts: 0, likes: 0, views: 0 };
+    users[uname].posts += 1;
+    users[uname].likes += likes;
+    users[uname].views += views;
+  });
+
+  const uniqueUsers = Object.keys(users).length;
+  const totalPosts = tweets.length;
+  const totalLikes = Object.values(users).reduce((s,u)=>s+u.likes,0);
+  const totalViews = Object.values(users).reduce((s,u)=>s+u.views,0);
+
+  // 1) Averages per user
+  const avgPosts = uniqueUsers ? (totalPosts/uniqueUsers) : 0;
+  const avgLikes = uniqueUsers ? (totalLikes/uniqueUsers) : 0;
+  const avgViews = uniqueUsers ? (totalViews/uniqueUsers) : 0;
+  const elAvgPosts = document.getElementById('avg-posts');
+  const elAvgLikes = document.getElementById('avg-likes');
+  const elAvgViews = document.getElementById('avg-views');
+  if (elAvgPosts) elAvgPosts.textContent = `Avg Posts: ${avgPosts.toFixed(2)}`;
+  if (elAvgLikes) elAvgLikes.textContent = `Avg Likes: ${avgLikes.toFixed(2)}`;
+  if (elAvgViews) elAvgViews.textContent = `Avg Views: ${avgViews.toFixed(2)}`;
+
+  // Store filtered data globally for use in event handlers
+  window._analyticsFilteredData = { tweets, users, period };
+
+  // helper to render top authors by metric (uses CURRENT stored data)
+  function renderTopAuthors(metric) {
+    const listEl = document.getElementById('top-authors-list');
+    if (!listEl) return;
+    const data = window._analyticsFilteredData || { users: {} };
+    const arr = Object.entries(data.users).map(([name,stats]) => ({ name, value: Number(stats[metric]||0), stats }));
+    arr.sort((a,b)=> b.value - a.value);
+    const top = arr.slice(0,10);
+    listEl.innerHTML = '';
+    if (top.length === 0) {
+      listEl.innerHTML = '<li>Нет данных</li>';
+      return;
+    }
+    top.forEach((it, idx) => {
+      const li = document.createElement('li');
+      li.innerHTML = `${idx+1}. <strong>${escapeHtml(it.name)}</strong> — ${it.value}`;
+      listEl.appendChild(li);
+    });
+  }
+
+  // helper to render top posts by metric (uses CURRENT stored data)
+  function renderTopPosts(metric) {
+    const listEl = document.getElementById('top-posts-list');
+    if (!listEl) return;
+    const data = window._analyticsFilteredData || { tweets: [] };
+    const postsArr = data.tweets.map(t => {
+      const likes = Number(t.favorite_count || t.likes || t.like_count || 0) || 0;
+      const views = Number(t.views_count || t.views || 0) || 0;
+      const text = (t.full_text || t.text || t.content || '').slice(0,200);
+      const author = (t.user && (t.user.screen_name || t.user.name)) || t.username || '';
+      const url = t.url || (t.id_str && author ? `https://twitter.com/${author}/status/${t.id_str}` : '#');
+      return { t, likes, views, text, author, url };
+    });
+    postsArr.sort((a,b) => (b[metric]||0) - (a[metric]||0));
+    const top = postsArr.slice(0,10);
+    listEl.innerHTML = '';
+    if (top.length === 0) { listEl.innerHTML = '<li>Нет данных</li>'; return; }
+    top.forEach((p, idx) => {
+      const li = document.createElement('li');
+      li.className = 'top-post-item';
+      const excerpt = document.createElement('div');
+      excerpt.className = 'excerpt';
+      excerpt.innerHTML = `<a href="${p.url}" target="_blank">${escapeHtml(p.text || '(no text)')}</a>`;
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.innerHTML = `<div class="author">${escapeHtml(p.author || '(unknown)')}</div><div class="metric">${p[metric] || 0}</div>`;
+      li.appendChild(excerpt);
+      li.appendChild(meta);
+      listEl.appendChild(li);
+    });
+  }
+
+  // Tweets per day data for chart (adaptive date range based on period)
+  const perDay = {}; // key YYYY-MM-DD -> count
+  const chartDays = period === 'all' ? 60 : (period === '7' ? 7 : (period === '14' ? 14 : 30));
+  tweets.forEach(t => {
+    const created = t.tweet_created_at || t.created_at || t.created || null;
+    if (!created) return;
+    const d = new Date(created);
+    if (isNaN(d)) return;
+    const key = d.toISOString().slice(0,10);
+    perDay[key] = (perDay[key] || 0) + 1;
+  });
+
+  // prepare labels/data arrays for last N days
+  const labels = [];
+  const counts = [];
+  for (let i = chartDays - 1; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(now.getDate() - i);
+    const key = d.toISOString().slice(0,10);
+    labels.push(key);
+    counts.push(perDay[key] || 0);
+  }
+
+  // render/update Chart.js chart
+  try {
+    const ctx = document.getElementById('analytics-chart');
+    if (ctx) {
+      if (analyticsChart) {
+        analyticsChart.data.labels = labels;
+        analyticsChart.data.datasets[0].data = counts;
+        analyticsChart.update();
+      } else if (window.Chart) {
+        analyticsChart = new Chart(ctx.getContext('2d'), {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Tweets per day',
+              backgroundColor: 'rgba(111,227,209,0.9)',
+              borderColor: 'rgba(111,227,209,1)',
+              data: counts
+            }]
+          },
+          options: {
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { grid: { display: false }, ticks: { maxRotation: 0, minRotation: 0 } },
+              y: { beginAtZero: true }
+            }
+          }
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('Chart render failed', err);
+  }
+
+  // initial render using default selects (if present)
+  const authorMetricSelect = document.getElementById('author-metric-select');
+  const postMetricSelect = document.getElementById('post-metric-select');
+  const authorMetric = authorMetricSelect ? authorMetricSelect.value : 'posts';
+  const postMetric = postMetricSelect ? postMetricSelect.value : 'likes';
+  renderTopAuthors(authorMetric);
+  renderTopPosts(postMetric);
+
+  // attach listeners (idempotent) — these now call the stored-data versions
+  if (authorMetricSelect && !authorMetricSelect._bound) {
+    authorMetricSelect.addEventListener('change', e => renderTopAuthors(e.target.value));
+    authorMetricSelect._bound = true;
+  }
+  if (postMetricSelect && !postMetricSelect._bound) {
+    postMetricSelect.addEventListener('change', e => renderTopPosts(e.target.value));
+    postMetricSelect._bound = true;
+  }
 }
 
-#volume-slider {
-  width: 80px;
-  accent-color: #ff4081;
-  cursor: pointer;
+// Analytics time period filter
+const analyticsTimeSelect = document.getElementById('analytics-time-select');
+if (analyticsTimeSelect) {
+  analyticsTimeSelect.addEventListener('change', e => {
+    analyticsPeriod = e.target.value || 'all';
+    renderAnalytics();
+  });
 }
 
-/* === TABS === */
-.tabs {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-.tab-btn {
-  padding: 8px 14px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  border: 2px solid rgba(255,255,255,0.25); /* изменена обводка */
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); /* изменен фон */
-  color: #fff; /* белый цвет текста */
-  cursor: pointer;
-  font-weight: 700;
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для tab-btn */
-.tab-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-.tab-btn:hover { box-shadow: 0 0 12px rgba(255,255,255,0.12); }
-.tab-btn.active {
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
-  color: #fff;
-  border-color: rgba(255,255,255,0.6);
+// Nested analytics tabs setup
+function setupAnalyticsTabs() {
+  const btns = document.querySelectorAll('.analytics-tab-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active from all buttons and sections
+      btns.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.analytics-nested-content').forEach(s => s.classList.remove('active'));
+      // Add active to clicked button and corresponding section
+      btn.classList.add('active');
+      const section = btn.dataset.analyticsTab;
+      const sectionEl = document.querySelector(`[data-analytics-section="${section}"]`);
+      if (sectionEl) sectionEl.classList.add('active');
+    });
+  });
 }
 
-/* Tab content container - УБРАНО ПЕРЕОПРЕДЕЛЕНИЕ DISPLAY */
-/* .tab-content { display: none; } */
-/* .tab-content.active { display: block; } */
-
-/* Tab content container */
-.tab-content { padding: 8px 0 30px; }
-
-/* Analytics small tweaks */
-.analytics-stats .stat-box { flex: none; width: 220px; }
-#analytics-top-authors { padding-left: 18px; }
-#analytics-per-day li { padding: 4px 0; color: #fff; /* белый цвет текста */ }
-
-/* Analytics blocks */
-.analytics-block { 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.06), rgba(47, 79, 79, 0.02)); /* изменен фон */
-  padding: 12px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  margin-bottom: 12px; 
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-/* Полупрозрачные магические символы для analytics-block */
-.analytics-block::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-.analytics-row { display:flex; gap:12px; }
-.analytics-block select { 
-  background:linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)); /* изменен фон селекта */
-  color:#fff; 
-  border:1px solid rgba(255,255,255,0.08); 
-  padding:6px 8px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-}
-.analytics-block ol { padding-left: 18px; }
-.top-post-item { 
-  padding:8px 10px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  margin-bottom:8px; 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.04), rgba(47, 79, 79, 0.01)); /* изменен фон */
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для top-post-item */
-.top-post-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-.top-post-item .excerpt { max-width:70%; color:#fff; /* белый цвет текста */ }
-.top-post-item .meta { color:#fff; /* белый цвет текста */
-  font-weight:600; }
-
-/* --- UI polish for analytics --- */
-:root{
-  --bg: #0d1117;
-  --muted: #fff; /* изменен цвет muted */
-  --accent: #6fe3d1;
-  --card-bg: linear-gradient(180deg, rgba(47, 79, 79, 0.06), rgba(47, 79, 79, 0.02)); /* изменен цвет card-bg */
-  --glass: linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)); /* изменен цвет glass */
-  --glass-strong: linear-gradient(180deg, rgba(47, 79, 79, 0.1), rgba(47, 79, 79, 0.06)); /* изменен цвет glass-strong */
-  --radius: 7.5%; /* изменен радиус */
-}
-
-.container { max-width:1100px; margin: 140px auto 60px; padding: 28px; }
-
-.tab-content { transition: opacity 250ms ease, transform 250ms ease; }
-
-.analytics-block { 
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6); 
-  border: 1px solid rgba(255,255,255,0.08); /* изменена обводка */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.06), rgba(47, 79, 79, 0.02)); /* изменен фон */
-  padding:18px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-}
-
-.analytics-row .stat-box { 
-  width: 220px; 
-  padding:14px; 
-  text-align:center; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); /* изменен фон */
-  box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2); 
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для аналитических stat-box */
-.analytics-row .stat-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-.analytics-row .stat-box h4 { margin:0; font-size:0.9rem; color:#fff; /* белый цвет текста */ }
-
-.analytics-block h3 { 
-  margin:0 0 8px 0; 
-  color:#fff; /* белый цвет текста */
-  font-size:1.05rem; 
-}
-
-#top-authors-list, #top-posts-list { 
-  list-style: none; 
-  margin: 0; 
-  padding: 0; 
-}
-#top-authors-list li { 
-  display:flex; 
-  justify-content:space-between; 
-  align-items:center; 
-  padding:10px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.02), rgba(47, 79, 79, 0.01)); /* изменен фон */
-  margin-bottom:8px; 
-  border:1px solid rgba(255,255,255,0.02); 
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для элементов списка */
-#top-authors-list li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-#top-authors-list li strong { color:#fff; /* белый цвет текста */ }
-
-.top-post-item { 
-  display:flex; 
-  gap:12px; 
-  align-items:center; 
-  padding:12px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.04), rgba(47, 79, 79, 0.02)); /* изменен фон */
-  border:1px solid rgba(255,255,255,0.02); 
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для top-post-item */
-.top-post-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-.top-post-item .excerpt a { color: #fff; /* белый цвет текста */
-  text-decoration:none; }
-.top-post-item .excerpt a:hover { text-decoration:underline; }
-.top-post-item .meta { display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
-.top-post-item .meta .author { font-weight:700; color:#fff; /* белый цвет текста */
- }
-.top-post-item .meta .metric { 
-  background: linear-gradient(90deg,rgba(255,255,255,0.1),rgba(255,255,255,0.05)); /* изменен фон метрики */
-  color:#fff; /* белый цвет текста */
-  padding:6px 8px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  font-weight:700; 
-}
-
-/* make selects nicer */
-.analytics-block select { 
-  appearance:none; 
-  -webkit-appearance:none; 
-  -moz-appearance:none; 
-  padding:8px 12px; 
-  border-radius: 7.5%; /* скругление 5-10% */
-  border:1px solid rgba(255,255,255,0.06); 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)); /* изменен фон селекта */
-  color:#fff; 
-}
-.analytics-block select:focus { 
-  box-shadow: 0 6px 18px rgba(111,227,209,0.07); 
-  outline: none; 
-}
-
-/* responsive grid for analytics blocks */
-#tab-analytics { display:flex; flex-direction:column; gap:18px; }
-.analytics-grid { display:grid; grid-template-columns: 1fr; gap:18px; }
-@media(min-width:900px) {
-  .analytics-grid { grid-template-columns: 1fr 1fr; align-items:start; }
-  #analytics-averages { grid-column: 1 / -1; }
-}
-
-/* small interactive touches */
-#tab-analytics .analytics-block:hover { 
-  transform: translateY(-3px); 
-  transition: transform 180ms ease; 
-}
-
-.stat-box { 
-  transition: transform 160ms, box-shadow 160ms; 
-}
-.stat-box:hover { 
-  transform: translateY(-4px); 
-  box-shadow: 0 10px 30px rgba(255,255,255,0.06); /* изменена тень при наведении */
-}
-
-/* subtle numbering style */
-#top-authors-list li::marker { color: #fff; /* изменен цвет маркера */ }
-
-/* ensure long excerpts wrap nicely */
-.excerpt { word-break: break-word; }
-
-/* === SELECT STYLING (period + metrics) === */
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* изменен цвет стрелки */
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 16px;
-  padding-right: 32px;
-  border-radius: 7.5%; /* скругление 5-10% */
-}
-
-/* period filter styling */
-.analytics-time-filter {
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.08), rgba(47, 79, 79, 0.04)) !important; /* изменен фон */
-  border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
-  border-radius: 7.5%; /* скругление 5-10% */
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для analytics-time-filter */
-.analytics-time-filter::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.analytics-time-filter select {
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.12), rgba(47, 79, 79, 0.08)) !important; /* изменен фон селекта */
-  border: 1px solid rgba(255,255,255,0.2) !important; /* изменена обводка */
-  color: #fff; /* белый цвет текста */
-  font-weight: 600;
-  padding: 10px 32px 10px 12px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  transition: all 200ms ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.analytics-time-filter select:hover {
-  border-color: rgba(255,255,255,0.4) !important; /* изменена обводка при наведении */
-  box-shadow: 0 6px 16px rgba(255,255,255,0.1); /* изменена тень при наведении */
-}
-
-.analytics-time-filter select:focus {
-  outline: none;
-  border-color: #fff !important; /* изменена обводка при фокусе */
-  box-shadow: 0 8px 24px rgba(255,255,255,0.15); /* изменена тень при фокусе */
-  transform: translateY(-2px);
-}
-
-/* metric selects styling (inside analytics blocks) */
-.analytics-block > div:first-of-type {
-  gap: 12px;
-}
-
-.analytics-block select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.12), rgba(47, 79, 79, 0.06)) !important; /* изменен фон селекта */
-  border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
-  color: #fff; /* белый цвет текста */
-  font-weight: 600;
-  padding: 10px 12px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  cursor: pointer;
-  transition: all 180ms ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.analytics-block select:hover {
-  border-color: rgba(255,255,255,0.3) !important; /* изменена обводка при наведении */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.16), rgba(47, 79, 79, 0.1)) !important; /* изменен фон при наведении */
-  box-shadow: 0 6px 16px rgba(255,255,255,0.08); /* изменена тень при наведении */
-}
-
-.analytics-block select:focus {
-  outline: none;
-  border-color: #fff !important; /* изменена обводка при фокусе */
-  box-shadow: 0 8px 20px rgba(255,255,255,0.12); /* изменена тень при фокусе */
-  transform: translateY(-1px);
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.12)) !important; /* изменен фон при фокусе */
-}
-
-/* Dropdown options styling */
-select option {
-  background: #0d1117;
-  color: #fff; /* белый цвет текста */
-  padding: 8px;
-  border: none;
-  border-radius: 7.5%; /* скругление 5-10% для опций */
-}
-
-select option:hover {
-  background: rgba(255, 255, 255, 0.2); /* изменен фон при наведении */
-  color: #fff; /* белый цвет текста */
-}
-
-select option:checked {
-  background: linear-gradient(#fff, #fff); /* изменен фон выбранной опции */
-  background-color: #fff !important; /* изменен цвет фона */
-  color: #0d1117 !important; /* изменен цвет текста */
-  border-radius: 7.5%; /* скругление 5-10% для выбранной опции */
-}
-
-/* === Nested analytics tabs === */
-.analytics-nested-tabs { 
-  display:flex; 
-  gap:8px; 
-  margin-bottom:16px; 
-  border-bottom:2px solid rgba(255, 255, 255, 0.03); 
-}
-.analytics-tab-btn { 
-  padding:10px 16px; 
-  border: none; 
-  background: transparent; 
-  color:#fff; /* белый цвет текста */
-  font-weight:600; 
-  cursor:pointer; 
-  border-bottom:3px solid transparent; 
-  transition: all 200ms ease; 
-  border-radius: 7.5% 7.5% 0 0; /* скругление только сверху для вкладок */
-}
-.analytics-tab-btn:hover { 
-  color:#fff; /* белый цвет текста */
-}
-.analytics-tab-btn.active { 
-  color:#fff; /* белый цвет текста */
-  border-bottom-color:#fff; /* изменен цвет нижней границы активной вкладки */
-}
-.analytics-nested-content { 
-  display: none !important; 
-  animation: fadeIn 250ms ease; 
-}
-.analytics-nested-content.active { 
-  display: block !important; 
-}
-@keyframes fadeIn { 
-  from { 
-    opacity:0; 
-  } 
-  to { 
-    opacity:1; 
-  } 
-}
-
-/* === CHART SECTION (новый блок, стилизован под дизайн сайта) === */
-.chart-section {
-  margin: 40px 0;
-  padding: 20px;
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
-  text-align: center;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-/* Полупрозрачные магические символы для chart-section */
-.chart-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-.chart-section:hover {
-  border-color: #fff; /* изменен цвет обводки при наведении */
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); /* изменена тень при наведении */
-  transform: scale(1.01);
-}
-.chart-section h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #fff; /* белый цвет текста */
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень текста */
-}
-.chart-section p {
-  font-size: 1rem;
-  margin-bottom: 20px;
-  color: #fff; /* белый цвет текста */
-}
-
-/* --- ДОБАВЛЕНО: УБРАТЬ ПЕРЕОПРЕДЕЛЕНИЕ DISPLAY ДЛЯ tab-content --- */
-/* Удалено правило .tab-content { display: none; } */
-/* Удалено правило .tab-content.active { display: block; } */
+// Инициализация табов ПОСЛЕ загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+  setupTabs(); // Инициализируем основные вкладки
+  setupAnalyticsTabs(); // Инициализируем вложенные вкладки аналитики
+});
