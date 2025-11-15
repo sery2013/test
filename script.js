@@ -571,10 +571,26 @@ function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
 
+  // Вспомогательная функция для блокировки кликов
+  let clickBlockerActive = false;
+  function temporarilyBlockClicks() {
+    if (clickBlockerActive) return; // Уже заблокировано
+    clickBlockerActive = true;
+    document.addEventListener('click', blockClickHandler, { capture: true, once: true, passive: false });
+    setTimeout(() => { clickBlockerActive = false; }, 100); // Разблокируем через 100мс
+  }
+
+  function blockClickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation(); // Останавливает ВСЕ обработчики на этом элементе и всплытие
+  }
+
   if (csvBtn && !csvBtn._bound) {
     csvBtn.addEventListener('click', function(e) {
-      e.preventDefault(); // Останавливаем любое стандартное поведение
-      e.stopPropagation(); // Останавливаем всплытие, чтобы не повлиять на родителей
+      e.preventDefault();
+      e.stopPropagation();
+      temporarilyBlockClicks(); // Включаем блокировку
       exportToCSV();
     });
     csvBtn._bound = true;
@@ -582,8 +598,9 @@ function bindExportButtons() {
 
   if (jsonBtn && !jsonBtn._bound) {
     jsonBtn.addEventListener('click', function(e) {
-      e.preventDefault(); // Останавливаем любое стандартное поведение
-      e.stopPropagation(); // Останавливаем всплытие, чтобы не повлиять на родителей
+      e.preventDefault();
+      e.stopPropagation();
+      temporarilyBlockClicks(); // Включаем блокировку
       exportToJSON();
     });
     jsonBtn._bound = true;
@@ -901,4 +918,5 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
 
