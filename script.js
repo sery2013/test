@@ -438,37 +438,7 @@ function addUserClickHandlers() {
 
 // --- renderTable остаётся как раньше, addUserClickHandlers вызывается в конце ---
 
-const player = document.getElementById('player');
-const playBtn = document.getElementById('play-btn');
-const nextBtn = document.getElementById('next-btn');
 
-
-let isPlaying = false;
-
-player.volume = 0.5; // стартовая громкость
-
-if (playBtn) {
-  playBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      player.pause();
-      playBtn.textContent = '▶️';
-    } else {
-      player.play().then(() => {
-        playBtn.textContent = '⏸️';
-      }).catch(err => console.log('Autoplay blocked:', err));
-    }
-    isPlaying = !isPlaying;
-  });
-}
-
-if (nextBtn) {
-  nextBtn.addEventListener('click', () => {
-    player.currentTime = 0;
-    player.play();
-    if (playBtn) playBtn.textContent = '⏸️';
-    isPlaying = true;
-  });
-}
 
 // --- Tabs setup and Analytics rendering ---
 function setupTabs() {
@@ -701,3 +671,4 @@ function setupAnalyticsTabs() {
 
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+
