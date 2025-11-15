@@ -582,12 +582,22 @@ function exportToJSON() {
 function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
+
   if (csvBtn && !csvBtn._bound) {
-    csvBtn.addEventListener('click', exportToCSV);
+    csvBtn.addEventListener('click', function(e) {
+      e.preventDefault(); // Останавливаем стандартное поведение (если есть)
+      e.stopPropagation(); // Останавливаем всплытие события
+      exportToCSV();
+    });
     csvBtn._bound = true;
   }
+
   if (jsonBtn && !jsonBtn._bound) {
-    jsonBtn.addEventListener('click', exportToJSON);
+    jsonBtn.addEventListener('click', function(e) {
+      e.preventDefault(); // Останавливаем стандартное поведение (если есть)
+      e.stopPropagation(); // Останавливаем всплытие события
+      exportToJSON();
+    });
     jsonBtn._bound = true;
   }
 }
@@ -1006,3 +1016,4 @@ document.getElementById('refresh-btn').addEventListener('click', () => {
   fetchTweets();
 });
 ```
+
