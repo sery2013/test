@@ -1095,4 +1095,17 @@ select option:checked {
   cursor: pointer;
 }
 
+/* === Разделитель для карточек постов в Top 10 posts === */
+#top-posts-list .top-post-item {
+  border-bottom: 1px solid #ffffff; /* Белая линия */
+  margin-bottom: 8px; /* Отступ снизу */
+  padding-bottom: 8px; /* Отступ внутри карточки снизу */
+}
+
+/* Убираем линию у последнего элемента */
+#top-posts-list .top-post-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
 
