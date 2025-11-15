@@ -1053,21 +1053,25 @@ select option:checked {
 /* ... */
 
 /* === НОВЫЙ КОД ДЛЯ .welcome-section === */
-.welcome-section {
-  text-align: center;
-  margin-bottom: 30px;
-  /* --- Новые стили для рамки --- */
-  background-color: #f9f9f9; /* Светлый фон */
-  border: 2px solid #2F4F4F; /* Цвет рамки #2F4F4F */
-  border-radius: 10px; /* Скругление углов */
-  padding: 20px; /* Внутренний отступ */
-  max-width: 800px; /* Максимальная ширина */
-  margin: 20px auto 30px auto; /* Центрирование, внешние отступы */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Тень */
-  position: relative; /* Для позиционирования псевдоэлемента */
+
+.welcome-container {
+  text-align: center; /* Центрирует цитату */
+  margin: 20px 0; /* Внешние отступы */
 }
 
-.welcome-section::before {
+.welcome-quote {
+  background-color: #f9f9f9; /* Светлый фон */
+  border-left: 5px solid #2F4F4F; /* Цвет левой границы #2F4F4F */
+  border-radius: 0 5px 5px 0; /* Скругление правых углов */
+  padding: 15px 20px; /* Внутренние отступы */
+  margin: 0 auto; /* Центрирование, убираем внешние отступы по бокам */
+  max-width: 800px; /* Максимальная ширина */
+  font-style: normal; /* Убираем курсив по умолчанию */
+  position: relative; /* Для позиционирования псевдоэлемента */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Легкая тень */
+}
+
+.welcome-quote::before {
   /* Псевдоэлемент для добавления магических символов */
   content: "";
   position: absolute;
@@ -1075,30 +1079,32 @@ select option:checked {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="black" opacity="0.05">✦✧✦✧</text></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="black" opacity="0.05">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none; /* Позволяет кликать сквозь него */
   z-index: 0; /* Помещает его позади текста */
-  border-radius: 10px; /* Соответствует скруглению блока */
+  border-radius: 0 5px 5px 0; /* Соответствует скруглению блока */
 }
 
-.welcome-section > * {
+.welcome-quote > * {
   /* Помещает все дочерние элементы (h1, p) поверх псевдоэлемента */
   position: relative;
   z-index: 1;
 }
 
-/* Стили для ссылок внутри .welcome-section */
-.welcome-section a {
+.welcome-title {
+  color: #2F4F4F; /* Цвет заголовка */
+  text-align: center; /* Центрирование заголовка */
+  margin: 0 0 10px 0; /* Отступы вокруг заголовка */
+}
+
+/* Стили для ссылок внутри цитаты */
+.welcome-quote a {
   color: #0066cc; /* Цвет ссылки */
   text-decoration: underline; /* Подчеркивание */
 }
 
-.welcome-section a:hover {
+.welcome-quote a:hover {
   color: #0052a3; /* Цвет ссылки при наведении */
 }
-
-/* === КОНЕЦ НОВОГО КОДА === */
-
-/* (если в вашем файле была последняя фигурная скобка от какого-то другого правила, она остаётся ПОСЛЕ всего этого кода) */
