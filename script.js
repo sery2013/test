@@ -10,15 +10,12 @@ let timeFilter = "all";
 let analyticsChart = null;
 let analyticsPeriod = "all"; // filter for analytics: 'all', '7', '14', '30'
 let analyticsHourFilter = "all"; // filter for heatmap hour: 'all', '0', '1', ... '23'
-let currentLang = 'en'; // по умолчанию
+let currentLang = 'en'; // en или ru
 
 // - Fetch leaderboard data -
 async function fetchData() {
   try {
     const response = await fetch("leaderboard.json"); // <-- путь к файлу в репо
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
     const json = await response.json();
     rawData = json;
     normalizeData(rawData);
@@ -26,21 +23,10 @@ async function fetchData() {
     renderTable();
     updateArrows();
     updateTotals();
-    // === ОБНОВЛЕНИЕ ИНДИКАТОРА ОБНОВЛЕНИЯ ===
-    // Проверяем, существует ли элемент перед обновлением
-    const lastUpdatedElement = document.getElementById('last-updated');
-    if (lastUpdatedElement) {
-        lastUpdatedElement.textContent = `Last updated: ${new Date().toLocaleString()}`;
-    } else {
-        console.warn("Element with ID 'last-updated' not found.");
-    }
+    // === УДАЛЕНО: ОБНОВЛЕНИЕ ИНДИКАТОРА ОБНОВЛЕНИЯ ===
+    // document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleString()}`;
   } catch (err) {
     console.error("Failed to fetch leaderboard:", err);
-    // Попробуем обновить индикатор даже при ошибке, если элемент существует
-    const lastUpdatedElement = document.getElementById('last-updated');
-    if (lastUpdatedElement) {
-        lastUpdatedElement.textContent = `Last updated: Failed - ${new Date().toLocaleString()}`;
-    }
   }
 }
 
@@ -48,9 +34,6 @@ async function fetchData() {
 async function fetchTweets() {
   try {
     const response = await fetch("all_tweets.json"); // <-- путь к файлу в репо
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
     const json = await response.json();
     if (Array.isArray(json)) {
       allTweets = json;
@@ -143,13 +126,9 @@ function applyTimeFilterIfNeeded(base) {
 function updateTotals() {
   const totalPosts = data.reduce((sum, s) => sum + (Number(s.posts) || 0), 0);
   const totalViews = data.reduce((sum, s) => sum + (Number(s.views) || 0), 0);
-  const totalPostsEl = document.getElementById("total-posts");
-  const totalUsersEl = document.getElementById("total-users");
-  const totalViewsEl = document.getElementById("total-views");
-
-  if (totalPostsEl) totalPostsEl.textContent = `Total Posts: ${totalPosts}`;
-  if (totalUsersEl) totalUsersEl.textContent = `Total Users: ${data.length}`;
-  if (totalViewsEl) totalViewsEl.textContent = `Total Views: ${totalViews}`;
+  document.getElementById("total-posts").textContent = `Total Posts: ${totalPosts}`;
+  document.getElementById("total-users").textContent = `Total Users: ${data.length}`;
+  document.getElementById("total-views").textContent = `Total Views: ${totalViews}`;
 }
 
 // - Sort, Filter, Render -
@@ -179,10 +158,6 @@ function shareUserOnTwitter(username) {
 // - Render Table with Share Button -
 function renderTable() {
   const tbody = document.getElementById("leaderboard-body");
-  if (!tbody) {
-      console.error("Element with ID 'leaderboard-body' not found.");
-      return;
-  }
   tbody.innerHTML = "";
 
   const filtered = filterData();
@@ -210,10 +185,7 @@ function renderTable() {
     const shareBtn = document.createElement("button");
     shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: block;"> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.244 2.25H8.05l4.713 6.231zm-1.161 17.52h1.833L7.08 4.126H5.03z"/> </svg>`; // SVG иконка Twitter
     shareBtn.className = 'share-btn'; // Класс для стилей
-    // --- ОБНОВЛЕНИЕ ПОДСКАЗКИ shareBtn В ЗАВИСИМОСТИ ОТ ЯЗЫКА ---
-    const shareBtnTitle = currentLang === 'en' ? `Share ${escapeHtml(name)}'s stats on Twitter` : `Поделиться статистикой ${escapeHtml(name)} в Twitter`;
-    shareBtn.title = shareBtnTitle; // Подсказка при наведении
-    // --- КОНЕЦ ОБНОВЛЕНИЯ ПОДСКАЗКИ ---
+    shareBtn.title = `Share ${escapeHtml(name)}'s stats on Twitter`; // Подсказка при наведении
     shareBtn.onclick = function(e) {
         e.stopPropagation(); // ВАЖНО: Останавливаем всплытие, чтобы клик не сработал на строке таблицы
         shareUserOnTwitter(name); // Функция, которая откроет окно Twitter Intent
@@ -233,10 +205,7 @@ function renderTable() {
     tbody.appendChild(tr);
   });
 
-  const pageInfoElement = document.getElementById("page-info");
-  if (pageInfoElement) {
-      pageInfoElement.textContent = `Page ${currentPage} / ${totalPages}`;
-  }
+  document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
 
   // Добавляем обработчики клика
   addUserClickHandlers();
@@ -315,38 +284,31 @@ function setupTabs() {
 function showTweets(username) {
   const container = document.getElementById("tweets-list");
   const title = document.getElementById("tweets-title");
-  if (container) {
-      container.innerHTML = "";
-  }
-  if (title) {
-      title.textContent = `Посты пользователя: ${username}`;
-  }
+  container.innerHTML = "";
 
   const userTweets = allTweets.filter(tweet => {
     const candidate = (tweet.user && (tweet.user.screen_name || tweet.user.name)) || "";
     return candidate.toLowerCase().replace(/^@/, "") === username.toLowerCase().replace(/^@/, "");
   });
 
-  if (container) {
-      if (userTweets.length === 0) {
-        container.innerHTML = "<li>У пользователя нет постов</li>";
-        return;
-      }
-
-      userTweets.forEach(tweet => {
-        const li = document.createElement("li");
-        const text = tweet.full_text || tweet.text || tweet.content || "(no text)";
-        const url = tweet.url || (tweet.id_str && tweet.user ? `https://twitter.com/${tweet.user.screen_name || tweet.user.name}/status/${tweet.id_str}` : "#");
-        li.innerHTML = `<a href="${url}" target="_blank">${escapeHtml(text)}</a>`;
-        container.appendChild(li);
-      });
+  title.textContent = `Посты пользователя: ${username}`;
+  if(userTweets.length === 0) {
+    container.innerHTML = "<li>У пользователя нет постов</li>";
+    return;
   }
+
+  userTweets.forEach(tweet => {
+    const li = document.createElement("li");
+    const text = tweet.full_text || tweet.text || tweet.content || "(no text)";
+    const url = tweet.url || (tweet.id_str && tweet.user ? `https://twitter.com/${tweet.user.screen_name || tweet.user.name}/status/${tweet.id_str}` : "#");
+    li.innerHTML = `<a href="${url}" target="_blank">${escapeHtml(text)}</a>`;
+    container.appendChild(li);
+  });
 }
 
 // - Обновляем обработчики клика -
 function addUserClickHandlers() {
   const tbody = document.getElementById("leaderboard-body");
-  if (!tbody) return;
   tbody.querySelectorAll("tr").forEach(tr => {
     tr.addEventListener("click", () => {
       const username = tr.children[0].textContent.trim();
@@ -497,7 +459,7 @@ function renderAnalytics() {
               label: 'Tweets per day',
               backgroundColor: 'rgba(255, 255, 255, 0.9)', // Цвет заливки столбцов
               borderColor: 'rgba(0, 255, 255, 1)', // Цвет обводки столбцов
-              data: counts // <-- ИСПРАВЛЕНО: добавлено ''
+              data: counts // <-- ИСПРАВЛЕНО: добавлено 'data:'
             }]
           },
           options: {
@@ -775,348 +737,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// === LANGUAGE SWITCHER ===
-const langEn = document.getElementById('lang-en');
-const langRu = document.getElementById('lang-ru');
+// === LANGUAGE SWITCHER (УДАЛЕНО) ===
+// Код для переключателя языков (langEn, langRu, setLanguage и т.д.) полностью удалён.
+// Функция updateStatsTexts также удалена, так как она использовалась только для языков.
 
-function setLanguage(lang) {
-    currentLang = lang;
-    langEn.classList.toggle('active', lang === 'en');
-    langRu.classList.toggle('active', lang === 'ru');
-
-    // Обновляем текст на странице
-    if (lang === 'en') {
-        // --- ОБНОВЛЕНИЕ ТЕКСТА В .welcome-section ---
-        const h1 = document.querySelector('h1');
-        if (h1) h1.textContent = 'WELCOME RITUALISTS!';
-        const welcomeP1 = document.querySelector('.welcome-section p:nth-of-type(1)');
-        if (welcomeP1) welcomeP1.textContent = 'This leaderboard is generated based on all posts in the ';
-        const welcomeP2 = document.querySelector('.welcome-section p:nth-of-type(2)');
-        if (welcomeP2) welcomeP2.textContent = 'If your posts are not published through ';
-        const welcomeP3 = document.querySelector('.welcome-section p:nth-of-type(3)');
-        if (welcomeP3) welcomeP3.textContent = 'By clicking on any participant, you can view their works directly on the website.';
-        const welcomeP4 = document.querySelector('.welcome-section p:nth-of-type(4)');
-        if (welcomeP4) welcomeP4.textContent = 'By clicking on any metric (for example, views), you can filter by it.';
-        const updateInfoP = document.querySelector('.welcome-section p:nth-of-type(5)');
-        if (updateInfoP) updateInfoP.innerHTML = '<b><span style="color:#90EE90;">Updates every 2 days</span></b>';
-        const supportP = document.querySelector('.welcome-section p:nth-of-type(7)');
-        if (supportP) supportP.textContent = 'Support us on Twitter!';
-        const teamP = document.querySelector('.team-box p');
-        if (teamP) teamP.innerHTML = 'Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a>';
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА В ФИЛЬТРАХ И ЭЛЕМЕНТАХ LEADERBOARD ---
-        const timeSelectOptions = document.querySelectorAll('#time-select option');
-        if (timeSelectOptions.length >= 4) {
-            timeSelectOptions[0].textContent = 'Last 7 days';
-            timeSelectOptions[1].textContent = 'Last 14 days';
-            timeSelectOptions[2].textContent = 'Last 30 days';
-            timeSelectOptions[3].textContent = 'All time';
-        }
-        const searchInput = document.getElementById('search');
-        if (searchInput) searchInput.placeholder = 'Search user...';
-        const prevPageBtn = document.getElementById('prev-page');
-        if (prevPageBtn) prevPageBtn.textContent = 'Previous';
-        const nextPageBtn = document.getElementById('next-page');
-        if (nextPageBtn) nextPageBtn.textContent = 'Next';
-        const refreshBtn = document.getElementById('refresh-btn');
-        if (refreshBtn) refreshBtn.textContent = '🔄 Refresh';
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА ВО ВКЛАДКАХ ---
-        const leaderboardTabBtn = document.querySelector('.tab-btn[data-tab="leaderboard"]');
-        if (leaderboardTabBtn) leaderboardTabBtn.textContent = 'Leaderboard';
-        const analyticsTabBtn = document.querySelector('.tab-btn[data-tab="analytics"]');
-        if (analyticsTabBtn) analyticsTabBtn.textContent = 'Analytics';
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА В ANALYTICS ---
-        const analyticsH2 = document.querySelector('#tab-analytics h2');
-        if (analyticsH2) analyticsH2.textContent = 'Analytics';
-        const analyticsTimeOptions = document.querySelectorAll('#analytics-time-select option');
-        if (analyticsTimeOptions.length >= 4) {
-            analyticsTimeOptions[0].textContent = 'All time';
-            analyticsTimeOptions[1].textContent = 'Last 30 days';
-            analyticsTimeOptions[2].textContent = 'Last 14 days';
-            analyticsTimeOptions[3].textContent = 'Last 7 days';
-        }
-        const hourSelectOptions = document.querySelectorAll('#hour-select option');
-        if (hourSelectOptions.length >= 25) { // Проверяем, что есть опции "All hours" и "0"-"23"
-            hourSelectOptions[0].textContent = 'All hours';
-            for (let i = 1; i <= 24; i++) {
-                if (hourSelectOptions[i]) {
-                    hourSelectOptions[i].textContent = `${i - 1}:00`;
-                }
-            }
-        }
-
-        const avgMetricsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="averages"]');
-        if (avgMetricsBtn) avgMetricsBtn.textContent = 'Avg metrics';
-        const topAuthorsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="authors"]');
-        if (topAuthorsBtn) topAuthorsBtn.textContent = 'Top 10 authors';
-        const topPostsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="posts"]');
-        if (topPostsBtn) topPostsBtn.textContent = 'Top 10 posts';
-
-        const exportCsvBtn = document.getElementById('export-csv');
-        if (exportCsvBtn) exportCsvBtn.textContent = 'Export CSV';
-        const exportJsonBtn = document.getElementById('export-json');
-        if (exportJsonBtn) exportJsonBtn.textContent = 'Export JSON';
-
-        // --- ОБНОВЛЕНИЕ ЗАГОЛОВКОВ ТАБЛИЦЫ ---
-        const headers = {
-            'name-header': 'User',
-            'posts-header': 'Posts',
-            'likes-header': 'Likes',
-            'retweets-header': 'Retweets',
-            'comments-header': 'Comments',
-            'views-col-header': 'Views'
-        };
-        Object.entries(headers).forEach(([id, text]) => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = text;
-        });
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА ФИЛЬТРОВ В ANALYTICS ---
-        const authorMetricOptions = document.querySelectorAll('#author-metric-select option');
-        if (authorMetricOptions.length >= 3) {
-            authorMetricOptions[0].textContent = 'Posts';
-            authorMetricOptions[1].textContent = 'Likes';
-            authorMetricOptions[2].textContent = 'Views';
-        }
-        const postMetricOptions = document.querySelectorAll('#post-metric-select option');
-        if (postMetricOptions.length >= 2) {
-            postMetricOptions[0].textContent = 'Likes';
-            postMetricOptions[1].textContent = 'Views';
-        }
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА ЭЛЕМЕНТОВ ВЛОЖЕННЫХ РАЗДЕЛОВ ANALYTICS ---
-        const avgMetricsH3 = document.querySelector('#analytics-averages-section h3');
-        if (avgMetricsH3) avgMetricsH3.textContent = 'Average metrics per user';
-        const heatmapH3 = document.querySelector('#heatmap-container').parentElement.querySelector('h3');
-        if (heatmapH3) heatmapH3.textContent = 'Activity Heatmap (Tweets by Day & Hour)';
-        const topAuthorsH3 = document.querySelector('#analytics-authors-section h3');
-        if (topAuthorsH3) topAuthorsH3.textContent = 'Top 10 authors';
-        const topPostsH3 = document.querySelector('#analytics-posts-section h3');
-        if (topPostsH3) topPostsH3.textContent = 'Top 10 posts';
-
-        const sortLabel1 = document.querySelector('#analytics-authors-section label[for="author-metric-select"]');
-        if (sortLabel1) sortLabel1.textContent = 'Sort by:';
-        const sortLabel2 = document.querySelector('#analytics-posts-section label[for="post-metric-select"]');
-        if (sortLabel2) sortLabel2.textContent = 'Sort by:';
-
-    } else if (lang === 'ru') { // --- ТО ЖЕ САМОЕ, НО НА РУССКОМ ЯЗЫКЕ ---
-        // --- ОБНОВЛЕНИЕ ТЕКСТА В .welcome-section ---
-        const h1 = document.querySelector('h1');
-        if (h1) h1.textContent = 'ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!';
-        const welcomeP1 = document.querySelector('.welcome-section p:nth-of-type(1)');
-        if (welcomeP1) welcomeP1.textContent = 'Этот лидерборд генерируется на основе всех постов в сообществе ';
-        const welcomeP2 = document.querySelector('.welcome-section p:nth-of-type(2)');
-        if (welcomeP2) welcomeP2.textContent = 'Если ваши посты не публикуются через ';
-        const welcomeP3 = document.querySelector('.welcome-section p:nth-of-type(3)');
-        if (welcomeP3) welcomeP3.textContent = 'Щёлкнув по любому участнику, вы можете просмотреть его работы на сайте.';
-        const welcomeP4 = document.querySelector('.welcome-section p:nth-of-type(4)');
-        if (welcomeP4) welcomeP4.textContent = 'Щёлкнув по любой метрике (например, просмотры), вы можете отфильтровать по ней.';
-        const updateInfoP = document.querySelector('.welcome-section p:nth-of-type(5)');
-        if (updateInfoP) updateInfoP.innerHTML = '<b><span style="color:#90EE90;">Обновляется каждые 2 дня</span></b>';
-        const supportP = document.querySelector('.welcome-section p:nth-of-type(7)');
-        if (supportP) supportP.textContent = 'Поддержите нас в Twitter!';
-        const teamP = document.querySelector('.team-box p');
-        if (teamP) teamP.innerHTML = 'Разработчик - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a>';
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА В ФИЛЬТРАХ И ЭЛЕМЕНТАХ LEADERBOARD ---
-        const timeSelectOptions = document.querySelectorAll('#time-select option');
-        if (timeSelectOptions.length >= 4) {
-            timeSelectOptions[0].textContent = 'Последние 7 дней';
-            timeSelectOptions[1].textContent = 'Последние 14 дней';
-            timeSelectOptions[2].textContent = 'Последние 30 дней';
-            timeSelectOptions[3].textContent = 'Все время';
-        }
-        const searchInput = document.getElementById('search');
-        if (searchInput) searchInput.placeholder = 'Поиск пользователя...';
-        const prevPageBtn = document.getElementById('prev-page');
-        if (prevPageBtn) prevPageBtn.textContent = 'Назад';
-        const nextPageBtn = document.getElementById('next-page');
-        if (nextPageBtn) nextPageBtn.textContent = 'Вперёд';
-        const refreshBtn = document.getElementById('refresh-btn');
-        if (refreshBtn) refreshBtn.textContent = '🔄 Обновить';
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА ВО ВКЛАДКАХ ---
-        const leaderboardTabBtn = document.querySelector('.tab-btn[data-tab="leaderboard"]');
-        if (leaderboardTabBtn) leaderboardTabBtn.textContent = 'Лидерборд';
-        const analyticsTabBtn = document.querySelector('.tab-btn[data-tab="analytics"]');
-        if (analyticsTabBtn) analyticsTabBtn.textContent = 'Аналитика';
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА В ANALYTICS ---
-        const analyticsH2 = document.querySelector('#tab-analytics h2');
-        if (analyticsH2) analyticsH2.textContent = 'Аналитика';
-        const analyticsTimeOptions = document.querySelectorAll('#analytics-time-select option');
-        if (analyticsTimeOptions.length >= 4) {
-            analyticsTimeOptions[0].textContent = 'Все время';
-            analyticsTimeOptions[1].textContent = 'Последние 30 дней';
-            analyticsTimeOptions[2].textContent = 'Последние 14 дней';
-            analyticsTimeOptions[3].textContent = 'Последние 7 дней';
-        }
-        const hourSelectOptions = document.querySelectorAll('#hour-select option');
-        if (hourSelectOptions.length >= 25) {
-            hourSelectOptions[0].textContent = 'Все часы';
-            for (let i = 1; i <= 24; i++) {
-                if (hourSelectOptions[i]) {
-                    hourSelectOptions[i].textContent = `${i - 1}:00`;
-                }
-            }
-        }
-
-        const avgMetricsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="averages"]');
-        if (avgMetricsBtn) avgMetricsBtn.textContent = 'Средние метрики';
-        const topAuthorsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="authors"]');
-        if (topAuthorsBtn) topAuthorsBtn.textContent = 'Топ-10 авторов';
-        const topPostsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="posts"]');
-        if (topPostsBtn) topPostsBtn.textContent = 'Топ-10 постов';
-
-        const exportCsvBtn = document.getElementById('export-csv');
-        if (exportCsvBtn) exportCsvBtn.textContent = 'Экспорт CSV';
-        const exportJsonBtn = document.getElementById('export-json');
-        if (exportJsonBtn) exportJsonBtn.textContent = 'Экспорт JSON';
-
-        // --- ОБНОВЛЕНИЕ ЗАГОЛОВКОВ ТАБЛИЦЫ ---
-        const headers = {
-            'name-header': 'Пользователь',
-            'posts-header': 'Посты',
-            'likes-header': 'Лайки',
-            'retweets-header': 'Ретвиты',
-            'comments-header': 'Комментарии',
-            'views-col-header': 'Просмотры'
-        };
-        Object.entries(headers).forEach(([id, text]) => {
-            const el = document.getElementById(id);
-            if (el) el.textContent = text;
-        });
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА ФИЛЬТРОВ В ANALYTICS ---
-        const authorMetricOptions = document.querySelectorAll('#author-metric-select option');
-        if (authorMetricOptions.length >= 3) {
-            authorMetricOptions[0].textContent = 'Посты';
-            authorMetricOptions[1].textContent = 'Лайки';
-            authorMetricOptions[2].textContent = 'Просмотры';
-        }
-        const postMetricOptions = document.querySelectorAll('#post-metric-select option');
-        if (postMetricOptions.length >= 2) {
-            postMetricOptions[0].textContent = 'Лайки';
-            postMetricOptions[1].textContent = 'Просмотры';
-        }
-
-        // --- ОБНОВЛЕНИЕ ТЕКСТА ЭЛЕМЕНТОВ ВЛОЖЕННЫХ РАЗДЕЛОВ ANALYTICS ---
-        const avgMetricsH3 = document.querySelector('#analytics-averages-section h3');
-        if (avgMetricsH3) avgMetricsH3.textContent = 'Средние метрики на пользователя';
-        const heatmapH3 = document.querySelector('#heatmap-container').parentElement.querySelector('h3');
-        if (heatmapH3) heatmapH3.textContent = 'Тепловая карта активности (Твиты по дням и часам)';
-        const topAuthorsH3 = document.querySelector('#analytics-authors-section h3');
-        if (topAuthorsH3) topAuthorsH3.textContent = 'Топ-10 авторов';
-        const topPostsH3 = document.querySelector('#analytics-posts-section h3');
-        if (topPostsH3) topPostsH3.textContent = 'Топ-10 постов';
-
-        const sortLabel1 = document.querySelector('#analytics-authors-section label[for="author-metric-select"]');
-        if (sortLabel1) sortLabel1.textContent = 'Сортировать по:';
-        const sortLabel2 = document.querySelector('#analytics-posts-section label[for="post-metric-select"]');
-        if (sortLabel2) sortLabel2.textContent = 'Сортировать по:';
-
-    }
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА В БЛОКАХ СТАТИСТИКИ ---
-    // Это обновление текста в блоках статистики (Total Posts, Total Users, Total Views, Avg Posts и т.д.)
-    // вынесено в отдельную функцию, чтобы она вызывалась как при смене языка, так и при обновлении данных
-    updateStatsTexts(lang);
-}
-
-// --- ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ОБНОВЛЕНИЯ ТЕКСТА БЛОКОВ СТАТИСТИКИ ---
-function updateStatsTexts(lang) {
-    const totalPostsEl = document.getElementById('total-posts');
-    if (totalPostsEl) {
-        const currentText = totalPostsEl.textContent;
-        const value = currentText.split(': ')[1] || '0';
-        totalPostsEl.textContent = lang === 'en' ? `Total Posts: ${value}` : `Всего Постов: ${value}`;
-    }
-
-    const totalUsersEl = document.getElementById('total-users');
-    if (totalUsersEl) {
-        const currentText = totalUsersEl.textContent;
-        const value = currentText.split(': ')[1] || '0';
-        totalUsersEl.textContent = lang === 'en' ? `Total Users: ${value}` : `Всего Пользователей: ${value}`;
-    }
-
-    const totalViewsEl = document.getElementById('total-views');
-    if (totalViewsEl) {
-        const currentText = totalViewsEl.textContent;
-        const value = currentText.split(': ')[1] || '0';
-        totalViewsEl.textContent = lang === 'en' ? `Total Views: ${value}` : `Всего Просмотров: ${value}`;
-    }
-
-    const avgPostsEl = document.getElementById('avg-posts');
-    if (avgPostsEl) {
-        const currentText = avgPostsEl.textContent;
-        const value = currentText.split(': ')[1] || '0.00';
-        avgPostsEl.textContent = lang === 'en' ? `Avg Posts: ${value}` : `Среднее Постов: ${value}`;
-    }
-
-    const avgLikesEl = document.getElementById('avg-likes');
-    if (avgLikesEl) {
-        const currentText = avgLikesEl.textContent;
-        const value = currentText.split(': ')[1] || '0.00';
-        avgLikesEl.textContent = lang === 'en' ? `Avg Likes: ${value}` : `Среднее Лайков: ${value}`;
-    }
-
-    const avgViewsEl = document.getElementById('avg-views');
-    if (avgViewsEl) {
-        const currentText = avgViewsEl.textContent;
-        const value = currentText.split(': ')[1] || '0.00';
-        avgViewsEl.textContent = lang === 'en' ? `Avg Views: ${value}` : `Среднее Просмотров: ${value}`;
-    }
-}
-
-// Обработчики кликов для переключения языка
-if (langEn) {
-    langEn.addEventListener('click', () => {
-        if (currentLang !== 'en') {
-            setLanguage('en');
-            localStorage.setItem('lang', 'en'); // Сохраняем язык в localStorage
-        }
-    });
-}
-if (langRu) {
-    langRu.addEventListener('click', () => {
-        if (currentLang !== 'ru') {
-            setLanguage('ru');
-            localStorage.setItem('lang', 'ru'); // Сохраняем язык в localStorage
-        }
-    });
-}
-// Загрузка сохраненного языка при загрузке страницы
-document.addEventListener('DOMContentLoaded', () => {
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang && (savedLang === 'en' || savedLang === 'ru')) {
-        setLanguage(savedLang);
-    } else {
-        // Если язык не сохранен, можно определить по языку браузера (опционально)
-        // const browserLang = navigator.language.startsWith('ru') ? 'ru' : 'en';
-        // setLanguage(browserLang);
-        // Но по умолчанию у нас en, если ничего не сохранено
-        setLanguage('en');
-    }
-});
-
-// === MANUAL UPDATE BUTTON ===
-// Обработчик для кнопки "Refresh" - теперь внутри DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    const refreshBtn = document.getElementById('refresh-btn');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', () => {
-            console.log("Manual refresh triggered!");
-            // Вызываем те же функции, что и при автоматическом обновлении
-            fetchData();
-            fetchTweets(); // Если обновление твитов также нужно
-        });
-    } else {
-        console.warn("Button with ID 'refresh-btn' not found.");
-    }
-});
-
+// === MANUAL UPDATE BUTTON (УДАЛЕНО) ===
+// Код для кнопки "Refresh" (document.getElementById('refresh-btn') и обработчик) удалён.
 
 // - Функция для скачивания файла -
 function downloadFile(filename, content, mimeType = 'text/plain') {
