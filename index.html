@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- === BANNER === -->
+    <div class="centered-banner">
+        <a href="https://sery2013.github.io/test/" target="_blank" class="banner-link"></a>
+    </div>
+
     <div class="background"></div>
 
     <div class="header-fixed">
@@ -120,54 +125,4 @@
                         <div class="stat-box" id="avg-likes">Avg Likes: -</div>
                         <div class="stat-box" id="avg-views">Avg Views: -</div>
                     </div>
-                    <!-- Chart: tweets per day -->
-                    <div style="margin-top:16px;">
-                        <canvas id="analytics-chart" height="120"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2) Top 10 authors with filter -->
-            <section class="analytics-nested-content" id="analytics-authors-section" data-analytics-section="authors">
-                <div class="analytics-block" id="analytics-top-authors-block">
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <h3 style="margin:0;">Top 10 authors</h3>
-                        <div style="display:flex; gap:8px; align-items:center;">
-                            <label for="author-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
-                            <select id="author-metric-select">
-                                <option value="posts">Posts</option>
-                                <option value="likes">Likes</option>
-                                <option value="views">Views</option>
-                            </select>
-                        </div>
-                    </div>
-                    <ol id="top-authors-list" style="margin-top:12px;"></ol>
-                </div>
-            </section>
-
-            <!-- 3) Top 10 posts with filter -->
-            <section class="analytics-nested-content" id="analytics-posts-section" data-analytics-section="posts">
-                <div class="analytics-block" id="analytics-top-posts-block">
-                    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <h3 style="margin:0;">Top 10 posts</h3>
-                        <div style="display:flex; gap:8px; align-items:center;">
-                            <label for="post-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
-                            <select id="post-metric-select">
-                                <option value="likes">Likes</option>
-                                <option value="views">Views</option>
-                            </select>
-                        </div>
-                    </div>
-                    <ol id="top-posts-list" style="margin-top:12px;"></ol>
-                </div>
-            </section>
-        </div>
-    </div>
-
-    <!-- Chart.js CDN for analytics charts -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
-
-
+                   
