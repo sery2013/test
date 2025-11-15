@@ -26,18 +26,16 @@
 
             <div class="team-box">
                 <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
-                
             </div>
         </div>
 
-        <!-- Tabs -->
+        <!-- Tabs (перемещены под team-box) -->
         <div class="tabs">
             <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
             <button class="tab-btn" data-tab="analytics">Analytics</button>
         </div>
-
-        <!-- Tab content containers -->
-        <div id="leaderboard-wrapper" class="tab-content active">
+        <!-- wrapper for leaderboard content so we can toggle visibility -->
+        <div id="leaderboard-wrapper">
             <!-- Общая статистика -->
             <div class="stats">
                 <div class="stat-box" id="total-posts">Total Posts: 0</div>
@@ -89,8 +87,8 @@
             </div>
         </div>
 
-        <!-- Analytics tab content -->
-        <div id="tab-analytics" class="tab-content" style="text-align:left;">
+        <!-- Analytics tab content (скрыто по умолчанию) -->
+        <div id="tab-analytics" class="tab-content" style="display:none; text-align:left;">
             <h2>Analytics</h2>
 
             <!-- Time filter for analytics -->
