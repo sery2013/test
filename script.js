@@ -752,7 +752,7 @@ function renderAnalytics() {
     counts.push(perDay[key] || 0);
   }
 
-  // render/update Chart.js chart
+ // render/update Chart.js chart
 try {
   const ctx = document.getElementById('analytics-chart');
   if (ctx) {
@@ -763,13 +763,13 @@ try {
     } else if (window.Chart) {
       analyticsChart = new Chart(ctx.getContext('2d'), {
         type: 'bar',
-        data: {
+        data: { // <-- Одно 'data:' на уровне конфигурации
           labels: labels,
           datasets: [{
             label: 'Tweets per day',
             backgroundColor: 'rgba(255, 255, 255, 0.9)', // Цвет заливки столбцов
             borderColor: 'rgba(0, 255, 255, 1)',     // Цвет обводки столбцов
-             data: counts // <-- ИСПРАВЛЕНО: добавлено 'data:'
+            data: counts // <-- counts теперь правильно внутри datasets[0].data
           }]
         },
         options: {
@@ -1021,3 +1021,4 @@ document.getElementById('refresh-btn').addEventListener('click', () => {
   fetchTweets();
 });
 ```
+
