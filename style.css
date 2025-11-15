@@ -129,7 +129,7 @@ body {
   color: #fff; /* белый цвет текста */
 }
 
-/* Полупрозрачные руны для stat-box (всегда видны) */
+/* Полупрозрачные геометрические фигуры (как магические символы) для stat-box (всегда видны) */
 .stat-box::before {
   content: "";
   position: absolute;
@@ -137,21 +137,21 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  /* Используем руны (например, ᚠ, ᚢ, ᚦ, ᚨ, ᚷ, ᚹ, ᛚ, ᛟ) */
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">ᚠᚢᚦᚨᚷᚹᛚᛟ</text></svg>');
+  /* Используем SVG с геометрическими фигурами (квадраты, круги, треугольники) */
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect x="0" y="0" width="20" height="20" fill="white" opacity="0.1"/><circle cx="60" cy="30" r="10" fill="white" opacity="0.1"/><polygon points="90,10 80,50 100,50" fill="white" opacity="0.1"/></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
   z-index: -1;
 }
 
-/* Эффект градиента с рунами при наведении */
+/* Эффект градиента с геометрическими фигурами при наведении */
 .stat-box:hover::before {
-  /* Добавляем градиентный оверлей с рунами */
+  /* Добавляем градиентный оверлей с геометрическими фигурами */
   background-image: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
-    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.15">ᚠᚢᚦᚨᚷᚹᛚᛟ</text></svg>');
-  background-blend-mode: overlay; /* Смешиваем градиент с фоном и рунами */
+    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect x="0" y="0" width="20" height="20" fill="white" opacity="0.15"/><circle cx="60" cy="30" r="10" fill="white" opacity="0.15"/><polygon points="90,10 80,50 100,50" fill="white" opacity="0.15"/></svg>');
+  background-blend-mode: overlay; /* Смешиваем градиент с фоном и фигурами */
   opacity: 1;
 }
 
@@ -161,13 +161,13 @@ body {
   transform: scale(1.03);
 }
 
-/* Эффект градиента с рунами при нажатии */
+/* Эффект градиента с геометрическими фигурами при нажатии */
 .stat-box:active::before {
-  /* Более насыщенный градиент и руны при нажатии */
+  /* Более насыщенный градиент и геометрические фигуры при нажатии */
   background-image: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1)),
-    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.25">ᚠᚢᚦᚨᚷᚹᛚᛟ</text></svg>');
-  background-blend-mode: overlay; /* Смешиваем градиент с фоном и рунами */
+    url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect x="0" y="0" width="20" height="20" fill="white" opacity="0.25"/><circle cx="60" cy="30" r="10" fill="white" opacity="0.25"/><polygon points="90,10 80,50 100,50" fill="white" opacity="0.25"/></svg>');
+  background-blend-mode: overlay; /* Смешиваем градиент с фоном и фигурами */
   opacity: 1;
 }
 
@@ -1204,6 +1204,7 @@ select option:checked {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block; /* Убедимся, что рамка применяется */
 }
+
 
 
 
