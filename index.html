@@ -28,92 +28,6 @@
           background-size: 1350px 100px; /* точный размер изображения */
           cursor: pointer; /* Курсор указывает на возможность клика */
         }
-
-        /* === WELCOME SECTION (полностью прозрачная рамка с обводкой) === */
-        .welcome-section {
-          /* Основные стили */
-          text-align: center; /* Центрирование текста */
-          margin: 20px auto 10px auto; /* Внешние отступы: верх, гориз. центрирование, низ (уменьшено для размещения .team-box ниже) */
-          padding: 25px 30px; /* Внутренние отступы */
-          max-width: 800px; /* Максимальная ширина */
-
-          /* Стили рамки-цитаты */
-          background-color: transparent; /* Полностью прозрачный фон */
-          border: 2px solid #2F4F4F; /* Обводка цвета #2F4F4F */
-          border-radius: 5px; /* Скругление всех углов */
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Тень */
-
-          /* Позиционирование и слои */
-          position: relative; /* Для позиционирования псевдоэлемента */
-          z-index: 0; /* Установим базовый уровень */
-
-          /* Цвет текста */
-          color: #333; /* Темно-серый цвет текста для лучшей читаемости */
-        }
-
-        /* Псевдоэлемент для добавления декоративных магических символов или теней */
-        .welcome-section::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          /* Пример добавления полупрозрачных символов (замените на нужные) */
-          /* background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="black" opacity="0.05">✦✧✦✧</text></svg>'); */
-          background-repeat: repeat;
-          background-size: 100px;
-          pointer-events: none; /* Позволяет кликать сквозь него */
-          z-index: -1; /* Помещает его позади текста */
-          border-radius: 5px; /* Соответствует скруглению блока */
-        }
-
-        /* Стили для заголовка внутри .welcome-section */
-        .welcome-section h1 {
-          color: #2F4F4F; /* Цвет заголовка */
-          text-align: center; /* Центрирование заголовка */
-          margin-top: 0; /* Убираем верхний отступ */
-          margin-bottom: 15px; /* Отступ снизу */
-          font-size: 1.8em; /* Размер шрифта заголовка */
-        }
-
-        /* Стили для параграфов внутри .welcome-section */
-        .welcome-section p {
-          margin: 8px 0; /* Вертикальные отступы между параграфами */
-          line-height: 1.5; /* Высота строки для удобочитаемости */
-          font-size: 1em; /* Размер шрифта */
-        }
-
-        /* Стили для ссылок внутри .welcome-section */
-        .welcome-section a {
-          color: #0066cc; /* Цвет ссылки */
-          text-decoration: underline; /* Подчеркивание */
-        }
-
-        .welcome-section a:hover {
-          color: #0052a3; /* Цвет ссылки при наведении */
-        }
-
-        /* Стили для .team-box (вынесен за пределы .welcome-section) */
-        .team-box {
-          margin: 10px auto; /* Отступ сверху и снизу, центрирование по горизонтали */
-          padding: 10px 15px; /* Внутренние отступы */
-          background-color: #2F4F4F; /* Цвет фона */
-          border-radius: 5px; /* Скругление углов */
-          text-align: center; /* Центрирование текста */
-          color: #fff; /* Белый цвет текста */
-          display: inline-block; /* Чтобы ширина была по контенту */
-        }
-
-        /* Стили для ссылки внутри .team-box */
-        .team-box a {
-          color: #fff; /* Белый цвет ссылки */
-          text-decoration: underline; /* Подчеркивание */
-        }
-
-        .team-box a:hover {
-          color: #a9ddd3; /* Цвет ссылки при наведении */
-        }
     </style>
 </head>
 <body>
@@ -136,11 +50,10 @@
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
             <p><b><span style="color:#90EE90;">Updated every 2 days</span></b></p>
             <p>Support us on Twitter!</p>
-        </div>
 
-        <!-- Блок "Follow Developer" вынесен ниже и не входит в .welcome-section -->
-        <div class="team-box">
-            <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+            <div class="team-box">
+                <p>Follow Twitter Dev - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+                            </div>
         </div>
 
         <!-- Tabs (перемещены под .team-box) -->
@@ -283,3 +196,6 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
