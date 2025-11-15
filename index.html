@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rialo Club Leaderboard</title>
+    <title>Ritual Community</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* === CENTERED BANNER (1350×100, по центру, кликабельный, просто обновляет страницу) === */
@@ -28,113 +28,6 @@
           background-size: 1350px 100px; /* точный размер изображения */
           cursor: pointer; /* Курсор указывает на возможность клика */
         }
-
-        /* === WELCOME SECTION (стилизована как прозрачная цитата, текст по центру) === */
-        .welcome-section {
-          /* Основные стили */
-          text-align: left; /* Выравнивание текста по левому краю */
-          margin: 20px auto 10px auto; /* Внешние отступы: верх, гориз. центрирование, низ (уменьшено для размещения .team-box ниже) */
-          padding: 25px 30px; /* Внутренние отступы */
-          max-width: 800px; /* Максимальная ширина */
-
-          /* Стили рамки-цитаты */
-          background-color: rgba(255, 255, 255, 0.05); /* Очень лёгкий полупрозрачный фон */
-          border: 1px solid rgba(255, 255, 255, 0.1); /* Тонкая светлая граница */
-          border-left: 5px solid #2F4F4F; /* Цвет левой границы #2F4F4F */
-          border-radius: 0 5px 5px 0; /* Скругление правых углов */
-          box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Тень */
-
-          /* Позиционирование и слои */
-          position: relative; /* Для позиционирования псевдоэлемента */
-          z-index: 0; /* Установим базовый уровень */
-
-          /* Цвет текста */
-          color: #fff; /* Белый цвет текста для контраста с фоном */
-        }
-
-        /* Псевдоэлемент для добавления декоративных магических символов или теней */
-        .welcome-section::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          /* Пример добавления полупрозрачных символов (замените на нужные) */
-          background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.03">✦✧✦✧</text></svg>');
-          background-repeat: repeat;
-          background-size: 100px;
-          pointer-events: none; /* Позволяет кликать сквозь него */
-          z-index: -1; /* Помещает его позади текста */
-          border-radius: 0 5px 5px 0; /* Соответствует скруглению блока */
-        }
-
-        /* Стили для заголовка внутри .welcome-section */
-        .welcome-section h1 {
-          color: #a9ddd3; /* Цвет заголовка */
-          text-align: center; /* Центрирование заголовка */
-          margin-top: 0; /* Убираем верхний отступ */
-          margin-bottom: 15px; /* Отступ снизу */
-          font-size: 1.8em; /* Размер шрифта заголовка */
-          text-shadow: 0 0 8px rgba(169, 221, 211, 0.6); /* Тень заголовка */
-        }
-
-        /* Стили для параграфов внутри .welcome-section */
-        .welcome-section p {
-          margin: 8px 0; /* Вертикальные отступы между параграфами */
-          line-height: 1.5; /* Высота строки для удобочитаемости */
-          font-size: 1em; /* Размер шрифта */
-        }
-
-        /* Стили для ссылок внутри .welcome-section */
-        .welcome-section a {
-          color: #fff; /* Цвет ссылки */
-          text-decoration: underline; /* Подчеркивание */
-        }
-
-        .welcome-section a:hover {
-          color: #a9ddd3; /* Цвет ссылки при наведении */
-        }
-
-        /* Стили для .team-box (вынесен за пределы .welcome-section) */
-        .team-box {
-          margin: 10px auto; /* Отступ сверху и снизу, центрирование по горизонтали */
-          padding: 10px 15px; /* Внутренние отступы */
-          background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* Градиент с цветом #2F4F4F */
-          border: 1px solid rgba(255, 255, 255, 0.15); /* Обводка */
-          border-radius: 5px; /* Скругление углов */
-          text-align: center; /* Центрирование текста */
-          color: #fff; /* Белый цвет текста */
-          display: inline-block; /* Чтобы ширина была по контенту */
-          position: relative; /* Для позиционирования псевдоэлемента */
-          overflow: hidden;   /* Обрезаем псевдоэлемент */
-          max-width: 800px; /* Максимальная ширина */
-        }
-
-        /* Псевдоэлемент для .team-box */
-        .team-box::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.05">✦✧✦✧</text></svg>');
-          background-repeat: repeat;
-          background-size: 100px;
-          pointer-events: none;
-          z-index: -1;
-        }
-
-        /* Стили для ссылки внутри .team-box */
-        .team-box a {
-          color: #a9ddd3; /* Цвет ссылки */
-          text-decoration: underline; /* Подчеркивание */
-        }
-
-        .team-box a:hover {
-          color: #fff; /* Цвет ссылки при наведении */
-        }
     </style>
 </head>
 <body>
@@ -157,11 +50,10 @@
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
             <p><b><span style="color:#90EE90;">Updated every 2 days</span></b></p>
             <p>Support us on Twitter!</p>
-        </div>
 
-        <!-- Блок "Follow Developer" вынесен ниже и не входит в .welcome-section -->
-        <div class="team-box">
-            <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+            <div class="team-box">
+                <p>Follow Twitter Dev - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+                            </div>
         </div>
 
         <!-- Tabs (перемещены под .team-box) -->
@@ -173,18 +65,6 @@
         <!-- wrapper for leaderboard content so we can toggle visibility -->
         <div id="leaderboard-wrapper" class="tab-content active">
             
-            <!-- Музыкальный плеер -->
-            <div class="music-player">
-            <img src="orca.jpg" alt="Track cover" class="track-cover">
-            <div class="controls">
-                <h3 class="track-title">anthem of ORCA</h3>
-                <div class="buttons">
-                <button id="play-btn">▶️</button>
-                </div>
-            </div>
-            <audio id="player" src="hardbass.mp3"></audio>
-            </div>
-
             <!-- Общая статистика -->
             <div class="stats">
                 <div class="stat-box" id="total-posts">Total Posts: 0</div>
@@ -314,5 +194,22 @@
     <!-- Chart.js CDN for analytics charts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
+
+  <!-- ... ваш существующий HTML до </body> ... -->
+
+  <!-- Snow effect container -->
+  <div class="snow-container" id="snowContainer"></div>
+
+  <!-- Chart.js CDN for analytics charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
+
+    
+</body>
+</html>
+
+
+
+
