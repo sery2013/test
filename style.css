@@ -94,7 +94,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -137,7 +137,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -424,7 +424,7 @@ tbody tr:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -611,7 +611,7 @@ tr.active-row:hover {
 
 /* Analytics blocks */
 .analytics-block { 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   padding: 12px; 
   border-radius: 7.5%; /* скругление 5-10% */
   margin-bottom: 12px; 
@@ -636,7 +636,7 @@ tr.active-row:hover {
 }
 .analytics-row { display:flex; gap:12px; }
 .analytics-block select { 
-  background:linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон селекта - повысил непрозрачность */
+  background:#2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
   color:#fff !important; /* гарантирован белый цвет текста */
   border:1px solid rgba(255,255,255,0.08); 
   padding:6px 8px; 
@@ -647,7 +647,7 @@ tr.active-row:hover {
   padding:8px 10px; 
   border-radius: 7.5%; /* скругление 5-10% */
   margin-bottom:8px; 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   display:flex; 
   justify-content:space-between; 
   align-items:center; 
@@ -678,9 +678,9 @@ tr.active-row:hover {
   --bg: #0d1117;
   --muted: #fff; /* изменен цвет muted */
   --accent: #6fe3d1;
-  --card-bg: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)); /* изменен цвет card-bg - повысил непрозрачность */
-  --glass: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)); /* изменен цвет glass - повысил непрозрачность */
-  --glass-strong: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.1)); /* изменен цвет glass-strong - повысил непрозрачность */
+  --card-bg: #2F4F4F; /* изменен цвет card-bg - сплошной цвет #2F4F4F */
+  --glass: #2F4F4F; /* изменен цвет glass - сплошной цвет #2F4F4F */
+  --glass-strong: #2F4F4F; /* изменен цвет glass-strong - сплошной цвет #2F4F4F */
   --radius: 7.5%; /* изменен радиус */
 }
 
@@ -691,7 +691,7 @@ tr.active-row:hover {
 .analytics-block { 
   box-shadow: 0 6px 18px rgba(2,6,23,0.6); 
   border: 1px solid rgba(255,255,255,0.08); /* изменена обводка */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   padding:18px; 
   border-radius: 7.5%; /* скругление 5-10% */
   color: #fff; /* гарантирован белый цвет текста */
@@ -702,7 +702,7 @@ tr.active-row:hover {
   padding:14px; 
   text-align:center; 
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(90deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2); 
   position: relative;
   overflow: hidden;
@@ -741,7 +741,7 @@ tr.active-row:hover {
   align-items:center; 
   padding:10px; 
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   margin-bottom:8px; 
   border:1px solid rgba(255,255,255,0.02); 
   position: relative;
@@ -770,7 +770,7 @@ tr.active-row:hover {
   align-items:center; 
   padding:12px; 
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   border:1px solid rgba(255,255,255,0.02); 
   position: relative;
   overflow: hidden;
@@ -797,7 +797,7 @@ tr.active-row:hover {
 .top-post-item .meta .author { font-weight:700; color:#fff !important; /* гарантирован белый цвет текста */
  }
 .top-post-item .meta .metric { 
-  background: linear-gradient(90deg,rgba(255,255,255,0.15),rgba(255,255,255,0.05)) !important; /* изменен фон метрики - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон метрики - сплошной цвет #2F4F4F */
   color:#fff !important; /* гарантирован белый цвет текста */
   padding:6px 8px; 
   border-radius: 7.5%; /* скругление 5-10% */
@@ -812,7 +812,7 @@ tr.active-row:hover {
   padding:8px 12px; 
   border-radius: 7.5%; /* скругление 5-10% */
   border:1px solid rgba(255,255,255,0.06); 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон селекта - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
   color:#fff !important; /* гарантирован белый цвет текста */
 }
 .analytics-block select:focus { 
@@ -863,7 +863,7 @@ select {
 
 /* period filter styling */
 .analytics-time-filter {
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   border: 1px solid rgba(255,255,255, 0.15) !important; /* изменена обводка */
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
   border-radius: 7.5%; /* скругление 5-10% */
@@ -887,7 +887,7 @@ select {
 }
 
 .analytics-time-filter select {
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.1)) !important; /* изменен фон селекта - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
   border: 1px solid rgba(255,255,255,0.2) !important; /* изменена обводка */
   color: #fff !important; /* гарантирован белый цвет текста */
   font-weight: 600;
@@ -918,7 +918,7 @@ select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.2), rgba(47, 79, 79, 0.1)) !important; /* изменен фон селекта - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
   border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
   color: #fff !important; /* гарантирован белый цвет текста */
   font-weight: 600;
@@ -931,7 +931,7 @@ select {
 
 .analytics-block select:hover {
   border-color: rgba(255,255,255,0.3) !important; /* изменена обводка при наведении */
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.25), rgba(47, 79, 79, 0.15)) !important; /* изменен фон при наведении - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон при наведении - сплошной цвет #2F4F4F */
   box-shadow: 0 6px 16px rgba(255,255,255,0.08); /* изменена тень при наведении */
 }
 
@@ -940,7 +940,7 @@ select {
   border-color: #fff !important; /* изменена обводка при фокусе */
   box-shadow: 0 8px 20px rgba(255,255,255,0.12); /* изменена тень при фокусе */
   transform: translateY(-1px);
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.3), rgba(47, 79, 79, 0.2)) !important; /* изменен фон при фокусе - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон при фокусе - сплошной цвет #2F4F4F */
 }
 
 /* Dropdown options styling */
@@ -991,7 +991,7 @@ select option:checked {
 .analytics-nested-content { 
   display: none !important; 
   animation: fadeIn 250ms ease; 
-  background: linear-gradient(180deg, rgba(47, 79, 79, 0.15), rgba(47, 79, 79, 0.05)) !important; /* изменен фон - повысил непрозрачность */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
   color: #fff !important; /* гарантирован белый цвет текста */
   border-radius: 7.5%; /* скругление 5-10% */
   padding: 10px; /* добавлен внутренний отступ */
@@ -1030,7 +1030,7 @@ select option:checked {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
