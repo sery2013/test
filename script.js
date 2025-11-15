@@ -175,9 +175,6 @@ function renderTable() {
   });
 
   document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
-
-  // Добавляем обработчики клика
-  addUserClickHandlers();
 }
 
 function escapeHtml(str) {
@@ -343,6 +340,9 @@ function toggleTweetsRow(tr, username) {
     tr.parentNode.insertBefore(tweetsRow, tr.nextElementSibling);
 }
 
+// Объявление функции дважды убрано, оставлена одна актуальная
+// function toggleTweetsRow(tr, username) { ... }
+
 // --- Обновляем обработчики клика ---
 function addUserClickHandlers() {
     const tbody = document.getElementById("leaderboard-body");
@@ -392,27 +392,18 @@ if (nextBtn) {
 function setupTabs() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      // 1. Снимаем активность со всех кнопок
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      // 2. Делаем нажатую кнопку активной
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
-      // 3. Получаем ID вкладки
       const tab = btn.dataset.tab;
-      // 4. Скрываем оба контейнера
       const lb = document.getElementById('leaderboard-wrapper');
       const an = document.getElementById('tab-analytics');
-      if (lb) lb.style.display = 'none';
-      if (an) an.style.display = 'none';
-
-      // 5. Показываем нужный контейнер
       if (tab === 'analytics') {
+        if (lb) lb.style.display = 'none';
         if (an) an.style.display = 'block';
-        // Вызываем рендер аналитики при активации вкладки
-        if (typeof renderAnalytics === "function") {
-            renderAnalytics();
-        }
-      } else { // tab === 'leaderboard'
+        renderAnalytics();
+      } else {
         if (lb) lb.style.display = 'block';
+        if (an) an.style.display = 'none';
       }
     });
   });
