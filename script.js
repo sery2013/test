@@ -933,6 +933,13 @@ function setLanguage(lang) {
         analyticsTimeOptions[3].textContent = lang === 'en' ? 'Last 7 days' : 'Последние 7 дней';
     }
 
+    // --- ОБНОВЛЕНИЕ ТЕКСТА LABEL И ОПЦИЙ ДЛЯ ФИЛЬТРА ПО ЧАСАМ ---
+    const analyticsTimeLabel = document.querySelector('label[for="analytics-time-select"]');
+    if (analyticsTimeLabel) analyticsTimeLabel.textContent = lang === 'en' ? 'Filter by time:' : 'Фильтр по времени:';
+
+    const hourLabel = document.querySelector('label[for="hour-select"]');
+    if (hourLabel) hourLabel.textContent = lang === 'en' ? 'Filter by hour:' : 'Фильтр по часам:';
+
     const hourSelectOptions = document.querySelectorAll('#hour-select option');
     if (hourSelectOptions.length >= 25) { // Проверяем, что есть опции "All hours" и "0"-"23"
         hourSelectOptions[0].textContent = lang === 'en' ? 'All hours' : 'Все часы';
@@ -942,6 +949,8 @@ function setLanguage(lang) {
             }
         }
     }
+    // --- КОНЕЦ ОБНОВЛЕНИЯ ТЕКСТА LABEL И ОПЦИЙ ДЛЯ ФИЛЬТРА ПО ЧАСАМ ---
+
 
     const avgMetricsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="averages"]');
     if (avgMetricsBtn) avgMetricsBtn.textContent = lang === 'en' ? 'Avg metrics' : 'Средние метрики';
