@@ -28,12 +28,60 @@
           background-size: 1350px 100px; /* точный размер изображения */
           cursor: pointer; /* Курсор указывает на возможность клика */
         }
+
+        /* === LANGUAGE SWITCHER (в правом верхнем углу) === */
+        .lang-switcher {
+          position: absolute; /* Используем absolute, чтобы точно прижать к углу внутри sticky .centered-banner */
+          top: 10px;
+          right: 10px;
+          z-index: 1001; /* Выше, чем баннер */
+          display: flex;
+          gap: 2px; /* Маленький зазор между кнопками */
+        }
+
+        .lang-btn {
+          background: #2F4F4F;
+          color: #aaa; /* Неактивный цвет */
+          border: 1px solid #6fe3d1;
+          border-radius: 5px;
+          padding: 5px 8px;
+          cursor: pointer;
+          font-size: 0.9em;
+          transition: background-color 0.2s, color 0.2s;
+        }
+
+        .lang-btn:first-child {
+          border-radius: 5px 0 0 5px; /* Скругление только у левой кнопки */
+        }
+
+        .lang-btn:last-child {
+          border-radius: 0 5px 5px 0; /* Скругление только у правой кнопки */
+          border-left: none; /* Убираем левую границу у правой кнопки */
+        }
+
+        .lang-btn.active {
+          background: #6fe3d1; /* Цвет активной кнопки */
+          color: #0d1117; /* Цвет текста активной кнопки */
+        }
+
+        .lang-btn:hover {
+          background: #4a6b6b; /* Цвет при наведении */
+        }
+
+        .lang-btn.active:hover {
+          background: #5bc0bd; /* Цвет активной кнопки при наведении */
+        }
     </style>
 </head>
 <body>
     <!-- === BANNER (теперь просто обновляет страницу) === -->
     <div class="centered-banner">
         <a href="javascript:location.reload()" class="banner-link"></a>
+        <!-- === LANGUAGE SWITCHER (в правом верхнем углу) === -->
+        <div class="lang-switcher">
+            <span id="lang-en" class="lang-btn active">EN</span>
+            <span id="lang-ru" class="lang-btn">RU</span>
+        </div>
     </div>
 
     <div class="background"></div>
