@@ -14,7 +14,7 @@ let analyticsHourFilter = "all"; // filter for heatmap hour: 'all', '0', '1', ..
 // --- НОВАЯ ГЛОБАЛЬНАЯ ПЕРЕМЕННАЯ ДЛЯ ЯЗЫКА ---
 let currentLang = 'en'; // по умолчанию en, будет изменён при загрузке
 
-// --- Fetch leaderboard data ---
+// - Fetch leaderboard data -
 async function fetchData() {
   try {
     const response = await fetch("leaderboard.json"); // <-- путь к файлу в репо
@@ -30,7 +30,7 @@ async function fetchData() {
   }
 }
 
-// --- Fetch all tweets ---
+// - Fetch all tweets -
 async function fetchTweets() {
   try {
     const response = await fetch("all_tweets.json"); // <-- путь к файлу в репо
@@ -63,7 +63,7 @@ setInterval(() => {
   fetchData();
 }, 3600000); // обновлять каждый час
 
-// --- Normalize leaderboard data ---
+// - Normalize leaderboard data -
 function normalizeData(json) {
   data = [];
 
@@ -131,7 +131,7 @@ function normalizeData(json) {
   }
 }
 
-// --- Update totals ---
+// - Update totals -
 function updateTotals() {
   const totalPosts = data.reduce((sum, s) => sum + (Number(s.posts) || 0), 0);
   const totalViews = data.reduce((sum, s) => sum + (Number(s.views) || 0), 0);
@@ -140,7 +140,7 @@ function updateTotals() {
   document.getElementById("total-views").textContent = `Total Views: ${totalViews}`;
 }
 
-// --- Sort, Filter, Render ---
+// - Sort, Filter, Render -
 function sortData() {
   data.sort((a, b) => {
     const valA = Number(a[sortKey] || 0);
@@ -154,7 +154,7 @@ function filterData() {
   return data.filter(item => (item.username || "").toLowerCase().includes(query));
 }
 
-// --- SHARE BUTTON FUNCTIONALITY ---
+// - SHARE BUTTON FUNCTIONALITY -
 function shareUserOnTwitter(username) {
     const tweetText = `Check out @${username} on the Ritual Community Leaderboard! #RitualCommunity #Leaderboard`;
     const leaderboardUrl = window.location.href;
@@ -164,7 +164,7 @@ function shareUserOnTwitter(username) {
     window.open(twitterIntentUrl, '_blank', 'width=600,height=400');
 }
 
-// --- Render Table with Share Button ---
+// - Render Table with Share Button -
 function renderTable() {
   const tbody = document.getElementById("leaderboard-body");
   tbody.innerHTML = "";
@@ -179,7 +179,7 @@ function renderTable() {
     const name = stats.username || "";
     const tr = document.createElement("tr");
 
-    // --- НАЧАЛО ИЗМЕНЕНИЙ: Создание ячейки с именем и кнопкой ---
+    // - НАЧАЛО ИЗМЕНЕНИЙ: Создание ячейки с именем и кнопкой -
     const nameCell = document.createElement("td");
     const nameContainer = document.createElement("div");
     nameContainer.style.display = "flex";
@@ -204,7 +204,7 @@ function renderTable() {
     nameContainer.appendChild(nameSpan);
     nameContainer.appendChild(shareBtn);
     nameCell.appendChild(nameContainer);
-    // --- КОНЕЦ ИЗМЕНЕНИЙ ---
+    // - КОНЕЦ ИЗМЕНЕНИЙ -
 
     tr.appendChild(nameCell); // Добавляем ячейку с именем и кнопкой
     tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.posts || 0)}</td>`);
@@ -222,7 +222,7 @@ function renderTable() {
   addUserClickHandlers();
 }
 
-// --- Escaping HTML ---
+// - Escaping HTML -
 function escapeHtml(str) {
   // Обеспечиваем, что str - строка, прежде чем обрабатывать
   const stringified = String(str || '');
@@ -234,7 +234,7 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
-// --- Sorting headers ---
+// - Sorting headers -
 function updateSort(key) {
   if (sortKey === key) sortOrder = sortOrder === "asc" ? "desc" : "asc";
   else { sortKey = key; sortOrder = "desc"; }
@@ -253,23 +253,23 @@ function updateArrows() {
   if (headerEl) headerEl.classList.add("active");
 }
 
-// --- Pagination ---
+// - Pagination -
 document.getElementById("prev-page").onclick = () => { if (currentPage > 1) { currentPage--; renderTable(); } };
 document.getElementById("next-page").onclick = () => {
   const total = Math.ceil(filterData().length / perPage);
   if (currentPage < total) { currentPage++; renderTable(); }
 };
 
-// --- Search ---
+// - Search -
 document.getElementById("search").addEventListener("input", () => { currentPage = 1; renderTable(); });
 
-// --- Sorting headers click ---
+// - Sorting headers click -
 ["posts","likes","retweets","comments","views"].forEach(key => {
   const el = document.getElementById(key === "views" ? "views-col-header" : key+"-header");
   if(el) el.addEventListener("click", () => updateSort(key));
 });
 
-// --- Time filter ---
+// - Time filter -
 document.getElementById("time-select").addEventListener("change", e => {
   timeFilter = e.target.value || "all";
   currentPage = 1;
@@ -279,7 +279,7 @@ document.getElementById("time-select").addEventListener("change", e => {
   updateTotals();
 });
 
-// --- Отображение твитов при клике на пользователя ---
+// - Отображение твитов при клике на пользователя -
 function showTweets(username) {
     const container = document.getElementById("tweets-list");
     const title = document.getElementById("tweets-title");
@@ -306,7 +306,7 @@ function showTweets(username) {
     });
 }
 
-// --- Добавляем обработчики клика на строки таблицы после рендера ---
+// - Добавляем обработчики клика на строки таблицы после рендера -
 function addUserClickHandlers() {
     const tbody = document.getElementById("leaderboard-body");
     tbody.querySelectorAll("tr").forEach(tr => {
@@ -318,7 +318,7 @@ function addUserClickHandlers() {
 }
 
 
-// --- Создание аккордеона твитов ---
+// - Создание аккордеона твитов -
 function toggleTweetsRow(tr, username) {
     // Если уже есть раскрытая строка под этим пользователем — удаляем её
     const nextRow = tr.nextElementSibling;
@@ -449,7 +449,7 @@ function toggleTweetsRow(tr, username) {
 
 
 
-// --- Обновляем обработчики клика ---
+// - Обновляем обработчики клика -
 function addUserClickHandlers() {
     const tbody = document.getElementById("leaderboard-body");
     tbody.querySelectorAll("tr").forEach(tr => {
@@ -460,11 +460,11 @@ function addUserClickHandlers() {
     });
 }
 
-// --- renderTable остаётся как раньше, addUserClickHandlers вызывается в конце ---
+// - renderTable остаётся как раньше, addUserClickHandlers вызывается в конце -
 
 
 
-// --- Tabs setup and Analytics rendering ---
+// - Tabs setup and Analytics rendering -
 function setupTabs() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -485,7 +485,7 @@ function setupTabs() {
   });
 }
 
-// --- Функция для отрисовки тепловой гистограммы ---
+// - Функция для отрисовки тепловой гистограммы -
 function renderHeatmap(tweets) {
   const container = document.getElementById('heatmap-container');
   if (!container) return;
@@ -535,7 +535,7 @@ function renderHeatmap(tweets) {
   }
 }
 
-// --- Функция для скачивания файла ---
+// - Функция для скачивания файла -
 function downloadFile(filename, content, mimeType = 'text/plain') {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
@@ -548,7 +548,7 @@ function downloadFile(filename, content, mimeType = 'text/plain') {
   URL.revokeObjectURL(url);
 }
 
-// --- Функция экспорта в CSV ---
+// - Функция экспорта в CSV -
 function exportToCSV() {
   const users = window._analyticsFilteredData?.users || {};
   const rows = [];
@@ -565,14 +565,14 @@ function exportToCSV() {
   downloadFile('leaderboard-export.csv', csvContent, 'text/csv');
 }
 
-// --- Функция экспорта в JSON ---
+// - Функция экспорта в JSON -
 function exportToJSON() {
   const data = window._analyticsFilteredData || {};
   const jsonContent = JSON.stringify(data, null, 2);
   downloadFile('leaderboard-export.json', jsonContent, 'application/json');
 }
 
-// --- Функция привязки кнопок экспорта ---
+// - Функция привязки кнопок экспорта -
 function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
@@ -617,7 +617,7 @@ function renderAnalytics() {
     }
   }
 
-  // --- НОВЫЙ ФИЛЬТР: Фильтрация по часу ---
+  // - НОВЫЙ ФИЛЬТР: Фильтрация по часу -
   if (analyticsHourFilter !== 'all') {
       const targetHour = Number(analyticsHourFilter);
       if (!isNaN(targetHour) && targetHour >= 0 && targetHour <= 23) {
@@ -631,7 +631,7 @@ function renderAnalytics() {
           });
       }
   }
-  // --- КОНЕЦ НОВОГО ФИЛЬТРА ---
+  // - КОНЕЦ НОВОГО ФИЛЬТРА -
 
   // build per-user aggregates: posts, likes, views (from FILTERED tweets)
   const users = {}; // {uname: {posts, likes, views}}
@@ -806,7 +806,7 @@ try {
     postMetricSelect._bound = true;
   }
 
-  // --- ВЫЗОВЫ НОВЫХ ФУНКЦИЙ ---
+  // - ВЫЗОВЫ НОВЫХ ФУНКЦИЙ -
   renderHeatmap(tweets);
   bindExportButtons();
 }
@@ -820,7 +820,7 @@ if (analyticsTimeSelect) {
   });
 }
 
-// --- НОВЫЙ ОБРАБОТЧИК: Фильтр по часам ---
+// - НОВЫЙ ОБРАБОТЧИК: Фильтр по часам -
 const hourSelect = document.getElementById('hour-select');
 if (hourSelect) {
     hourSelect.addEventListener('change', e => {
@@ -828,7 +828,7 @@ if (hourSelect) {
         renderAnalytics();
     });
 }
-// --- КОНЕЦ НОВОГО ОБРАБОТЧИКА ---
+// - КОНЕЦ НОВОГО ОБРАБОТЧИКА -
 
 // Nested analytics tabs setup
 function setupAnalyticsTabs() {
