@@ -28,60 +28,12 @@
           background-size: 1350px 100px; /* точный размер изображения */
           cursor: pointer; /* Курсор указывает на возможность клика */
         }
-
-        /* === LANGUAGE SWITCHER (в правом верхнем углу) === */
-        .lang-switcher {
-          position: fixed; /* Используем fixed, чтобы точно прижать к углу */
-          top: 10px;
-          right: 10px;
-          z-index: 1001; /* Выше, чем баннер */
-          display: flex;
-          gap: 2px; /* Маленький зазор между кнопками */
-        }
-
-        .lang-btn {
-          background: #2F4F4F;
-          color: #aaa; /* Неактивный цвет */
-          border: 1px solid #6fe3d1;
-          border-radius: 5px;
-          padding: 5px 8px;
-          cursor: pointer;
-          font-size: 0.9em;
-          transition: background-color 0.2s, color 0.2s;
-        }
-
-        .lang-btn:first-child {
-          border-radius: 5px 0 0 5px; /* Скругление только у левой кнопки */
-        }
-
-        .lang-btn:last-child {
-          border-radius: 0 5px 5px 0; /* Скругление только у правой кнопки */
-          border-left: none; /* Убираем левую границу у правой кнопки */
-        }
-
-        .lang-btn.active {
-          background: #6fe3d1; /* Цвет активной кнопки */
-          color: #0d1117; /* Цвет текста активной кнопки */
-        }
-
-        .lang-btn:hover {
-          background: #4a6b6b; /* Цвет при наведении */
-        }
-
-        .lang-btn.active:hover {
-          background: #5bc0bd; /* Цвет активной кнопки при наведении */
-        }
     </style>
 </head>
 <body>
     <!-- === BANNER (теперь просто обновляет страницу) === -->
     <div class="centered-banner">
         <a href="javascript:location.reload()" class="banner-link"></a>
-        <!-- === LANGUAGE SWITCHER (в правом верхнем углу) === -->
-        <div class="lang-switcher">
-            <span id="lang-en" class="lang-btn active">EN</span>
-            <span id="lang-ru" class="lang-btn">RU</span>
-        </div>
     </div>
 
     <div class="background"></div>
@@ -96,12 +48,12 @@
             <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
             <p>By clicking on any participant, you can view their works directly on the website.</p>
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
-            <p><b><span style="color:#90EE90;">Updated every 2 days</span></b> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></p> <!-- Добавлен индикатор -->
+            <p><b><span style="color:#90EE90;">Updated every 2 days</span></b></p>
             <p>Support us on Twitter!</p>
 
             <div class="team-box">
                 <p>Follow Twitter Dev - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
-            </div>
+                            </div>
         </div>
 
         <!-- Tabs (перемещены под .team-box) -->
@@ -134,8 +86,6 @@
                     <option value="30">Last 30 days</option>
                     <option value="all" selected>All time</option>
                 </select>
-                <!-- === КНОПКА ОБНОВИТЬ (рядом с фильтром) === -->
-                <button id="refresh-btn" style="background: #2F4F4F; color: white; border: 1px solid #6fe3d1; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-size: 0.9em; margin-left: 10px;" title="Refresh data manually">🔄 Refresh</button>
             </div>
 
             <!-- Таблица лидеров -->
