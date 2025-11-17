@@ -1403,3 +1403,9 @@ select option:checked {
     width: fit-content;
   }
 }
+
+
+/* === ЦЕНТРИРОВАНИЕ ЗАГОЛОВКА "User" === */
+th#name-header {
+  text-align: center;
+}
