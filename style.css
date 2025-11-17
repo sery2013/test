@@ -1574,3 +1574,47 @@ select option:checked {
   /* Убираем стили, которые могли задавать display: block или width: 100% */
   width: auto; /* Ширина по содержимому */
 }
+
+
+/* === СТИЛИ ДЛЯ НОВОГО БЛОКА ИНФОРМАЦИИ (аналогичные .team-box) === */
+.info-box {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05); /* Пример фона, как у .team-box */
+  border-radius: 8px; /* Скругление, как у .team-box */
+  margin-bottom: 15px; /* Отступ снизу */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Пример границы */
+  flex: 2; /* Правая часть (контент) занимает больше места */
+  min-width: 0; /* Позволяет сжиматься */
+  display: flex; /* Используем flex для выравнивания элементов внутри */
+  flex-direction: column; /* Элементы внутри идут сверху вниз */
+  color: #fff; /* Белый цвет текста */
+}
+
+.info-box h1 {
+  margin-top: 0; /* Убираем верхний отступ у заголовка */
+  margin-bottom: 10px; /* Отступ снизу от заголовка к параграфам */
+  color: #fff; /* Цвет заголовка */
+}
+
+.info-box p {
+  margin: 5px 0; /* Отступы между параграфами */
+  color: #fff; /* Цвет текста */
+  font-size: 1rem; /* Размер шрифта */
+}
+
+.info-box a {
+  color: #6fe3d1; /* Цвет ссылки */
+  text-decoration: underline; /* Подчеркивание ссылки */
+}
+
+.info-box a:hover {
+  text-decoration: none; /* Убираем подчеркивание при наведении */
+}
+
+/* Стиль для последнего параграфа с датой обновления (если она там будет) */
+.info-box p:last-child {
+  margin-top: auto; /* Отодвигает вниз */
+  text-align: right; /* Выравнивание по правому краю */
+  font-style: italic; /* Курсив для даты обновления */
+  color: #a9ddd3; /* Цвет даты обновления */
+}
