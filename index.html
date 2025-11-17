@@ -96,12 +96,13 @@
             <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
             <p>By clicking on any participant, you can view their works directly on the website.</p>
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
-            <p><b><span style="color:#90EE90;">Updated every 2 days</span></b></p>
+            <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
+            <p><b><span style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
             <p>Support us on Twitter!</p>
 
             <div class="team-box">
                 <p>Follow Twitter Dev - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
-                            </div>
+            </div>
         </div>
 
         <!-- Tabs (перемещены под .team-box) -->
@@ -120,20 +121,23 @@
                 <div class="stat-box" id="total-views">Total Views: 0</div>
             </div>
 
-            <!-- 🔍 Поиск -->
-            <div class="search-box">
-                <input type="text" id="search" placeholder="Search user...">
-            </div>
-
-            <!-- Фильтр по времени -->
-            <div class="time-filter">
-                <label for="time-select">Filter by time:</label>
-                <select id="time-select">
-                    <option value="7">Last 7 days</option>
-                    <option value="14">Last 14 days</option>
-                    <option value="30">Last 30 days</option>
-                    <option value="all" selected>All time</option>
-                </select>
+            <!-- === SEARCH AND TIME FILTER IN ONE LINE === -->
+            <div class="search-time-filter-container">
+                <div class="search-section">
+                    <label for="search" class="search-label">SEARCH USER</label>
+                    <input type="text" id="search" placeholder="Type @handle or part of name..." class="search-input">
+                </div>
+                <div class="filter-section">
+                    <span class="filter-label">FILTER BY TIME:</span>
+                    <select id="time-select" class="time-select">
+                        <option value="7">Last 7 days</option>
+                        <option value="14">Last 14 days</option>
+                        <option value="30">Last 30 days</option>
+                        <option value="all" selected>All time</option>
+                    </select>
+                    <!-- --- ИЗМЕНЕНИЕ: Добавлена кнопка Refresh --- -->
+                    <button id="refresh-btn" style="background: #2F4F4F; color: white; border: 1px solid #6fe3d1; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-size: 0.9em; margin-left: 10px;" title="Refresh data manually">🔄 Refresh</button>
+                </div>
             </div>
 
             <!-- Таблица лидеров -->
