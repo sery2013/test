@@ -1530,10 +1530,22 @@ select option:checked {
 
 
 
-/* === ЦЕНТРИРОВАНИЕ ЗАГОЛОВКА "User" (Принудительное) === */
+/* === ЦЕНТРИРОВАНИЕ ЗАГОЛОВКА "User" (АЛЬТЕРНАТИВНЫЙ МЕТОД) === */
+/* Применяем стили непосредственно к ячейке заголовка таблицы */
 #name-header {
-    text-align: center !important;
-    justify-content: center !important;
-    display: flex !important;
-    align-items: center !important;
+  /* Используем flexbox для центрирования содержимого */
+  display: flex !important;
+  justify-content: center !important; /* Центрирует по горизонтали */
+  align-items: center !important;     /* Центрирует по вертикали */
+  text-align: center !important;      /* На всякий случай, для inline-элементов внутри */
+  /* Убедимся, что ширина позволяет центрировать */
+  width: auto !important; /* Используем auto, чтобы ширина определялась содержимым или таблицей */
+}
+
+/* Если внутри #name-header есть вложенные элементы (например, span с текстом или стрелка сортировки),
+   они также должны центрироваться. Flexbox родителя обычно решает это. */
+#name-header .sort-arrow {
+  /* Убедимся, что стрелка (если есть) также центрирована внутри flex-контейнера */
+  margin-left: 5px; /* Отступ от текста, если он есть */
+  /* Не нужно задавать justify-content для стрелки, так как она внутри flex-контейнера заголовка */
 }
