@@ -29,91 +29,59 @@ body {
   align-items: center;     /* центрирует содержимое по вертикали */
   background: #0d1117; /* фон, если изображение не загрузится */
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  /* Убираем внутренние отступы, чтобы картинка прилегала вплотную */
 }
 
 .banner-link {
   display: block;
   width: 1350px;   /* фиксированная ширина изображения */
   height: 100px;   /* фиксированная высота */
-  /* УБРАНО: text-decoration, color */
-  /* Добавляем изображение */
   background: url("https://i.yapx.ru/cInFv.png") no-repeat center center; /* <-- ССЫЛКА НА ИЗОБРАЖЕНИЕ БАННЕРА */
   background-size: 1350px 100px; /* точный размер изображения */
-  /* Курсор указывает на возможность клика */
-  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* === CONTAINER === */
 .container {
-  max-width: 1100px;
-  margin: 140px auto 60px;
-  padding: 28px;
-  position: relative;
-  z-index: 1;
+  max-width: 1000px;
+  margin: 160px auto 60px; /* увеличено с 140px до 160px, чтобы учесть высоту баннера */
+  padding: 20px;
+  text-align: center;
 }
 
 /* === WELCOME SECTION === */
 .welcome-section {
   text-align: center;
   margin-bottom: 30px;
-  padding: 20px;
-  border-radius: 5%; /* скругление 5-10% */
-  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
-  color: #fff; /* белый цвет текста */
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для welcome-section */
-.welcome-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
+  color: #fff; /* изменен цвет текста */
 }
 
 .welcome-section h1 {
   font-size: 2.5rem;
-  margin-bottom: 10px;
-  color: #fff; /* белый цвет текста */
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень текста */
+  font-weight: 800;
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* изменена тень текста */
 }
 
 .welcome-section p {
   font-size: 1.1rem;
   margin: 8px 0;
-  color: #fff; /* белый цвет текста */
 }
 
 .welcome-section a {
-  color: #6fe3d1; /* цвет ссылок */
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.welcome-section a:hover {
+  color: #fff;
   text-decoration: underline;
 }
 
-/* === TEAM BOX (в .welcome-section) === */
+/* === TEAM BOX === */
 .team-box {
-  margin-top: 20px;
+  display: inline-block;
+  margin-top: 15px;
   padding: 15px;
-  border-radius: 5%; /* скругление 5-10% */
+  border: 2px solid rgba(255, 255, 255, 0.5); /* изменена обводка */
+  border-radius: 7.5%; /* скругление 5-10% */
   background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border: 2px solid rgba(255, 255, 255, 0.3); /* изменена обводка */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15); /* изменена тень */
-  color: #fff; /* белый цвет текста */
+  text-align: center;
   position: relative;
   overflow: hidden;
 }
@@ -126,7 +94,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -155,11 +123,10 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
   border-radius: 7.5%; /* скругление 5-10% */
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
-  color: #fff; /* белый цвет текста */
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  text-align: center;
-  font-weight: 600;
+  color: #fff; /* белый цвет текста */
 }
 
 /* Полупрозрачные магические символы для stat-box */
@@ -170,7 +137,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -178,260 +145,125 @@ body {
 }
 
 .stat-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* изменена тень при наведении */
+  border-color: #fff; /* изменен цвет обводки при наведении */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); /* изменена тень при наведении */
+  transform: scale(1.03);
 }
 
 /* === SEARCH BOX === */
 .search-box {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
-.search-box input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 5%; /* скругление 5-10% */
-  border: 2px solid rgba(255, 255, 255, 0.25); /* изменена обводка */
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); /* изменен фон */
-  color: #fff; /* белый цвет текста */
+#search {
+  width: 60%;
+  padding: 10px 15px;
   font-size: 1rem;
-  box-sizing: border-box;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для search-box input */
-.search-box input::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.search-box input:focus {
+  color: #fff; /* изменен цвет текста */
+  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
+  border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
+  border-radius: 7.5%; /* скругление 5-10% */
   outline: none;
-  border-color: #6fe3d1; /* изменен цвет обводки при фокусе */
-  box-shadow: 0 0 10px rgba(111, 227, 209, 0.5); /* изменена тень при фокусе */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
+  transition: all 0.3s ease;
 }
 
-.search-box input::placeholder {
-  color: #a9ddd3; /* изменен цвет placeholder */
+#search:focus {
+  border-color: #fff; /* изменен цвет обводки при фокусе */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); /* изменена тень при фокусе */
+  transform: scale(1.02);
 }
 
-/* === TIME FILTER === */
-.time-filter {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding: 12px;
-  border-radius: 5%; /* скругление 5-10% */
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); /* изменен фон */
-  border: 2px solid rgba(255,255,255,0.25); /* изменена обводка */
-  color: #fff; /* белый цвет текста */
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для time-filter */
-.time-filter::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.time-filter label {
-  font-weight: 600;
-  color: #a9ddd3; /* изменен цвет текста label */
-  white-space: nowrap;
-}
-
-.time-filter select {
-  flex: 1;
-  max-width: 180px;
-  padding: 8px 12px;
-  border-radius: 5%; /* скругление 5-10% */
-  border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
-  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
-  color: #fff !important; /* гарантирован белый цвет текста */
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 180ms ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для time-filter select */
-.time-filter select::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.time-filter select:focus {
-  box-shadow: 0 6px 18px rgba(111,227,209,0.07);
-  outline: none;
-}
-
-.time-filter select:hover {
-  background: #3a5f5f !important; /* изменен фон при наведении */
-  border-color: rgba(255,255,255,0.3) !important; /* изменена обводка при наведении */
-}
-
-/* === LEADERBOARD TABLE === */
+/* === TABLE === */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
   border-radius: 5%; /* скругление 5-10% */
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* добавлена тень таблицы */
-}
-
-thead {
   background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  color: #fff; /* белый цвет текста */
+  backdrop-filter: blur(5px);
   position: relative;
   overflow: hidden;
 }
 
-/* Полупрозрачные магические символы для thead */
-thead::before {
+/* Полупрозрачные магические символы для таблицы */
+table::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
   z-index: -1;
 }
 
-th, td {
-  padding: 14px;
-  text-align: left;
+thead th {
+  padding: 12px 15px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff; /* изменен цвет текста */
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3); /* изменена обводка */
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: 0.2s;
+}
+
+thead th:hover {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень при наведении */
+}
+
+thead th.active {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень активного заголовка */
+}
+
+.sort-arrow {
+  font-size: 0.8rem;
+  margin-left: 5px;
+  opacity: 0.7;
+}
+
+tbody td {
+  padding: 10px 15px;
+  text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   color: #fff; /* белый цвет текста */
 }
 
-th {
-  font-weight: 700;
-  cursor: pointer;
-  position: relative;
-  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для th */
-th::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-th:hover {
-  background: #3a5f5f !important; /* изменен фон при наведении */
-}
-
-th.active {
-  background: #3a5f5f !important; /* изменен фон активной ячейки */
-  color: #fff !important; /* белый цвет текста активной ячейки */
-}
-
-.sort-arrow {
-  margin-left: 5px;
-  color: #6fe3d1; /* цвет стрелки */
-}
-
-tbody tr {
-  background: rgba(13, 17, 23, 0.85); /* фон строки */
-  transition: background 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для tbody tr */
-tbody tr::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
 tbody tr:hover {
-  background: rgba(26, 32, 42, 0.9); /* изменен фон при наведении */
-}
-
-tbody tr:nth-child(even) {
-  background: rgba(20, 25, 35, 0.85); /* фон четной строки */
+  background: rgba(255, 255, 255, 0.1); /* изменен цвет фона при наведении */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* изменена тень при наведении */
 }
 
 /* === PAGINATION === */
 .pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  margin-top: 25px;
 }
 
 .pagination button {
-  padding: 10px 20px;
-  border-radius: 5%; /* скругление 5-10% */
-  border: 2px solid rgba(255,255,255,0.25); /* изменена обводка */
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); /* изменен фон */
-  color: #fff; /* белый цвет текста */
+  padding: 8px 15px;
+  color: #fff; /* изменен цвет текста */
+  font-weight: 500;
+  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
+  border: 2px solid rgba(255, 255, 255, 0.5); /* изменена обводка */
+  border-radius: 7.5%; /* скругление 5-10% */
   cursor: pointer;
-  font-weight: 700;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
 }
 
-/* Полупрозрачные магические символы для pagination button */
+/* Полупрозрачные магические символы для кнопок пагинации */
 .pagination button::before {
   content: "";
   position: absolute;
@@ -439,7 +271,7 @@ tbody tr:nth-child(even) {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -457,96 +289,103 @@ tbody tr:nth-child(even) {
   color: #fff; /* изменен цвет текста */
 }
 
-/* === TABS === */
-.tabs {
+.time-filter {
   display: flex;
-  gap: 12px;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 18px;
-}
-
-.tab-btn {
-  padding: 8px 14px;
-  border-radius: 5%; /* скругление 5-10% */
-  border: 2px solid rgba(255,255,255,0.25); /* изменена обводка */
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); /* изменен фон */
-  color: #fff; /* белый цвет текста */
-  cursor: pointer;
-  font-weight: 700;
+  gap: 10px;
+  margin: 20px auto;
+  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
+  padding: 10px 20px;
+  border-radius: 7.5%; /* скругление 5-10% */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05); /* изменена тень */
+  width: fit-content;
   position: relative;
   overflow: hidden;
 }
 
-/* Полупрозрачные магические символы для tab-btn */
-.tab-btn::before {
+/* Полупрозрачные магические символы для time-filter */
+.time-filter::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
   z-index: -1;
 }
 
-.tab-btn:hover { box-shadow: 0 0 12px rgba(255,255,255,0.12); }
+.time-filter label {
+  font-weight: 600;
+  color: #fff; /* изменен цвет текста */
+  font-size: 16px;
+  letter-spacing: 0.3px;
+}
 
-.tab-btn.active {
-  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+.time-filter select {
+  background: #1c1c1c;
   color: #fff;
-  border-bottom: 2px solid #fff; /* изменен цвет нижней границы */
-  position: relative;
-  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 7.5%; /* скругление 5-10% */
+  padding: 8px 14px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
 }
 
-/* Полупрозрачные магические символы для активной tab-btn */
-.tab-btn.active::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
+.time-filter select:hover {
+  background: #2a2a2a;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.time-filter select:focus {
+  background: #2f2f2f;
+  border-color: #4a90e2;
+  box-shadow: 0 0 10px rgba(74, 144, 226, 0.4);
 }
 
 /* === ACCORDION (TWEETS SECTION) === */
 .tweets-row td {
   background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
-  border-top: 2px solid rgba(169, 221, 211, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.3); /* изменена обводка */
   padding: 25px;
   animation: fadeInAccordion 0.4s ease;
-  border-radius: 5%; /* скругление 5%, как вы просили */
-  /* Добавляем полупрозрачные магические символы */
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
+  border-radius: 5%; /* скругление 5-10% */
+  color: #fff; /* белый цвет текста */
   position: relative;
   overflow: hidden;
 }
 
-/* Анимация "магического сияния" при наведении на .tweets-row */
-.tweets-row td:hover::before {
+/* Полупрозрачные магические символы для tweets-row */
+.tweets-row td::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(169, 221, 211, 0.2), rgba(169, 221, 211, 0.1));
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
   z-index: -1;
 }
 
 @keyframes fadeInAccordion {
-  from {opacity: 0;transform: translateY(-5px);}
-  to {opacity: 1;transform: translateY(0);}
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Контейнер для карточек твитов */
@@ -571,7 +410,25 @@ tbody tr:nth-child(even) {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Полупрозрачные магические символы для tweet-card */
+.tweet-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .tweet-card:hover {
@@ -600,7 +457,7 @@ tbody tr:nth-child(even) {
 .tweet-card .tweet-date {
   margin-top: 10px;
   font-size: 0.9rem;
-  color: #a9ddd3;
+  color: #fff; /* белый цвет текста */
   opacity: 0.8;
   text-align: right;
   font-style: italic;
@@ -625,40 +482,736 @@ tr.active-row:hover {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)) !important; /* изменен фон при наведении */
 }
 
-/* === SNOW EFFECT === */
-.snow-container {
-  position: fixed;
+.music-player {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
+  border-radius: 7.5%; /* скругление 5-10% */
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(6px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Полупрозрачные магические символы для music-player */
+.music-player::before {
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
   pointer-events: none;
-  z-index: 100; /* Должен быть ниже баннера */
+  z-index: -1;
 }
 
+.track-cover {
+  width: 150px;
+  height: 150px;
+  border-radius: 5%; /* скругление 5-10% */
+  object-fit: cover;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff; /* белый цвет текста */
+}
+
+.track-title {
+  font-size: 1rem;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff; /* белый цвет текста */
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#play-btn, #next-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #fff; /* белый цвет текста */
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#play-btn:hover, #next-btn:hover {
+  transform: scale(1.2);
+}
+
+#volume-slider {
+  width: 80px;
+  accent-color: #ff4081;
+  cursor: pointer;
+}
+
+/* === TABS === */
+.tabs {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+.tab-btn {
+  padding: 8px 14px;
+  border-radius: 5%; /* скругление 5-10% */
+  border: 2px solid rgba(255,255,255,0.25); /* изменена обводка */
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)); /* изменен фон */
+  color: #fff; /* белый цвет текста */
+  cursor: pointer;
+  font-weight: 700;
+  position: relative;
+  overflow: hidden;
+}
+/* Полупрозрачные магические символы для tab-btn */
+.tab-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+.tab-btn:hover { box-shadow: 0 0 12px rgba(255,255,255,0.12); }
+.tab-btn.active {
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+  color: #fff;
+  border-color: rgba(255,255,255,0.6);
+}
+
+/* Tab content container - УБРАНО ПЕРЕОПРЕДЕЛЕНИЕ DISPLAY */
+/* .tab-content { display: none; } */
+/* .tab-content.active { display: block; } */
+
+/* Tab content container */
+.tab-content { padding: 8px 0 30px; }
+
+/* Analytics small tweaks */
+.analytics-stats .stat-box { flex: none; width: 220px; }
+#analytics-top-authors { padding-left: 18px; }
+#analytics-per-day li { padding: 4px 0; color: #fff; /* белый цвет текста */ }
+
+/* Analytics blocks */
+.analytics-block { 
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  padding: 12px; 
+  border-radius: 5%; /* скругление 5-10% */
+  margin-bottom: 12px; 
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff; /* гарантирован белый цвет текста */
+}
+/* Полупрозрачные магические символы для analytics-block */
+.analytics-block::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+.analytics-row { display:flex; gap:12px; }
+.analytics-block select { 
+  background:#2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
+  color:#fff !important; /* гарантирован белый цвет текста */
+  border:1px solid rgba(255,255,255,0.08); 
+  padding:6px 8px; 
+  border-radius: 7.5%; /* скругление 5-10% */
+}
+.analytics-block ol { padding-left: 18px; }
+.top-post-item { 
+  padding:8px 10px; 
+  border-radius: 5%; /* скругление 5-10% */
+  margin-bottom:8px; 
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  position: relative;
+  overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
+}
+/* Полупрозрачные магические символы для top-post-item */
+.top-post-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+.top-post-item .excerpt { max-width:70%; color:#fff !important; /* гарантирован белый цвет текста */ }
+.top-post-item .meta { color:#fff !important; /* гарантирован белый цвет текста */
+  font-weight:600; }
+
+/* --- UI polish for analytics --- */
+:root{
+  --bg: #0d1117;
+  --muted: #fff; /* изменен цвет muted */
+  --accent: #6fe3d1;
+  --card-bg: #2F4F4F; /* изменен цвет card-bg - сплошной цвет #2F4F4F */
+  --glass: #2F4F4F; /* изменен цвет glass - сплошной цвет #2F4F4F */
+  --glass-strong: #2F4F4F; /* изменен цвет glass-strong - сплошной цвет #2F4F4F */
+  --radius: 5%; /* изменен радиус */
+}
+
+.container { max-width:1100px; margin: 140px auto 60px; padding: 28px; }
+
+.tab-content { transition: opacity 250ms ease, transform 250ms ease; }
+
+.analytics-block { 
+  box-shadow: 0 6px 18px rgba(2,6,23,0.6); 
+  border: 1px solid rgba(255,255,255,0.08); /* изменена обводка */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  padding:18px; 
+  border-radius: 5%; /* скругление 5-10% */
+  color: #fff; /* гарантирован белый цвет текста */
+}
+
+.analytics-row .stat-box { 
+  width: 220px; 
+  padding:14px; 
+  text-align:center; 
+  border-radius: 5%; /* скругление 5-10% */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2); 
+  position: relative;
+  overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
+}
+/* Полупрозрачные магические символы для аналитических stat-box */
+.analytics-row .stat-box::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+.analytics-row .stat-box h4 { margin:0; font-size:0.9rem; color:#fff !important; /* гарантирован белый цвет текста */ }
+
+.analytics-block h3 { 
+  margin:0 0 8px 0; 
+  color:#fff !important; /* гарантирован белый цвет текста */
+  font-size:1.05rem; 
+}
+
+#top-authors-list, #top-posts-list { 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+#top-authors-list li { 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  padding:10px; 
+  border-radius: 5%; /* скругление 5-10% */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  margin-bottom:8px; 
+  border:1px solid rgba(255,255,255,0.02); 
+  position: relative;
+  overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
+}
+/* Полупрозрачные магические символы для элементов списка */
+#top-authors-list li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+#top-authors-list li strong { color:#fff !important; /* гарантирован белый цвет текста */ }
+
+.top-post-item { 
+  display:flex; 
+  gap:12px; 
+  align-items:center; 
+  padding:12px; 
+  border-radius: 5%; /* скругление 5-10% */
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  border:1px solid rgba(255,255,255,0.02); 
+  position: relative;
+  overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
+}
+/* Полупрозрачные магические символы для top-post-item */
+.top-post-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+.top-post-item .excerpt a { color: #fff !important; /* гарантирован белый цвет текста */
+  text-decoration:none; }
+.top-post-item .excerpt a:hover { text-decoration:underline; }
+.top-post-item .meta { display:flex; flex-direction:column; align-items:flex-end; gap:6px; }
+.top-post-item .meta .author { font-weight:700; color:#fff !important; /* гарантирован белый цвет текста */
+ }
+.top-post-item .meta .metric { 
+  background: #2F4F4F !important; /* изменен фон метрики - сплошной цвет #2F4F4F */
+  color:#fff !important; /* гарантирован белый цвет текста */
+  padding:6px 8px; 
+  border-radius: 5%; /* скругление 5-10% */
+  font-weight:700; 
+}
+
+/* make selects nicer */
+.analytics-block select { 
+  appearance:none; 
+  -webkit-appearance:none; 
+  -moz-appearance:none; 
+  padding:8px 12px; 
+  border-radius: 7.5%; /* скругление 5-10% */
+  border:1px solid rgba(255,255,255,0.06); 
+  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
+  color:#fff !important; /* гарантирован белый цвет текста */
+}
+.analytics-block select:focus { 
+  box-shadow: 0 6px 18px rgba(111,227,209,0.07); 
+  outline: none; 
+}
+
+/* responsive grid for analytics blocks */
+#tab-analytics { display:flex; flex-direction:column; gap:18px; }
+.analytics-grid { display:grid; grid-template-columns: 1fr; gap:18px; }
+@media(min-width:900px) {
+  .analytics-grid { grid-template-columns: 1fr 1fr; align-items:start; }
+  #analytics-averages { grid-column: 1 / -1; }
+}
+
+/* small interactive touches */
+#tab-analytics .analytics-block:hover { 
+  transform: translateY(-3px); 
+  transition: transform 180ms ease; 
+}
+
+.stat-box { 
+  transition: transform 160ms, box-shadow 160ms; 
+}
+.stat-box:hover { 
+  transform: translateY(-4px); 
+  box-shadow: 0 10px 30px rgba(255,255,255,0.06); /* изменена тень при наведении */
+}
+
+/* subtle numbering style */
+#top-authors-list li::marker { color: #fff; /* изменен цвет маркера */ }
+
+/* ensure long excerpts wrap nicely */
+.excerpt { word-break: break-word; }
+
+/* === SELECT STYLING (period + metrics) === */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* изменен цвет стрелки */
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 32px;
+  border-radius: 5%; /* скругление 5-10% */
+}
+
+/* period filter styling */
+.analytics-time-filter {
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  border: 1px solid rgba(255,255,255, 0.15) !important; /* изменена обводка */
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 5%; /* скругление 5-10% */
+  position: relative;
+  overflow: hidden;
+  color: #fff; /* гарантирован белый цвет текста */
+}
+/* Полупрозрачные магические символы для analytics-time-filter */
+.analytics-time-filter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.analytics-time-filter select {
+  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
+  border: 1px solid rgba(255,255,255,0.2) !important; /* изменена обводка */
+  color: #fff !important; /* гарантирован белый цвет текста */
+  font-weight: 600;
+  padding: 10px 32px 10px 12px;
+  border-radius: 5%; /* скругление 5-10% */
+  transition: all 200ms ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.analytics-time-filter select:hover {
+  border-color: rgba(255,255,255, 0.4) !important; /* изменена обводка при наведении */
+  box-shadow: 0 6px 16px rgba(255,255,255, 0.1); /* изменена тень при наведении */
+}
+
+.analytics-time-filter select:focus {
+  outline: none;
+  border-color: #fff !important; /* изменена обводка при фокусе */
+  box-shadow: 0 8px 24px rgba(255,255,255, 0.15); /* изменена тень при фокусе */
+  transform: translateY(-2px);
+}
+
+/* metric selects styling (inside analytics blocks) */
+.analytics-block > div:first-of-type {
+  gap: 12px;
+}
+
+.analytics-block select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
+  border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
+  color: #fff !important; /* гарантирован белый цвет текста */
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 5%; /* скругление 5-10% */
+  cursor: pointer;
+  transition: all 180ms ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.analytics-block select:hover {
+  border-color: rgba(255,255,255,0.3) !important; /* изменена обводка при наведении */
+  background: #2F4F4F !important; /* изменен фон при наведении - сплошной цвет #2F4F4F */
+  box-shadow: 0 6px 16px rgba(255,255,255,0.08); /* изменена тень при наведении */
+}
+
+.analytics-block select:focus {
+  outline: none;
+  border-color: #fff !important; /* изменена обводка при фокусе */
+  box-shadow: 0 8px 20px rgba(255,255,255,0.12); /* изменена тень при фокусе */
+  transform: translateY(-1px);
+  background: #2F4F4F !important; /* изменен фон при фокусе - сплошной цвет #2F4F4F */
+}
+
+/* Dropdown options styling */
+select option {
+  background: #2F4F4F !important; /* изменен фон опций - теперь темно-серый */
+  color: #fff !important; /* белый цвет текста */
+  padding: 8px;
+  border: none;
+  border-radius: 5%; /* скругление 5-10% для опций */
+}
+
+select option:hover {
+  background: #3a5f5f !important; /* изменен фон при наведении */
+  color: #fff !important; /* белый цвет текста */
+}
+
+select option:checked {
+  background: #fff !important; /* изменен фон выбранной опции */
+  color: #2F4F4F !important; /* изменен цвет текста */
+  border-radius: 5%; /* скругление 5-10% для выбранной опции */
+}
+
+/* === Nested analytics tabs === */
+.analytics-nested-tabs { 
+  display:flex; 
+  gap:8px; 
+  margin-bottom:16px; 
+  border-bottom:2px solid rgba(255, 255, 255, 0.03); 
+}
+.analytics-tab-btn { 
+  padding:10px 16px; 
+  border: none; 
+  background: transparent; 
+  color:#fff !important; /* белый цвет текста */
+  font-weight:600; 
+  cursor:pointer; 
+  border-bottom:3px solid transparent; 
+  transition: all 200ms ease; 
+  border-radius: 5% 5% 0 0; /* скругление только сверху для вкладок */
+}
+.analytics-tab-btn:hover { 
+  color:#fff !important; /* белый цвет текста */
+}
+.analytics-tab-btn.active { 
+  color:#fff !important; /* белый цвет текста */
+  border-bottom-color:#fff; /* изменен цвет нижней границы активной вкладки */
+}
+.analytics-nested-content { 
+  display: none !important; 
+  animation: fadeIn 250ms ease; 
+  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
+  color: #fff !important; /* гарантирован белый цвет текста */
+  border-radius: 5%; /* скругление 5-10% */
+  padding: 10px; /* добавлен внутренний отступ */
+  border: 1px solid rgba(255, 255, 255, 0.05); /* добавлена тонкая граница */
+}
+.analytics-nested-content.active { 
+  display: block !important; 
+}
+@keyframes fadeIn { 
+  from { 
+    opacity:0; 
+  } 
+  to { 
+    opacity:1; 
+  } 
+}
+
+/* === CHART SECTION (новый блок, стилизован под дизайн сайта) === */
+.chart-section {
+  margin: 40px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #2F4F4F, #1a2a2a); /* градиент с цветом #2F4F4F */
+  border: 2px solid rgba(255, 255, 255, 0.4); /* изменена обводка */
+  border-radius: 5%; /* скругление 5-10% */
+  text-align: center;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); /* изменена тень */
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+/* Полупрозрачные магические символы для chart-section */
+.chart-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-repeat: repeat;
+  background-size: 100px;
+  pointer-events: none;
+  z-index: -1;
+}
+.chart-section:hover {
+  border-color: #fff; /* изменен цвет обводки при наведении */
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.6); /* изменена тень при наведении */
+  transform: scale(1.01);
+}
+.chart-section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff; /* белый цвет текста */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* изменена тень текста */
+}
+.chart-section p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+  color: #fff; /* белый цвет текста */
+}
+
+/* --- ДОБАВЛЕНО: УБРАТЬ ПЕРЕОПРЕДЕЛЕНИЕ DISPLAY ДЛЯ tab-content --- */
+/* Удалено правило .tab-content { display: none; } */
+/* Удалено правило .tab-content.active { display: block; } */
+
+/* === ВАШ СУЩЕСТВУЮЩИЙ CSS КОД === */
+/* (все ваши предыдущие стили остаются без изменений) */
+/* ... */
+/* ... */
+
+
+
+
+
+
+/* === CENTERED BANNER (1350×100, по центру, кликабельный, просто обновляет страницу) === */
+.centered-banner {
+  width: 100%;
+  height: 100px; /* высота 100px */
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Высокий z-index, чтобы баннер был поверх других элементов */
+  display: flex;
+  justify-content: center; /* центрирует содержимое по горизонтали */
+  align-items: center;     /* центрирует содержимое по вертикали */
+  background: #0d1117; /* фон, если изображение не загрузится */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  /* Убираем внутренние отступы, чтобы картинка прилегала вплотную */
+}
+
+.banner-link {
+  display: block;
+  width: 1350px;   /* фиксированная ширина изображения */
+  height: 100px;   /* фиксированная высота */
+  /* УБРАНО: text-decoration, color */
+  /* Добавляем изображение */
+  background: url("https://i.yapx.ru/cInFv.png") no-repeat center center; /* <-- ССЫЛКА НА ИЗОБРАЖЕНИЕ БАННЕРА */
+  background-size: 1350px 100px; /* точный размер изображения */
+  /* Курсор указывает на возможность клика */
+  cursor: pointer;
+}
+
+/* === Белая линия-разделитель для карточек постов в Top 10 posts (псевдоэлемент) === */
+#top-posts-list .top-post-item {
+  position: relative; /* Убедимся, что позиционирование работает */
+  margin-bottom: 8px; /* Отступ снизу */
+  padding-bottom: 12px; /* Дополнительный отступ внутри карточки, чтобы контент не прилипал к линии */
+}
+
+#top-posts-list .top-post-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #DCDCDC; /* Белый цвет линии */
+  opacity: 0.8; /* Прозрачность, можно убрать или изменить */
+  z-index: 1; /* Помещаем линию поверх фона карточки */
+}
+
+/* Убираем линию у последнего элемента */
+#top-posts-list .top-post-item:last-child::after {
+  display: none;
+}
+
+
+/* === Белая линия-разделитель для карточек авторов в Top 10 authors (псевдоэлемент) === */
+#top-authors-list li {
+  position: relative; /* Убедимся, что позиционирование работает */
+  margin-bottom: 8px; /* Отступ снизу */
+  padding-bottom: 12px; /* Дополнительный отступ внутри карточки, чтобы контент не прилипал к линии */
+}
+
+#top-authors-list li::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #DCDCDC; /* Белый цвет линии */
+  opacity: 0.8; /* Полупрозрачность */
+  z-index: 1; /* Помещаем линию поверх фона карточки */
+}
+
+/* Убираем линию у последнего элемента */
+#top-authors-list li:last-child::after {
+  display: none;
+}
+
+
+
+/* === Стили для цифр (метрик) в Top 10 authors и Top 10 posts === */
+
+/* Для цифр в Top 10 posts (.top-post-item .metric) - ОСТАЁТСЯ БЕЗ ИЗМЕНЕНИЙ */
+.top-post-item .meta .metric {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 8px;
+  border-radius: 7.5%;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Для цифр в Top 10 authors (после изменения script.js) */
+.author-metric-value {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 8px;
+  border-radius: 7.5%;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block; /* Убедимся, что рамка применяется */
+}
+
+
+
+/* === SNOW EFFECT (для фона leaderboard'а) === */
+/* Контейнер для снежинок */
+.snow-container {
+  position: fixed; /* Фиксируем относительно окна браузера */
+  top: 100px; /* Отступ сверху (высота баннера) */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 100px); /* Высота минус высота баннера */
+  pointer-events: none; /* Позволяет кликать сквозь снег */
+  z-index: 1; /* Помещаем над .background, но под .container и .centered-banner */
+  overflow: hidden; /* Обрезаем снежинки, выходящие за границы */
+}
+
+/* Стиль для отдельной снежинки */
 .snowflake {
   position: absolute;
-  color: #fff;
-  font-size: 1em;
-  font-weight: bold;
-  text-shadow: 0 0 5px #fff;
-  user-select: none;
+  background-color: #fff; /* Цвет снежинки - белый */
+  border-radius: 50%; /* Делаем её круглой (можно изменить на другую форму) */
+  opacity: 0.7; /* Начальная прозрачность */
   pointer-events: none;
-  /* Анимация падения */
-  animation-name: fall;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-direction: normal;
+  /* Анимация */
+  animation-name: fall, sway;
+  animation-timing-function: linear, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+  animation-fill-mode: both; /* Сохраняем конечное состояние анимации */
 }
 
-/* Анимация для падения и колебания */
+/* Анимация падения */
 @keyframes fall {
-  0% {
-    transform: translateY(-100vh) translateX(0);
-    opacity: 1;
+  to {
+    top: 100%;
   }
-  100% {
-    transform: translateY(100vh) translateX(20px); /* Максимальное отклонение */
+}
+
+/* Анимация колебания ( sway ) */
+@keyframes sway {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px); /* Максимальное отклонение */
   }
 }
 
@@ -673,16 +1226,17 @@ tr.active-row:hover {
   color: #fff; /* белый цвет текста (иконки) */
   background: rgba(29, 161, 242, 0.1); /* фон с прозрачностью */
   border: 1px solid rgba(29, 161, 242, 0.5); /* обводка с прозрачностью */
-  border-radius: 50%; /* круглая кнопка */
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
+  border-radius: 5%; /* скругление 5% */
+  cursor: pointer; /* курсор указывает на кликабельность */
+  transition: all 0.2s ease; /* плавный переход */
+  display: flex; /* Используем flex для центрирования иконки */
+  align-items: center; /* Центрируем по вертикали */
+  justify-content: center; /* Центрируем по горизонтали */
+  position: relative; /* Для позиционирования псевдоэлемента */
+  overflow: hidden; /* Обрезаем псевдоэлемент */
 }
 
+/* Полупрозрачные магические символы для share-btn */
 .share-btn::before {
   content: "";
   position: absolute;
@@ -690,7 +1244,7 @@ tr.active-row:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
@@ -698,15 +1252,16 @@ tr.active-row:hover {
 }
 
 .share-btn:hover {
-  background: rgba(29, 161, 242, 0.3); /* изменен фон при наведении */
-  border-color: #1da1f2; /* изменен цвет обводки при наведении */
-  transform: scale(1.1); /* увеличение при наведении */
-  box-shadow: 0 0 8px rgba(29, 161, 242, 0.5); /* тень при наведении */
+  background: rgba(29, 161, 242, 0.2); /* фон при наведении */
+  border-color: #1DA1F2; /* обводка при наведении */
+  transform: scale(1.1); /* лёгкое увеличение */
 }
 
+/* Дополнительно: убедимся, что SVG внутри кнопки масштабируется */
 .share-btn svg {
-  width: 16px; /* размер иконки */
-  height: 16px;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
   max-height: 100%;
   fill: currentColor; /* Использует цвет, заданный для кнопки */
   pointer-events: none; /* SVG не перехватывает события клика */
@@ -718,6 +1273,8 @@ tr.active-row:hover {
   align-items: center;
   gap: 8px; /* отступ между именем и кнопкой */
 }
+
+
 
 /* === MOBILE ADAPTATION === */
 @media (max-width: 768px) {
@@ -770,444 +1327,79 @@ tr.active-row:hover {
   }
 
   .search-box {
-    /* ... */
+    width: 100%;
+  }
+
+  #search {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 1rem;
   }
 
   .time-filter {
     flex-direction: column;
-    align-items: stretch;
+    gap: 8px;
+    padding: 8px 15px;
+    width: fit-content;
+    margin: 15px auto;
   }
 
-  .time-filter label {
-    margin-bottom: 5px;
-  }
-
+  .time-filter label,
   .time-filter select {
-    max-width: none;
+    font-size: 0.95rem;
   }
 
-  th, td {
-    padding: 8px 10px; /* Уменьшаем padding */
-    font-size: 0.9rem; /* Уменьшаем размер шрифта */
+  .pagination button,
+  .pagination span {
+    padding: 6px 10px;
+    font-size: 0.9rem;
   }
 
-  .pagination {
-    flex-direction: column;
-    gap: 10px;
+  /* 3. Уменьшить размер иконки "Поделиться в Twitter" */
+  .share-btn {
+    width: 20px;
+    height: 20px;
+    margin-left: 6px;
+    font-size: 0.8rem;
   }
 
-  .pagination button {
-    width: 100%;
-  }
-
-  /* 3. Адаптация карточек твитов */
-  .tweet-container {
-    gap: 15px; /* Уменьшаем отступ между карточками */
-  }
-
+  /* 4. Уменьшить размер твитов в аккордеоне */
   .tweet-card {
-    width: 100%; /* Карточки на всю ширину */
-    max-width: 445px; /* Ограничиваем максимальную ширину */
-    box-sizing: border-box;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 10px 12px;
   }
 
-  /* 4. Адаптация аналитики */
+  .tweet-card p {
+    font-size: 0.9rem;
+  }
+
+  .tweet-card .tweet-date {
+    font-size: 0.8rem;
+  }
+
+  /* 5. Сделать блоки аналитики вертикальными */
   .analytics-row {
     flex-direction: column;
     gap: 10px;
   }
 
   .analytics-row .stat-box {
-    width: 100%;
+    width: 100% !important;
   }
 
-  .analytics-nested-tabs {
-    flex-wrap: wrap;
-  }
-
-  .analytics-tab-btn {
-    padding: 8px 12px;
-    font-size: 0.9rem;
-  }
-
-  .analytics-time-filter {
+  /* 6. Упростить Top 10 списки */
+  #top-authors-list li,
+  .top-post-item {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 12px;
   }
 
-  .analytics-time-filter label {
-    margin-bottom: 5px;
-  }
-
-  .analytics-time-filter select {
-    max-width: none;
-  }
-
-  .top-post-item .excerpt {
-    max-width: 100%; /* На мобильных текст занимает всю ширину */
-  }
-
+  #top-authors-list li .author-metric-value,
   .top-post-item .meta {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-top: 4px;
+    width: fit-content;
   }
-}
-
-/* === ANALYTICS STYLES === */
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-.analytics-block {
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
-  border: 1px solid rgba(255,255,255,0.08); /* изменена обводка */
-  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
-  border-radius: 5%; /* скругление 5-10% */
-  padding: 18px;
-  margin-bottom: 18px;
-  position: relative;
-  overflow: hidden;
-  color: #fff; /* гарантирован белый цвет текста */
-}
-
-/* Полупрозрачные магические символы для analytics-block */
-.analytics-block::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.analytics-row {
-  display:flex;
-  gap:12px;
-}
-
-.analytics-row .stat-box {
-  width: 220px;
-  padding:14px;
-  text-align:center;
-  border-radius: 5%; /* скругление 5-10% */
-  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
-  box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2);
-  position: relative;
-  overflow: hidden;
-  color: #fff; /* гарантирован белый цвет текста */
-}
-
-/* Полупрозрачные магические символы для аналитических stat-box */
-.analytics-row .stat-box::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.analytics-tab-btn {
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid rgba(255,255,255,0.1);
-  padding: 10px 15px;
-  margin-right: 20px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #a9ddd3;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для analytics-tab-btn */
-.analytics-tab-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.analytics-tab-btn:hover { color:#fff !important; /* белый цвет текста */ }
-
-.analytics-tab-btn.active {
-  color:#fff !important; /* белый цвет текста */
-  border-bottom-color:#fff; /* изменен цвет нижней границы активной вкладки */
-}
-
-.analytics-nested-content {
-  display: none !important;
-  animation: fadeIn 250ms ease;
-  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
-  color: #fff !important; /* гарантирован белый цвет текста */
-  border-radius: 5%; /* скругление 5-10% */
-  padding: 10px; /* добавлен внутренний отступ */
-  border: 1px solid rgba(255, 255, 255, 0.05); /* добавлена тонкая граница */
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для analytics-nested-content */
-.analytics-nested-content::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.analytics-nested-content.active {
-  display: block !important;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.top-post-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  position: relative;
-  overflow: hidden;
-  background: #2F4F4F !important; /* изменен фон - сплошной цвет #2F4F4F */
-  border: 1px solid rgba(255,255,255,0.02);
-  position: relative;
-  overflow: hidden;
-  color: #fff; /* гарантирован белый цвет текста */
-}
-
-/* Полупрозрачные магические символы для top-post-item */
-.top-post-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.top-post-item:last-child {
-  border-bottom: none;
-}
-
-.top-post-item .excerpt {
-  flex: 1;
-  color: #a9ddd3;
-}
-
-.top-post-item .excerpt a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.top-post-item .excerpt a:hover {
-  text-decoration: underline;
-}
-
-.top-post-item .meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.top-post-item .author {
-  color: #a9ddd3;
-  font-weight: 600;
-}
-
-.top-post-item .metric {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 6px 8px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  font-weight: 700;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* make selects nicer */
-.analytics-block select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  padding: 8px 12px;
-  border-radius: 7.5%; /* скругление 5-10% */
-  border: 1px solid rgba(255,255,255,0.06);
-  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
-  color: #fff !important; /* гарантирован белый цвет текста */
-}
-
-.analytics-block select:focus {
-  box-shadow: 0 6px 18px rgba(111,227,209,0.07);
-  outline: none;
-}
-
-/* metric selects styling (inside analytics blocks) */
-.analytics-block > div:first-of-type {
-  gap: 12px;
-}
-
-.analytics-block select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background: #2F4F4F !important; /* изменен фон селекта - сплошной цвет #2F4F4F */
-  border: 1px solid rgba(255,255,255,0.15) !important; /* изменена обводка */
-  color: #fff !important; /* гарантирован белый цвет текста */
-  font-weight: 600;
-  padding: 10px 12px;
-  border-radius: 5%; /* скругление 5-10% */
-  cursor: pointer;
-  transition: all 180ms ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-/* Полупрозрачные магические символы для analytics-block select */
-.analytics-block select::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
-  background-repeat: repeat;
-  background-size: 100px;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.analytics-block select:hover {
-  background: #3a5f5f !important; /* изменен фон при наведении */
-  border-color: rgba(255,255,255,0.3) !important; /* изменена обводка при наведении */
-}
-
-/* - UI polish for analytics - */
-:root {
-  --bg: #0d1117;
-  --muted: #fff; /* изменен цвет muted */
-  --accent: #6fe3d1;
-  --card-bg: #2F4F4F; /* изменен цвет card-bg - сплошной цвет #2F4F4F */
-  --glass: #2F4F4F; /* изменен цвет glass - сплошной цвет #2F4F4F */
-  --glass-strong: #2F4F4F; /* изменен цвет glass-strong - сплошной цвет #2F4F4F */
-  --radius: 5%; /* изменен радиус */
-}
-
-/* - ДОБАВЛЕНО: УБРАТЬ ПЕРЕОПРЕДЕЛЕНИЕ DISPLAY ДЛЯ tab-content - */
-/* Удалено правило .tab-content { display: none; } */
-/* Удалено правило .tab-content.active { display: block; } */
-
-/* === ВАШ СУЩЕСТВУЮЩИЙ CSS КОД === */
-/* (все ваши предыдущие стили остаются без изменений) */
-/* ... */
-/* ... */
-
-/* === Белая линия-разделитель для карточек постов в Top 10 posts (псевдоэлемент) === */
-#top-posts-list .top-post-item {
-  position: relative; /* Убедимся, что позиционирование работает */
-  margin-bottom: 8px; /* Отступ снизу */
-  padding-bottom: 12px; /* Дополнительный отступ внутри карточки, чтобы контент не прилипал к линии */
-}
-
-#top-posts-list .top-post-item::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: #DCDCDC; /* Белый цвет линии */
-  opacity: 0.8; /* Прозрачность, можно убрать или изменить */
-  z-index: 1; /* Помещаем линию поверх фона карточки */
-}
-
-/* Убираем линию у последнего элемента */
-#top-posts-list .top-post-item:last-child::after {
-  display: none;
-}
-
-/* === Белая линия-разделитель для карточек постов в Top 10 authors (псевдоэлемент) === */
-#top-authors-list li {
-  position: relative; /* Убедимся, что позиционирование работает */
-  margin-bottom: 8px; /* Отступ снизу */
-  padding-bottom: 12px; /* Дополнительный отступ внутри карточки */
-}
-
-#top-authors-list li::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: #DCDCDC; /* Белый цвет линии */
-  opacity: 0.8; /* Прозрачность */
-  z-index: 1; /* Помещаем линию поверх фона карточки */
-}
-
-/* Убираем линию у последнего элемента */
-#top-authors-list li:last-child::after {
-  display: none;
-}
-
-/* === Стили для цифр (метрик) в Top 10 authors и Top 10 posts === */
-/* Для цифр в Top 10 posts (.top-post-item .metric) - ОСТАЁТСЯ БЕЗ ИЗМЕНЕНИЙ */
-.top-post-item .meta .metric {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 6px 8px;
-  border-radius: 7.5%;
-  font-weight: 700;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Для цифр в Top 10 authors (после изменения script.js) */
-.author-metric-value {
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 6px 8px;
-  border-radius: 7.5%;
-  font-weight: 700;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-left: 8px; /* Небольшой отступ слева от имени */
 }
