@@ -71,6 +71,171 @@
         .lang-btn.active:hover {
           background: #5bc0bd; /* Цвет активной кнопки при наведении */
         }
+
+        /* === ЦЕНТРИРОВАНИЕ ЗАГОЛОВКА "User" (АЛЬТЕРНАТИВНЫЙ МЕТОД) === */
+        /* Применяем стили непосредственно к ячейке заголовка таблицы */
+        #name-header {
+          /* Используем flexbox для центрирования содержимого */
+          display: flex !important;
+          justify-content: center !important; /* Центрирует по горизонтали */
+          align-items: center !important; /* Центрирует по вертикали */
+          text-align: center !important; /* На всякий случай, для inline-элементов внутри */
+          /* Убедимся, что ширина позволяет центрировать */
+          width: auto !important; /* Используем auto, чтобы ширина определялась содержимым или таблицей */
+        }
+        /* Если внутри #name-header есть вложенные элементы (например, span с текстом или стрелка сортировки),
+           они также должны центрироваться. Flexbox родителя обычно решает это. */
+        #name-header .sort-arrow {
+          /* Убедимся, что стрелка (если есть) также центрирована внутри flex-контейнера */
+          margin-left: 5px; /* Отступ от текста, если он есть */
+          /* Не нужно задавать justify-content для стрелки, так как она внутри flex-контейнера заголовка */
+        }
+
+        /* === СМЕЩЕНИЕ ЗАГОЛОВКА "User" ВПРАВО (на 1.5 см или 15px от левого края) === */
+        /* Используйте это правило ВМЕСТО предыдущего блока, если нужно смещение */
+        #name-header {
+          text-align: left !important; /* Выравнивание по левому краю */
+          padding-left: 15px !important; /* Отступ слева. Меняйте значение (15px) на 10px или 20px для другого сдвига */
+          /* Остальные стили, если были, можно убрать или оставить, если они не мешают */
+        }
+
+        /* === LEADERBOARD TABLE === */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            border-radius: 5px; /* Уменьшено скругление */
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* === ОБЪЕДИНЁННЫЙ БЛОК В НИЖНЕЙ ЧАСТИ === */
+        .combined-bottom-block {
+          display: flex; /* Используем flexbox */
+          flex-wrap: wrap; /* Разрешаем перенос на новую строку при необходимости */
+          align-items: center; /* Выравнивание по центру по вертикали */
+          justify-content: space-between; /* Распределяет пространство между дочерними элементами */
+          gap: 10px; /* Небольшой отступ между элементами */
+          margin-top: 15px; /* Отступ сверху */
+          padding: 10px; /* Внутренний отступ */
+          background: rgba(255, 255, 255, 0.02); /* Легкий фон, если нужно */
+          border-radius: 12px; /* Скругление углов */
+          width: 100%; /* Занимает всю ширину родителя */
+        }
+
+        /* Убедимся, что .team-box и .tabs растягиваются правильно */
+        .combined-bottom-block .team-box {
+          margin: 0; /* Сбрасываем отступы, если были */
+          flex: 1; /* Занимает доступное пространство */
+          min-width: 0; /* Позволяет сжиматься */
+        }
+
+        .combined-bottom-block .team-box p {
+          margin: 0; /* Сбрасываем отступы у параграфа */
+          white-space: nowrap; /* Предотвращаем перенос текста внутри team-box */
+          overflow: hidden; /* Скрываем переполнение */
+          text-overflow: ellipsis; /* Добавляем многоточие при переполнении */
+        }
+
+        .combined-bottom-block .tabs {
+          display: flex; /* Убедимся, что .tabs использует flex */
+          gap: 5px; /* Отступ между кнопками вкладок */
+          margin: 0; /* Сбрасываем отступы */
+          /* Убираем стили, которые могли задавать display: block или width: 100% */
+          width: auto; /* Ширина по содержимому */
+        }
+
+        /* === НОВЫЙ ПРИВЕТСТВЕННЫЙ БЛОК (по скриншоту) === */
+        .welcome-section-new {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-start; /* Выравнивание по верхнему краю */
+            gap: 20px; /* Отступ между левой и правой частью */
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2F4F4F, #1a2a2a);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5%;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section-new::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="white" opacity="0.1">✦✧✦✧</text></svg>');
+            background-repeat: repeat;
+            background-size: 100px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .welcome-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* Выравнивание содержимого по левому краю */
+            flex: 1; /* Левая часть занимает доступное пространство */
+            min-width: 0; /* Позволяет сжиматься */
+        }
+
+        .welcome-header h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+        }
+
+        .dev-info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5%;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: #a9ddd3;
+            align-self: flex-start; /* Прижимаем блок разработчиков к верху */
+        }
+
+        .dev-info-box p {
+            margin: 5px 0;
+            white-space: nowrap;
+        }
+
+        .dev-info-box a {
+            color: #6fe3d1;
+            text-decoration: underline;
+        }
+
+        .dev-info-box a:hover {
+            text-decoration: none;
+        }
+
+        .welcome-content {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: #fff;
+            flex: 2; /* Правая часть (контент) занимает больше места */
+            min-width: 0; /* Позволяет сжиматься */
+        }
+
+        .welcome-content p {
+            margin: 8px 0;
+        }
+
+        .welcome-content a {
+            color: #6fe3d1;
+            text-decoration: underline;
+        }
+
+        .welcome-content a:hover {
+            text-decoration: none;
+        }
+
     </style>
 </head>
 <body>
@@ -89,32 +254,36 @@
     <!-- УБРАН: <div class="header-fixed"> <h1>Ritual Community</h1> </div> -->
 
     <div class="container">
-        <!-- === WELCOME SECTION === -->
-        <div class="welcome-section">
-            <h1>WELCOME RITUALISTS!</h1>
-            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
-            <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
-            <p>By clicking on any participant, you can view their works directly on the website.</p>
-            <p>By clicking on any metric (for example, views), you can filter by it.</p>
-            <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
-            <p><b><span style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
-           <!-- ... предыдущий код до .team-box ... -->
-            <p>Support us on Twitter!</p>
-
-            <!-- Новый объединённый блок -->
-            <div class="combined-bottom-block">
-                <!-- Tabs (теперь внутри нового блока) -->
-                <div class="tabs">
-                    <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
-                    <button class="tab-btn" data-tab="analytics">Analytics</button>
-                </div>
-
-                <div class="team-box">
-                    <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+        <!-- === НОВЫЙ WELCOME SECTION (по скриншоту) === -->
+        <div class="welcome-section-new">
+            <div class="welcome-header">
+                <h1>WELCOME!</h1>
+                <!-- Блок с информацией о разработчиках -->
+                <div class="dev-info-box">
+                    <p><strong>Developer —</strong> <a href="https://x.com/makssay_eth" target="_blank">@makssay_eth</a></p>
+                    <p><strong>Art Creator —</strong> <a href="https://x.com/marrr_marina" target="_blank">@marrr_marina</a></p>
                 </div>
             </div>
-        </div> <!-- Закрывающий тег div для .welcome-section или .container -->
-<!-- ... следующий код ... -->
+            <div class="welcome-content">
+                <p>The leaderboard is based on all posts published inside the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
+                <p>Posts published outside the community will not appear here.</p>
+                <p>Click on any participant to view their works.</p>
+                <p>Click on any metric (e.g. Likes or Views) to sort.</p>
+                <p>Last update: <span id="last-updated">—</span></p>
+            </div>
+        </div>
+
+        <!-- Новый объединённый блок -->
+        <div class="combined-bottom-block">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+            </div>
+
+            <div class="team-box">
+                <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+            </div>
+        </div>
 
         <!-- wrapper for leaderboard content so we can toggle visibility -->
         <div id="leaderboard-wrapper" class="tab-content active">
@@ -140,7 +309,7 @@
                         <option value="30">Last 30 days</option>
                         <option value="all" selected>All time</option>
                     </select>
-                    <!-- --- ИЗМЕНЕНИЕ: Кнопка Refresh удалена --- -->
+                    <!-- Кнопка Refresh удалена -->
                 </div>
             </div>
 
