@@ -773,19 +773,37 @@ try {
       analyticsChart.update();
     } else if (window.Chart) {
       analyticsChart = new Chart(ctx.getContext('2d'), {
-        type: 'bar', // Используем тип 'bar' для столбчатой диаграммы
+        type: 'line', // МЕНЯЕМ тип графика с 'bar' на 'line'
         data: {
           labels: labels,
           datasets: [{
             label: 'Tweets per day',
-            backgroundColor: 'rgba(255, 255, 255, 0.9)', // Цвет заливки столбцов
-            borderColor: 'rgba(255, 255, 255, 1)',     // Цвет обводки столбцов
-             counts // <-- ИСПРАВЛЕНО: убрана лишняя запятая перед 'counts'
+            data: counts,
+            fill: false, // Не заполнять область под линией
+            borderColor: '#ffffff', // Цвет линии - белый
+            borderWidth: 2, // Толщина линии
+            pointBackgroundColor: '#ffffff', // Цвет точки (заполнение)
+            pointBorderColor: '#ffffff', // Цвет обводки точки
+            pointBorderWidth: 2, // Толщина обводки точки
+            pointRadius: 4, // Размер точки
+            pointHoverRadius: 6, // Размер точки при наведении
+            tension: 0.3 // Плавность кривой (0 = прямые линии, 1 = очень плавные)
           }]
         },
         options: {
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
+          plugins: {
+            legend: { display: false }, // Скрываем легенду
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              callbacks: {
+                label: function(context) {
+                  return `Tweets: ${context.raw}`;
+                }
+              }
+            }
+          },
           scales: {
             x: {
               grid: {
@@ -1194,3 +1212,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
