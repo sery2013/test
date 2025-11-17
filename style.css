@@ -1529,3 +1529,10 @@ select option:checked {
 }
 
 
+/* === СМЕЩЕНИЕ ЗАГОЛОВКА "User" ВЛЕВО === */
+#name-header {
+  text-align: left !important; /* Основное выравнивание текста по левому краю */
+  display: flex !important;     /* Делаем ячейку flex-контейнером */
+  justify-content: flex-start !important; /* Располагаем содержимое (текст) в начале (слева) */
+  align-items: center !important;         /* Центрируем по вертикали */
+}
