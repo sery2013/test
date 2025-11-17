@@ -1539,3 +1539,38 @@ select option:checked {
 
 
 
+/* === ОБЪЕДИНЁННЫЙ БЛОК В НИЖНЕЙ ЧАСТИ === */
+.combined-bottom-block {
+  display: flex; /* Используем flexbox */
+  flex-wrap: wrap; /* Разрешаем перенос на новую строку при необходимости */
+  align-items: center; /* Выравнивание по центру по вертикали */
+  justify-content: space-between; /* Распределяет пространство между дочерними элементами */
+  gap: 10px; /* Небольшой отступ между элементами */
+  margin-top: 15px; /* Отступ сверху */
+  padding: 10px; /* Внутренний отступ */
+  background: rgba(255, 255, 255, 0.02); /* Легкий фон, если нужно */
+  border-radius: 12px; /* Скругление углов */
+  width: 100%; /* Занимает всю ширину родителя */
+}
+
+/* Убедимся, что .team-box и .tabs растягиваются правильно */
+.combined-bottom-block .team-box {
+  margin: 0; /* Сбрасываем отступы, если были */
+  flex: 1; /* Занимает доступное пространство */
+  min-width: 0; /* Позволяет сжиматься */
+}
+
+.combined-bottom-block .team-box p {
+  margin: 0; /* Сбрасываем отступы у параграфа */
+  white-space: nowrap; /* Предотвращаем перенос текста внутри team-box */
+  overflow: hidden; /* Скрываем переполнение */
+  text-overflow: ellipsis; /* Добавляем многоточие при переполнении */
+}
+
+.combined-bottom-block .tabs {
+  display: flex; /* Убедимся, что .tabs использует flex */
+  gap: 5px; /* Отступ между кнопками вкладок */
+  margin: 0; /* Сбрасываем отступы */
+  /* Убираем стили, которые могли задавать display: block или width: 100% */
+  width: auto; /* Ширина по содержимому */
+}
