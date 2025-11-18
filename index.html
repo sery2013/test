@@ -71,6 +71,26 @@
         .lang-btn.active:hover {
           background: #5bc0bd; /* Цвет активной кнопки при наведении */
         }
+
+        /* === СТИЛИ ДЛЯ БЛОКА ПРИВЕТСТВИЯ === */
+        .welcome-block {
+            background-color: transparent; /* Полностью прозрачный фон, как вы предпочитаете */
+            border: 1px solid #2F4F4F; /* Рамка цвета #2F4F4F, как для лидерборда */
+            border-radius: 5%; /* Скругленные края, как вы предпочитаете для большинства блоков */
+            padding: 20px; /* Отступы внутри блока для лучшего вида */
+            color: white; /* Белый текст, как вы предпочитаете */
+            text-align: left; /* Выравнивание текста по левому краю */
+            margin: 20px auto; /* Центрирование блока по горизонтали с отступом сверху/снизу */
+            max-width: 800px; /* Ограничивает ширину для лучшего чтения на больших экранах */
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1); /* Легкая тень для глубины (опционально, но рекомендуется) */
+        }
+
+        .welcome-block h1 {
+            margin-top: 0; /* Убирает верхний отступ у заголовка */
+            margin-bottom: 15px; /* Добавляет отступ под заголовком */
+            font-size: 2rem; /* Увеличивает размер заголовка */
+            text-align: center; /* Заголовок можно оставить по центру, как акцент */
+        }
     </style>
 </head>
 <body>
@@ -89,8 +109,8 @@
     <!-- УБРАН: <div class="header-fixed"> <h1>Ritual Community</h1> </div> -->
 
     <div class="container">
-        <!-- === WELCOME SECTION === -->
-        <div class="welcome-section">
+        <!-- === WELCOME SECTION (теперь в рамке) === -->
+        <div class="welcome-block">
             <h1>WELCOME RITUALISTS!</h1>
             <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
             <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
@@ -98,22 +118,19 @@
             <p>By clicking on any metric (for example, views), you can filter by it.</p>
             <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
             <p><b><span style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
-           <!-- ... предыдущий код ... -->
-<div class="welcome-section-new">
-    <!-- ... содержимое приветствия ... -->
-</div>
+        </div>
 
-<!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
-<div class="combined-bottom-block">
-    <div class="tabs">
-        <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
-        <button class="tab-btn" data-tab="analytics">Analytics</button>
-    </div>
-    <div class="team-box">
-        <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
-    </div>
-</div>
-<!-- ... остальной код ... -->
+        <!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
+        <div class="combined-bottom-block">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+            </div>
+            <div class="team-box">
+                <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a></p>
+            </div>
+        </div>
+        <!-- ... остальной код ... -->
 
         <!-- wrapper for leaderboard content so we can toggle visibility -->
         <div id="leaderboard-wrapper" class="tab-content active">
@@ -305,5 +322,3 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
