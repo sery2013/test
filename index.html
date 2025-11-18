@@ -111,26 +111,26 @@
     <div class="container">
         <!-- === WELCOME SECTION (теперь в рамке) === -->
         <div class="welcome-block">
-            <h1>WELCOME RITUALISTS!</h1>
-            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
-            <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
-            <p>By clicking on any participant, you can view their works directly on the website.</p>
-            <p>By clicking on any metric (for example, views), you can filter by it.</p>
+            <h1 id="welcome-title">WELCOME RITUALISTS!</h1>
+            <p id="welcome-desc-1">This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
+            <p id="welcome-desc-2">If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
+            <p id="welcome-desc-3">By clicking on any participant, you can view their works directly on the website.</p>
+            <p id="welcome-desc-4">By clicking on any metric (for example, views), you can filter by it.</p>
             <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
-            <p><b><span style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
+            <p><b><span style="color:#90EE90;" id="welcome-update-text">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
         </div>
 
         <!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
-<div class="combined-bottom-block">
-    <div class="tabs">
-        <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
-        <button class="tab-btn" data-tab="analytics">Analytics</button>
-    </div>
-    <div class="team-box">
-        <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank" style="color: white; text-decoration: underline;">@kaye_moni</a></p>
-    </div>
-</div>
-        <!-- ... остальной код ... -->
+        <div class="combined-bottom-block">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+            </div>
+            <div class="team-box">
+                <p id="support-us-text">Support us on Twitter!</p>
+                <p id="follow-dev-text">Follow Developer - <a href="https://x.com/kaye_moni" target="_blank" style="color: white; text-decoration: underline;">@kaye_moni</a></p>
+            </div>
+        </div>
 
         <!-- wrapper for leaderboard content so we can toggle visibility -->
         <div id="leaderboard-wrapper" class="tab-content active">
@@ -312,14 +312,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 
-  <!-- ... ваш существующий HTML до </body> ... -->
-
   <!-- Snow effect container -->
   <div class="snow-container" id="snowContainer"></div>
-
-  <!-- Chart.js CDN for analytics charts -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
-
