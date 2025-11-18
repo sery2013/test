@@ -702,7 +702,7 @@ try {
           labels: labels,
           datasets: [{
             label: 'Tweets per day',
-            data: counts,
+             counts,
             fill: false, // Не заполнять область под линией
             borderColor: '#ffffff', // Цвет линии - белый
             borderWidth: 2, // Толщина линии
@@ -858,11 +858,23 @@ function setLanguage(lang) {
     const supportP = document.getElementById('support-us');
     if (supportP) supportP.textContent = lang === 'en' ? 'Support us on Twitter!' : 'Поддержите нас в Twitter!';
 
-    const teamP = document.getElementById('follow-dev-text');
-    if (teamP) teamP.textContent = lang === 'en' ? 'Follow Developer - ' : 'Следите за разработчиком - ';
+    // --- ИСПРАВЛЕНИЕ: Обновление текста и стилей для блока "Follow Developer" ---
+    const followDevTextElement = document.getElementById('follow-dev-text');
+    const followDevLinkElement = document.getElementById('follow-dev-link');
+    if (followDevTextElement && followDevLinkElement) {
+        // Обновляем текст до ссылки
+        const linkText = followDevLinkElement.textContent; // Сохраняем текст ссылки
+        followDevTextElement.textContent = lang === 'en' ? 'Follow Developer - ' : 'Следите за разработчиком - ';
+        // Восстанавливаем ссылку с правильным текстом и стилями
+        followDevLinkElement.textContent = linkText; // Восстанавливаем текст '@kaye_moni'
+        // Применяем стили к ссылке, как в index.html
+        followDevLinkElement.style.color = 'white';
+        followDevLinkElement.style.textDecoration = 'underline';
+        // Вставляем ссылку обратно внутрь элемента follow-dev-text
+        followDevTextElement.appendChild(followDevLinkElement);
+    }
+    // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
 
-    const teamPLink = document.getElementById('follow-dev-link');
-    if (teamPLink) teamPLink.textContent = '@kaye_moni';
 
     // --- ОБНОВЛЕНИЕ ТЕКСТА В ФИЛЬТРАХ И ЭЛЕМЕНТАХ LEADERBOARD ---
     const timeSelectOptions = document.querySelectorAll('#time-select option');
