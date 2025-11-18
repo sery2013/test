@@ -11,6 +11,118 @@ let analyticsChart = null;
 let analyticsPeriod = "all"; // filter for analytics: 'all', '7', '14', '30'
 let analyticsHourFilter = "all"; // filter for heatmap hour: 'all', '0', '1', ... '23'
 
+// === LANGUAGE SWITCHER ===
+// --- 1. Определяем глобальную переменную currentLang ---
+let currentLang = 'en'; // Язык по умолчанию
+
+// --- 2. Добавляем объект langData с переводами ---
+const langData = {
+    en: {
+        // ... существующие переводы ...
+        "leaderboard": "Leaderboard",
+        "analytics": "Analytics",
+        "search": "SEARCH USER",
+        "filter-time": "FILTER BY TIME:",
+        "last-7-days": "Last 7 days",
+        "last-14-days": "Last 14 days",
+        "last-30-days": "Last 30 days",
+        "all-time": "All time",
+        "type-handle": "Type @handle or part of name...",
+        "previous": "Previous",
+        "next": "Next",
+        // ... добавьте остальные переводы для EN ...
+        // --- НОВЫЕ ПЕРЕВОДЫ ---
+        "welcome-title": "WELCOME RITUALISTS!",
+        "welcome-desc-1": "This leaderboard is generated based on all posts in the <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>.",
+        "welcome-desc-2": "If your posts are not published through <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>, they will not be visible on the leaderboard.",
+        "welcome-desc-3": "By clicking on any participant, you can view their works directly on the website.",
+        "welcome-desc-4": "By clicking on any metric (for example, views), you can filter by it.",
+        "welcome-update-text": "Updated every 2 days",
+        "support-us-text": "Support us on Twitter!",
+        "follow-dev-text": "Follow Developer - <a href='https://x.com/kaye_moni' target='_blank' style='color: white; text-decoration: underline;'>@kaye_moni</a>",
+        // ... остальные переводы для EN ...
+    },
+    ru: {
+        // ... существующие переводы ...
+        "leaderboard": "Лидерборд",
+        "analytics": "Аналитика",
+        "search": "ПОИСК ПОЛЬЗОВАТЕЛЯ",
+        "filter-time": "ФИЛЬТР ПО ВРЕМЕНИ:",
+        "last-7-days": "Последние 7 дней",
+        "last-14-days": "Последние 14 дней",
+        "last-30-days": "Последние 30 дней",
+        "all-time": "Все время",
+        "type-handle": "Введите @ник или часть имени...",
+        "previous": "Назад",
+        "next": "Вперед",
+        // ... добавьте остальные переводы для RU ...
+        // --- НОВЫЕ ПЕРЕВОДЫ ---
+        "welcome-title": "ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!",
+        "welcome-desc-1": "Этот лидерборд генерируется на основе всех постов в <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>.",
+        "welcome-desc-2": "Если ваши посты не опубликованы через <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>, они не будут отображаться на лидерборде.",
+        "welcome-desc-3": "Нажав на любого участника, вы можете просматривать его работы прямо на сайте.",
+        "welcome-desc-4": "Нажав на любую метрику (например, просмотры), вы можете фильтровать по ней.",
+        "welcome-update-text": "Обновляется каждые 2 дня",
+        "support-us-text": "Поддержите нас в Twitter!",
+        "follow-dev-text": "Подписывайтесь на разработчика - <a href='https://x.com/kaye_moni' target='_blank' style='color: white; text-decoration: underline;'>@kaye_moni</a>",
+        // ... остальные переводы для RU ...
+    }
+};
+
+// --- 3. Создаём функцию для обновления языка ---
+function updateLanguage(lang) {
+    // Обновляем глобальную переменную
+    currentLang = lang;
+
+    // Находим все элементы с атрибутом id
+    document.querySelectorAll('[id]').forEach(element => {
+        // Проверяем, есть ли перевод для этого id в выбранном языке
+        if (langData[lang] && langData[lang][element.id]) {
+            // Меняем HTML содержимое элемента на перевод
+            element.innerHTML = langData[lang][element.id];
+        }
+    });
+
+    // Обновляем активную кнопку переключателя
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.getElementById(`lang-${lang}`).classList.add('active');
+
+    // Сохраняем язык в localStorage
+    localStorage.setItem('lang', lang);
+}
+
+// --- 4. Обработчики кликов для переключения языка ---
+document.addEventListener('DOMContentLoaded', () => {
+    const langEn = document.getElementById('lang-en');
+    const langRu = document.getElementById('lang-ru');
+
+    if (langEn) {
+        langEn.addEventListener('click', () => {
+            if (currentLang !== 'en') {
+                updateLanguage('en');
+            }
+        });
+    }
+    if (langRu) {
+        langRu.addEventListener('click', () => {
+            if (currentLang !== 'ru') {
+                updateLanguage('ru');
+            }
+        });
+    }
+
+    // --- 5. Загрузка сохраненного языка при запуске ---
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang && (savedLang === 'en' || savedLang === 'ru')) {
+        updateLanguage(savedLang);
+    } else {
+        // Если язык не сохранен, устанавливаем язык по умолчанию (EN)
+        updateLanguage('en');
+    }
+});
+
 // - Fetch leaderboard data -
 async function fetchData() {
   try {
@@ -63,7 +175,6 @@ setInterval(() => {
 // - Normalize leaderboard data -
 function normalizeData(json) {
   data = [];
-
   if (Array.isArray(json) && json.length > 0 && !Array.isArray(json[0])) {
     data = json.map(item => extractBaseStatsFromItem(item));
   } else if (Array.isArray(json) && json.length > 0 && Array.isArray(json[0])) {
@@ -79,9 +190,7 @@ function normalizeData(json) {
       return applyTimeFilterIfNeeded(base);
     });
   }
-
   data = data.map(d => applyTimeFilterIfNeeded(d));
-
   function extractBaseStatsFromItem(item) {
     const username = item.username || item.user || item.name || item.screen_name || "";
     const posts = Number(item.posts || item.tweets || 0);
@@ -91,24 +200,19 @@ function normalizeData(json) {
     const views = Number(item.views || item.views_count || 0);
     return { username, posts, likes, retweets, comments, views };
   }
-
   function applyTimeFilterIfNeeded(base) {
     if (!base || !base.username) return base;
     if (timeFilter === "all") return base;
-
     const days = Number(timeFilter);
     if (!days || days <= 0) return base;
-
     const now = new Date();
     const uname = String(base.username).toLowerCase().replace(/^@/, "");
-
     const userTweets = allTweets.filter(t => {
       const candidate = (t.user && (t.user.screen_name || t.user.name)) || "";
       return String(candidate).toLowerCase().replace(/^@/, "") === uname;
     });
 
     let posts = 0, likes = 0, retweets = 0, comments = 0, views = 0;
-
     userTweets.forEach(tweet => {
       const created = tweet.tweet_created_at || tweet.created_at || tweet.created || null;
       if (!created) return;
@@ -165,7 +269,6 @@ function shareUserOnTwitter(username) {
 function renderTable() {
   const tbody = document.getElementById("leaderboard-body");
   tbody.innerHTML = "";
-
   const filtered = filterData();
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
   if (currentPage > totalPages) currentPage = totalPages;
@@ -281,19 +384,15 @@ function showTweets(username) {
     const container = document.getElementById("tweets-list");
     const title = document.getElementById("tweets-title");
     container.innerHTML = "";
-
     const userTweets = allTweets.filter(tweet => {
         const candidate = (tweet.user && (tweet.user.screen_name || tweet.user.name)) || "";
         return candidate.toLowerCase().replace(/^@/, "") === username.toLowerCase().replace(/^@/, "");
     });
-
     title.textContent = `Посты пользователя: ${username}`;
-
     if(userTweets.length === 0) {
         container.innerHTML = "<li>У пользователя нет постов</li>";
         return;
     }
-
     userTweets.forEach(tweet => {
         const li = document.createElement("li");
         const content = tweet.text || tweet.content || "(no content)";
@@ -314,7 +413,6 @@ function addUserClickHandlers() {
     });
 }
 
-
 // - Создание аккордеона твитов -
 function toggleTweetsRow(tr, username) {
     // Если уже есть раскрытая строка под этим пользователем — удаляем её
@@ -323,7 +421,6 @@ function toggleTweetsRow(tr, username) {
         nextRow.remove();
         return;
     }
-
     // Удаляем все остальные раскрытые строки
     document.querySelectorAll(".tweets-row").forEach(row => row.remove());
 
@@ -358,8 +455,6 @@ function toggleTweetsRow(tr, username) {
 
     tweetsRow.appendChild(td);
     tr.parentNode.insertBefore(tweetsRow, tr.nextElementSibling);
-
-
 }
 
 function toggleTweetsRow(tr, username) {
@@ -424,7 +519,6 @@ function toggleTweetsRow(tr, username) {
       card.classList.add("tweet-card");
       const wordCount = content.trim().split(/\s+/).length;
       if (wordCount <= 3 && !imgTag) card.classList.add("short");
-
       card.innerHTML = `
         <a href="${url}" target="_blank" style="text-decoration:none; color:inherit;">
           <p>${escapeHtml(content)}</p>
@@ -442,10 +536,6 @@ function toggleTweetsRow(tr, username) {
   tr.parentNode.insertBefore(tweetsRow, tr.nextElementSibling);
 }
 
-
-
-
-
 // - Обновляем обработчики клика -
 function addUserClickHandlers() {
     const tbody = document.getElementById("leaderboard-body");
@@ -458,8 +548,6 @@ function addUserClickHandlers() {
 }
 
 // - renderTable остаётся как раньше, addUserClickHandlers вызывается в конце -
-
-
 
 // - Tabs setup and Analytics rendering -
 function setupTabs() {
@@ -515,8 +603,8 @@ function renderHeatmap(tweets) {
       cell.style.width = '100%';
       cell.style.aspectRatio = '1';
       cell.style.borderRadius = '3px';
-      cell.title = `${count} tweet(s)\n${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]}, ${hour}:00 UTC`;
-
+      cell.title = `${count} tweet(s)
+${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]}, ${hour}:00 UTC`;
       if (count === 0) {
         cell.style.backgroundColor = 'rgba(255,255,255,0.03)';
       } else {
@@ -549,15 +637,12 @@ function downloadFile(filename, content, mimeType = 'text/plain') {
 function exportToCSV() {
   const users = window._analyticsFilteredData?.users || {};
   const rows = [];
-
   // Заголовок
   rows.push(['Username', 'Posts', 'Likes', 'Views'].join(','));
-
   // Данные
   for (const [username, stats] of Object.entries(users)) {
     rows.push([username, stats.posts, stats.likes, stats.views].map(v => `"${v}"`).join(','));
   }
-
   const csvContent = rows.join('\n');
   downloadFile('leaderboard-export.csv', csvContent, 'text/csv');
 }
@@ -573,7 +658,6 @@ function exportToJSON() {
 function bindExportButtons() {
   const csvBtn = document.getElementById('export-csv');
   const jsonBtn = document.getElementById('export-json');
-
   if (csvBtn && !csvBtn._bound) {
     csvBtn.addEventListener('click', function(e) {
       e.preventDefault(); // Останавливаем любое стандартное поведение
@@ -582,7 +666,6 @@ function bindExportButtons() {
     });
     csvBtn._bound = true;
   }
-
   if (jsonBtn && !jsonBtn._bound) {
     jsonBtn.addEventListener('click', function(e) {
       e.preventDefault(); // Останавливаем любое стандартное поведение
@@ -593,13 +676,11 @@ function bindExportButtons() {
   }
 }
 
-
 function renderAnalytics() {
   // Filter tweets by the selected analytics period
   let tweets = Array.isArray(allTweets) ? allTweets : [];
   const now = new Date();
   const period = analyticsPeriod;
-
   if (period !== 'all') {
     const days = Number(period);
     if (days > 0) {
@@ -653,6 +734,7 @@ function renderAnalytics() {
   const avgPosts = uniqueUsers ? (totalPosts/uniqueUsers) : 0;
   const avgLikes = uniqueUsers ? (totalLikes/uniqueUsers) : 0;
   const avgViews = uniqueUsers ? (totalViews/uniqueUsers) : 0;
+
   const elAvgPosts = document.getElementById('avg-posts');
   const elAvgLikes = document.getElementById('avg-likes');
   const elAvgViews = document.getElementById('avg-views');
@@ -671,6 +753,7 @@ function renderAnalytics() {
     const arr = Object.entries(data.users).map(([name,stats]) => ({ name, value: Number(stats[metric]||0), stats }));
     arr.sort((a,b)=> b.value - a.value);
     const top = arr.slice(0,10);
+
     listEl.innerHTML = '';
     if (top.length === 0) {
       listEl.innerHTML = '<li>Нет данных</li>';
@@ -723,6 +806,7 @@ function renderAnalytics() {
     });
     postsArr.sort((a,b) => (b[metric]||0) - (a[metric]||0));
     const top = postsArr.slice(0,10);
+
     listEl.innerHTML = '';
     if (top.length === 0) { listEl.innerHTML = '<li>Нет данных</li>'; return; }
     top.forEach((p, idx) => {
@@ -883,6 +967,7 @@ function setupAnalyticsTabs() {
       // Remove active from all buttons and sections
       btns.forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.analytics-nested-content').forEach(s => s.classList.remove('active'));
+
       // Add active to clicked button and corresponding section
       btn.classList.add('active');
       const section = btn.dataset.analyticsTab;
@@ -895,268 +980,6 @@ function setupAnalyticsTabs() {
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
 
-// === LANGUAGE SWITCHER ===
-// УБЕДИТЕСЬ, ЧТО ГЛОБАЛЬНАЯ ПЕРЕМЕННАЯ currentLang ОПРЕДЕЛЕНА
-// let currentLang = 'en'; // Должна быть в начале файла
-
-function setLanguage(lang) {
-    currentLang = lang;
-    // Обновляем активные классы кнопок переключателя
-    const langEn = document.getElementById('lang-en');
-    const langRu = document.getElementById('lang-ru');
-    if (langEn) {
-        langEn.classList.toggle('active', lang === 'en');
-        langEn.classList.toggle('inactive', lang !== 'en'); // Опционально для стилей
-    }
-    if (langRu) {
-        langRu.classList.toggle('active', lang === 'ru');
-        langRu.classList.toggle('inactive', lang !== 'ru'); // Опционально для стилей
-    }
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА В .welcome-section ---
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'en' ? 'WELCOME RITUALISTS!' : 'ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!';
-
-    const welcomeP1 = document.querySelector('.welcome-section p:nth-of-type(1)');
-    if (welcomeP1) welcomeP1.textContent = lang === 'en' ? 'This leaderboard is generated based on all posts in the ' : 'Этот лидерборд генерируется на основе всех постов в сообществе ';
-
-    const welcomeP2 = document.querySelector('.welcome-section p:nth-of-type(2)');
-    if (welcomeP2) welcomeP2.textContent = lang === 'en' ? 'If your posts are not published through ' : 'Если ваши посты не публикуются через ';
-
-    const welcomeP3 = document.querySelector('.welcome-section p:nth-of-type(3)');
-    if (welcomeP3) welcomeP3.textContent = lang === 'en' ? 'By clicking on any participant, you can view their works directly on the website.' : 'Щёлкнув по любому участнику, вы можете просмотреть его работы на сайте.';
-
-    const welcomeP4 = document.querySelector('.welcome-section p:nth-of-type(4)');
-    if (welcomeP4) welcomeP4.textContent = lang === 'en' ? 'By clicking on any metric (for example, views), you can filter by it.' : 'Щёлкнув по любой метрике (например, просмотры), вы можете отфильтровать по ней.';
-
-    const updateInfoP = document.querySelector('.welcome-section p:nth-of-type(5)');
-    if (updateInfoP) updateInfoP.innerHTML = lang === 'en' ? '<b><span style="color:#90EE90;">Updates every 2 days</span></b>' : '<b><span style="color:#90EE90;">Обновляется каждые 2 дня</span></b>';
-
-    const supportP = document.querySelector('.welcome-section p:nth-of-type(7)');
-    if (supportP) supportP.textContent = lang === 'en' ? 'Support us on Twitter!' : 'Поддержите нас в Twitter!';
-
-    const teamP = document.querySelector('.team-box p');
-    if (teamP) teamP.innerHTML = lang === 'en' ? 'Follow Developer - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a>' : 'Разработчик - <a href="https://x.com/kaye_moni" target="_blank">@kaye_moni</a>';
-
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА В ФИЛЬТРАХ И ЭЛЕМЕНТАХ LEADERBOARD ---
-    const timeSelectOptions = document.querySelectorAll('#time-select option');
-    if (timeSelectOptions.length >= 4) {
-        timeSelectOptions[0].textContent = lang === 'en' ? 'Last 7 days' : 'Последние 7 дней';
-        timeSelectOptions[1].textContent = lang === 'en' ? 'Last 14 days' : 'Последние 14 дней';
-        timeSelectOptions[2].textContent = lang === 'en' ? 'Last 30 days' : 'Последние 30 дней';
-        timeSelectOptions[3].textContent = lang === 'en' ? 'All time' : 'Все время';
-    }
-
-    const searchInput = document.getElementById('search');
-    if (searchInput) searchInput.placeholder = lang === 'en' ? 'Search user...' : 'Поиск пользователя...';
-
-    const prevPageBtn = document.getElementById('prev-page');
-    if (prevPageBtn) prevPageBtn.textContent = lang === 'en' ? 'Previous' : 'Назад';
-
-    const nextPageBtn = document.getElementById('next-page');
-    if (nextPageBtn) nextPageBtn.textContent = lang === 'en' ? 'Next' : 'Вперёд';
-
-    // Обновление текста кнопки Refresh (если она есть)
-    // УДАЛЕНО: Кнопка Refresh больше не поддерживается в этом скрипте
-
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА ВО ВКЛАДКАХ ---
-    const leaderboardTabBtn = document.querySelector('.tab-btn[data-tab="leaderboard"]');
-    if (leaderboardTabBtn) leaderboardTabBtn.textContent = lang === 'en' ? 'Leaderboard' : 'Лидерборд';
-
-    const analyticsTabBtn = document.querySelector('.tab-btn[data-tab="analytics"]');
-    if (analyticsTabBtn) analyticsTabBtn.textContent = lang === 'en' ? 'Analytics' : 'Аналитика';
-
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА В ANALYTICS ---
-    const analyticsH2 = document.querySelector('#tab-analytics h2');
-    if (analyticsH2) analyticsH2.textContent = lang === 'en' ? 'Analytics' : 'Аналитика';
-
-    const analyticsTimeOptions = document.querySelectorAll('#analytics-time-select option');
-    if (analyticsTimeOptions.length >= 4) {
-        analyticsTimeOptions[0].textContent = lang === 'en' ? 'All time' : 'Все время';
-        analyticsTimeOptions[1].textContent = lang === 'en' ? 'Last 30 days' : 'Последние 30 дней';
-        analyticsTimeOptions[2].textContent = lang === 'en' ? 'Last 14 days' : 'Последние 14 дней';
-        analyticsTimeOptions[3].textContent = lang === 'en' ? 'Last 7 days' : 'Последние 7 дней';
-    }
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА LABEL И ОПЦИЙ ДЛЯ ФИЛЬТРА ПО ЧАСАМ ---
-    const analyticsTimeLabel = document.querySelector('label[for="analytics-time-select"]');
-    if (analyticsTimeLabel) analyticsTimeLabel.textContent = lang === 'en' ? 'Filter by time:' : 'Фильтр по времени:';
-
-    const hourLabel = document.querySelector('label[for="hour-select"]');
-    if (hourLabel) hourLabel.textContent = lang === 'en' ? 'Filter by hour:' : 'Фильтр по часам:';
-
-    const hourSelectOptions = document.querySelectorAll('#hour-select option');
-    if (hourSelectOptions.length >= 25) { // Проверяем, что есть опции "All hours" и "0"-"23"
-        hourSelectOptions[0].textContent = lang === 'en' ? 'All hours' : 'Все часы';
-        for (let i = 1; i <= 24; i++) {
-            if (hourSelectOptions[i]) {
-                hourSelectOptions[i].textContent = `${i - 1}:00`;
-            }
-        }
-    }
-    // --- КОНЕЦ ОБНОВЛЕНИЯ ТЕКСТА LABEL И ОПЦИЙ ДЛЯ ФИЛЬТРА ПО ЧАСАМ ---
-
-
-    const avgMetricsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="averages"]');
-    if (avgMetricsBtn) avgMetricsBtn.textContent = lang === 'en' ? 'Avg metrics' : 'Средние метрики';
-
-    const topAuthorsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="authors"]');
-    if (topAuthorsBtn) topAuthorsBtn.textContent = lang === 'en' ? 'Top 10 authors' : 'Топ-10 авторов';
-
-    const topPostsBtn = document.querySelector('.analytics-tab-btn[data-analytics-tab="posts"]');
-    if (topPostsBtn) topPostsBtn.textContent = lang === 'en' ? 'Top 10 posts' : 'Топ-10 постов';
-
-    const exportCsvBtn = document.getElementById('export-csv');
-    if (exportCsvBtn) exportCsvBtn.textContent = lang === 'en' ? 'Export CSV' : 'Экспорт CSV';
-
-    const exportJsonBtn = document.getElementById('export-json');
-    if (exportJsonBtn) exportJsonBtn.textContent = lang === 'en' ? 'Export JSON' : 'Экспорт JSON';
-
-    // --- ОБНОВЛЕНИЕ ЗАГОЛОВКОВ ТАБЛИЦЫ ---
-    const headers = {
-        'name-header': { en: 'User', ru: 'Пользователь' },
-        'posts-header': { en: 'Posts', ru: 'Посты' },
-        'likes-header': { en: 'Likes', ru: 'Лайки' },
-        'retweets-header': { en: 'Retweets', ru: 'Ретвиты' },
-        'comments-header': { en: 'Comments', ru: 'Комментарии' },
-        'views-col-header': { en: 'Views', ru: 'Просмотры' }
-    };
-    Object.entries(headers).forEach(([id, texts]) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = texts[lang];
-    });
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА ФИЛЬТРОВ В ANALYTICS ---
-    const authorMetricOptions = document.querySelectorAll('#author-metric-select option');
-    if (authorMetricOptions.length >= 3) {
-        authorMetricOptions[0].textContent = lang === 'en' ? 'Posts' : 'Посты';
-        // authorMetricOptions[1].textContent = lang === 'en' ?authorMetricOptions[1].textContent = lang === 'en' ? 'Likes' : 'Лайки'; // <-- ИСПРАВЛЕНО: удалена строка
-        authorMetricOptions[1].textContent = lang === 'en' ? 'Likes' : 'Лайки'; // <-- ИСПРАВЛЕНО: добавлена строка
-        authorMetricOptions[2].textContent = lang === 'en' ? 'Views' : 'Просмотры';
-    }
-    const postMetricOptions = document.querySelectorAll('#post-metric-select option');
-    if (postMetricOptions.length >= 2) {
-        postMetricOptions[0].textContent = lang === 'en' ? 'Likes' : 'Лайки';
-        postMetricOptions[1].textContent = lang === 'en' ? 'Views' : 'Просмотры';
-    }
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА ЭЛЕМЕНТОВ ВЛОЖЕННЫХ РАЗДЕЛОВ ANALYTICS ---
-    const avgMetricsH3 = document.querySelector('#analytics-averages-section h3');
-    if (avgMetricsH3) avgMetricsH3.textContent = lang === 'en' ? 'Average metrics per user' : 'Средние метрики на пользователя';
-
-    const heatmapH3 = document.querySelector('#heatmap-container').parentElement.querySelector('h3');
-    if (heatmapH3) heatmapH3.textContent = lang === 'en' ? 'Activity Heatmap (Tweets by Day & Hour)' : 'Тепловая карта активности (Твиты по дням и часам)';
-
-    const topAuthorsH3 = document.querySelector('#analytics-authors-section h3');
-    if (topAuthorsH3) topAuthorsH3.textContent = lang === 'en' ? 'Top 10 authors' : 'Топ-10 авторов';
-
-    const topPostsH3 = document.querySelector('#analytics-posts-section h3');
-    if (topPostsH3) topPostsH3.textContent = lang === 'en' ? 'Top 10 posts' : 'Топ-10 постов';
-
-    const sortLabel1 = document.querySelector('#analytics-authors-section label[for="author-metric-select"]');
-    if (sortLabel1) sortLabel1.textContent = lang === 'en' ? 'Sort by:' : 'Сортировать по:';
-
-    const sortLabel2 = document.querySelector('#analytics-posts-section label[for="post-metric-select"]');
-    if (sortLabel2) sortLabel2.textContent = lang === 'en' ? 'Sort by:' : 'Сортировать по:';
-
-    // --- ОБНОВЛЕНИЕ ТЕКСТА В БЛОКАХ СТАТИСТИКИ ---
-    // Функция обновления текста в блоках статистики (Total Posts, Avg Posts и т.д.)
-    // Извлекаем числовые значения перед обновлением текста
-    const totalPostsEl = document.getElementById('total-posts');
-    if (totalPostsEl) {
-        const currentText = totalPostsEl.textContent;
-        // Извлекаем значение после ":"
-        const value = currentText.split(': ')[1] || '0';
-        totalPostsEl.textContent = lang === 'en' ? `Total Posts: ${value}` : `Всего Постов: ${value}`;
-    }
-
-    const totalUsersEl = document.getElementById('total-users');
-    if (totalUsersEl) {
-        const currentText = totalUsersEl.textContent;
-        const value = currentText.split(': ')[1] || '0';
-        totalUsersEl.textContent = lang === 'en' ? `Total Users: ${value}` : `Всего Пользователей: ${value}`;
-    }
-
-    const totalViewsEl = document.getElementById('total-views');
-    if (totalViewsEl) {
-        const currentText = totalViewsEl.textContent;
-        const value = currentText.split(': ')[1] || '0';
-        totalViewsEl.textContent = lang === 'en' ? `Total Views: ${value}` : `Всего Просмотров: ${value}`;
-    }
-
-    const avgPostsEl = document.getElementById('avg-posts');
-    if (avgPostsEl) {
-        const currentText = avgPostsEl.textContent;
-        const value = currentText.split(': ')[1] || '0.00';
-        avgPostsEl.textContent = lang === 'en' ? `Avg Posts: ${value}` : `Среднее Постов: ${value}`;
-    }
-
-    const avgLikesEl = document.getElementById('avg-likes');
-    if (avgLikesEl) {
-        const currentText = avgLikesEl.textContent;
-        const value = currentText.split(': ')[1] || '0.00';
-        avgLikesEl.textContent = lang === 'en' ? `Avg Likes: ${value}` : `Среднее Лайков: ${value}`;
-    }
-
-    const avgViewsEl = document.getElementById('avg-views');
-    if (avgViewsEl) {
-        const currentText = avgViewsEl.textContent;
-        const value = currentText.split(': ')[1] || '0.00';
-        avgViewsEl.textContent = lang === 'en' ? `Avg Views: ${value}` : `Среднее Просмотров: ${value}`;
-    }
-}
-
-// --- ОБНОВЛЕНИЕ ПОДСКАЗКИ КНОПКИ "ПОДЕЛИТЬСЯ" В renderTable ---
-// Найдите функцию renderTable и измените строку с shareBtn.title следующим образом:
-/*
-// ВНУТРИ renderTable, ВНУТРИ ЦИКЛА pageData.forEach(stats => { ...
-// ...
-const shareBtn = document.createElement("button");
-// ...
-// --- ИЗМЕНЕНИЕ СЛЕДУЮЩЕЙ СТРОКИ ---
-shareBtn.title = currentLang === 'en' ? `Share ${escapeHtml(name)}'s stats on Twitter` : `Поделиться статистикой ${escapeHtml(name)} в Twitter`;
-// ...
-*/
-// Эта строка уже внесена в renderTable выше.
-
-// --- ОБРАБОТЧИКИ КЛИКОВ ДЛЯ ПЕРЕКЛЮЧЕНИЯ ЯЗЫКА ---
-document.addEventListener('DOMContentLoaded', () => {
-    const langEn = document.getElementById('lang-en');
-    const langRu = document.getElementById('lang-ru');
-
-    if (langEn) {
-        langEn.addEventListener('click', () => {
-            if (currentLang !== 'en') {
-                setLanguage('en');
-                localStorage.setItem('lang', 'en'); // Сохраняем язык в localStorage
-            }
-        });
-    }
-    if (langRu) {
-        langRu.addEventListener('click', () => {
-            if (currentLang !== 'ru') {
-                setLanguage('ru');
-                localStorage.setItem('lang', 'ru'); // Сохраняем язык в localStorage
-            }
-        });
-    }
-
-    // --- ЗАГРУЗКА СОХРАНЕННОГО ЯЗЫКА ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ---
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang && (savedLang === 'en' || savedLang === 'ru')) {
-        setLanguage(savedLang);
-    } else {
-        // Если язык не сохранен, можно определить по языку браузера (опционально)
-        // const browserLang = navigator.language.startsWith('ru') ? 'ru' : 'en';
-        // setLanguage(browserLang);
-        // Но по умолчанию у нас en, если ничего не сохранено
-        setLanguage('en');
-    }
-});
-
 // === SNOW EFFECT INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', () => {
     const snowContainer = document.getElementById('snowContainer');
@@ -1164,24 +987,19 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('Snow container element not found.');
         return;
     }
-
     const snowflakeCount = 50; // Количество снежинок (можно регулировать плотность)
     const containerRect = snowContainer.getBoundingClientRect();
-
     for (let i = 0; i < snowflakeCount; i++) {
         const flake = document.createElement('div');
         flake.classList.add('snowflake');
-
         // Случайные размеры снежинок (например, от 2 до 6 пикселей)
         const size = Math.random() * 4 + 2;
         flake.style.width = `${size}px`;
         flake.style.height = `${size}px`;
-
         // Случайная начальная позиция X
         const startX = Math.random() * containerRect.width;
         flake.style.left = `${startX}px`;
         flake.style.top = `${Math.random() * -containerRect.height}px`; // Начинают падать сверху
-
         // Случайные параметры анимации для разнообразия
         const durationFall = Math.random() * 10 + 5; // Длительность падения (5-15 секунд)
         const durationSway = Math.random() * 4 + 3;  // Длительность колебания (3-7 секунд)
@@ -1196,14 +1014,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Мы можем динамически создавать уникальные @keyframes, но это громоздко.
         // Вместо этого, можно просто менять transform вручную через JS с requestAnimationFrame,
         // но анимация CSS обычно плавнее.
-
         // Простой способ добавить немного индивидуальности без динамических @keyframes:
         // Случайная задержка начала анимации
         flake.style.animationDelay = `${Math.random() * 5}s`; // Задержка от 0 до 5 секунд
-
         snowContainer.appendChild(flake);
     }
-
     // Опционально: пересчитать позиции при изменении размера окна
     window.addEventListener('resize', () => {
         const newRect = snowContainer.getBoundingClientRect();
@@ -1212,4 +1027,3 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
-
