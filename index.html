@@ -99,8 +99,8 @@
         <a href="javascript:location.reload()" class="banner-link"></a>
         <!-- === LANGUAGE SWITCHER (в правом верхнем углу) === -->
         <div class="lang-switcher">
-            <span id="lang-en" class="lang-btn active">EN</span>
-            <span id="lang-ru" class="lang-btn">RU</span>
+            <span id="lang-en" class="lang-btn active" data-lang="en">EN</span>
+            <span id="lang-ru" class="lang-btn" data-lang="ru">RU</span>
         </div>
     </div>
 
@@ -111,25 +111,25 @@
     <div class="container">
         <!-- === WELCOME SECTION (теперь в рамке) === -->
         <div class="welcome-block">
-            <h1>WELCOME RITUALISTS!</h1>
-            <p>This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
-            <p>If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
-            <p>By clicking on any participant, you can view their works directly on the website.</p>
-            <p>By clicking on any metric (for example, views), you can filter by it.</p>
+            <h1 id="welcome-title">WELCOME RITUALISTS!</h1>
+            <p id="welcome-desc-1">This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.</p>
+            <p id="welcome-desc-2">If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.</p>
+            <p id="welcome-desc-3">By clicking on any participant, you can view their works directly on the website.</p>
+            <p id="welcome-desc-4">By clicking on any metric (for example, views), you can filter by it.</p>
             <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
-            <p><b><span style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
+            <p><b><span id="last-updated-static" style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
         </div>
 
         <!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
-<div class="combined-bottom-block">
-    <div class="tabs">
-        <button class="tab-btn active" data-tab="leaderboard">Leaderboard</button>
-        <button class="tab-btn" data-tab="analytics">Analytics</button>
-    </div>
-    <div class="team-box">
-        <p>Follow Developer - <a href="https://x.com/kaye_moni" target="_blank" style="color: white; text-decoration: underline;">@kaye_moni</a></p>
-    </div>
-</div>
+        <div class="combined-bottom-block">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="leaderboard" id="tab-leaderboard-btn">Leaderboard</button>
+                <button class="tab-btn" data-tab="analytics" id="tab-analytics-btn">Analytics</button>
+            </div>
+            <div class="team-box">
+                <p id="follow-dev-text">Follow Developer - <a href="https://x.com/kaye_moni" target="_blank" id="follow-dev-link" style="color: white; text-decoration: underline;">@kaye_moni</a></p>
+            </div>
+        </div>
         <!-- ... остальной код ... -->
 
         <!-- wrapper for leaderboard content so we can toggle visibility -->
@@ -145,16 +145,16 @@
             <!-- === SEARCH AND TIME FILTER IN ONE LINE === -->
             <div class="search-time-filter-container">
                 <div class="search-section">
-                    <label for="search" class="search-label">SEARCH USER</label>
+                    <label for="search" class="search-label" id="search-label">SEARCH USER</label>
                     <input type="text" id="search" placeholder="Type @handle or part of name..." class="search-input">
                 </div>
                 <div class="filter-section">
-                    <span class="filter-label">FILTER BY TIME:</span>
+                    <span class="filter-label" id="filter-label">FILTER BY TIME:</span>
                     <select id="time-select" class="time-select">
-                        <option value="7">Last 7 days</option>
-                        <option value="14">Last 14 days</option>
-                        <option value="30">Last 30 days</option>
-                        <option value="all" selected>All time</option>
+                        <option value="7" id="time-7">Last 7 days</option>
+                        <option value="14" id="time-14">Last 14 days</option>
+                        <option value="30" id="time-30">Last 30 days</option>
+                        <option value="all" id="time-all" selected>All time</option>
                     </select>
                     <!-- --- ИЗМЕНЕНИЕ: Кнопка Refresh удалена --- -->
                 </div>
@@ -177,9 +177,9 @@
 
             <!-- Пагинация -->
             <div class="pagination">
-                <button id="prev-page">Previous</button>
+                <button id="prev-page" id="prev-page-btn">Previous</button>
                 <span id="page-info"></span>
-                <button id="next-page">Next</button>
+                <button id="next-page" id="next-page-btn">Next</button>
             </div>
 
             <!-- Твиты выбранного пользователя -->
@@ -190,59 +190,59 @@
 
         <!-- Analytics tab content (hidden by default) -->
         <div id="tab-analytics" class="tab-content" style="display:none; text-align:left;">
-            <h2>Analytics</h2>
+            <h2 id="analytics-title">Analytics</h2>
 
             <!-- Time filter for analytics -->
             <div class="analytics-time-filter" style="display:flex; gap:10px; align-items:center; margin-bottom:18px; background: rgba(255,255,255,0.02); padding:12px; border-radius:12px;">
-                <label for="analytics-time-select" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by time:</label>
+                <label for="analytics-time-select" id="analytics-time-label" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by time:</label>
                 <select id="analytics-time-select" style="flex:1; max-width:180px;">
-                    <option value="all">All time</option>
-                    <option value="30">Last 30 days</option>
-                    <option value="14">Last 14 days</option>
-                    <option value="7">Last 7 days</option>
+                    <option value="all" id="analytics-time-all">All time</option>
+                    <option value="30" id="analytics-time-30">Last 30 days</option>
+                    <option value="14" id="analytics-time-14">Last 14 days</option>
+                    <option value="7" id="analytics-time-7">Last 7 days</option>
                 </select>
                 <!-- НОВЫЙ ФИЛЬТР ПО ЧАСАМ -->
-                <label for="hour-select" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by hour:</label>
+                <label for="hour-select" id="hour-label" style="font-weight:600; color:#a9ddd3; white-space:nowrap;">Filter by hour:</label>
                 <select id="hour-select" style="flex:1; max-width:180px;">
-                    <option value="all">All hours</option>
-                    <option value="0">00:00</option>
-                    <option value="1">01:00</option>
-                    <option value="2">02:00</option>
-                    <option value="3">03:00</option>
-                    <option value="4">04:00</option>
-                    <option value="5">05:00</option>
-                    <option value="6">06:00</option>
-                    <option value="7">07:00</option>
-                    <option value="8">08:00</option>
-                    <option value="9">09:00</option>
-                    <option value="10">10:00</option>
-                    <option value="11">11:00</option>
-                    <option value="12">12:00</option>
-                    <option value="13">13:00</option>
-                    <option value="14">14:00</option>
-                    <option value="15">15:00</option>
-                    <option value="16">16:00</option>
-                    <option value="17">17:00</option>
-                    <option value="18">18:00</option>
-                    <option value="19">19:00</option>
-                    <option value="20">20:00</option>
-                    <option value="21">21:00</option>
-                    <option value="22">22:00</option>
-                    <option value="23">23:00</option>
+                    <option value="all" id="hour-all">All hours</option>
+                    <option value="0" id="hour-0">00:00</option>
+                    <option value="1" id="hour-1">01:00</option>
+                    <option value="2" id="hour-2">02:00</option>
+                    <option value="3" id="hour-3">03:00</option>
+                    <option value="4" id="hour-4">04:00</option>
+                    <option value="5" id="hour-5">05:00</option>
+                    <option value="6" id="hour-6">06:00</option>
+                    <option value="7" id="hour-7">07:00</option>
+                    <option value="8" id="hour-8">08:00</option>
+                    <option value="9" id="hour-9">09:00</option>
+                    <option value="10" id="hour-10">10:00</option>
+                    <option value="11" id="hour-11">11:00</option>
+                    <option value="12" id="hour-12">12:00</option>
+                    <option value="13" id="hour-13">13:00</option>
+                    <option value="14" id="hour-14">14:00</option>
+                    <option value="15" id="hour-15">15:00</option>
+                    <option value="16" id="hour-16">16:00</option>
+                    <option value="17" id="hour-17">17:00</option>
+                    <option value="18" id="hour-18">18:00</option>
+                    <option value="19" id="hour-19">19:00</option>
+                    <option value="20" id="hour-20">20:00</option>
+                    <option value="21" id="hour-21">21:00</option>
+                    <option value="22" id="hour-22">22:00</option>
+                    <option value="23" id="hour-23">23:00</option>
                 </select>
             </div>
 
             <!-- Nested tabs for analytics sections -->
             <div class="analytics-nested-tabs">
-                <button class="analytics-tab-btn active" data-analytics-tab="averages">Avg metrics</button>
-                <button class="analytics-tab-btn" data-analytics-tab="authors">Top 10 authors</button>
-                <button class="analytics-tab-btn" data-analytics-tab="posts">Top 10 posts</button>
+                <button class="analytics-tab-btn active" data-analytics-tab="averages" id="analytics-tab-averages">Avg metrics</button>
+                <button class="analytics-tab-btn" data-analytics-tab="authors" id="analytics-tab-authors">Top 10 authors</button>
+                <button class="analytics-tab-btn" data-analytics-tab="posts" id="analytics-tab-posts">Top 10 posts</button>
             </div>
 
             <!-- 1) Average metrics per user -->
             <section class="analytics-nested-content active" id="analytics-averages-section" data-analytics-section="averages">
                 <div class="analytics-block" id="analytics-averages">
-                    <h3>Average metrics per user</h3>
+                    <h3 id="analytics-averages-title">Average metrics per user</h3>
                     <div class="analytics-row" style="display:flex; gap:12px; flex-wrap:wrap;">
                         <div class="stat-box" id="avg-posts">Avg Posts: -</div>
                         <div class="stat-box" id="avg-likes">Avg Likes: -</div>
@@ -251,9 +251,9 @@
                     
                     <!-- Heatmap Section -->
                     <div class="analytics-block" style="margin-top: 16px;">
-                        <h3>Activity Heatmap (Tweets by Day & Hour)</h3>
+                        <h3 id="heatmap-title">Activity Heatmap (Tweets by Day & Hour)</h3>
                         <div id="heatmap-container" style="display: grid; grid-template-columns: repeat(24, 1fr); gap: 2px; margin-top: 12px;"></div>
-                        <div style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.85rem; color: #999;">
+                        <div id="heatmap-legend" style="display: flex; gap: 8px; margin-top: 8px; font-size: 0.85rem; color: #999;">
                             <div>Sun</div> <div>Mon</div> <div>Tue</div> <div>Wed</div> <div>Thu</div> <div>Fri</div> <div>Sat</div>
                         </div>
                     </div>
@@ -265,8 +265,8 @@
                     
                     <!-- Export Buttons -->
                     <div style="margin-top: 16px; display: flex; gap: 10px;">
-                        <button id="export-csv" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;">Export CSV</button>
-                        <button id="export-json" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;">Export JSON</button>
+                        <button id="export-csv" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;" id="export-csv-btn">Export CSV</button>
+                        <button id="export-json" class="tab-btn" style="font-size: 0.9rem; padding: 6px 12px;" id="export-json-btn">Export JSON</button>
                     </div>
                 </div>
             </section>
@@ -275,13 +275,13 @@
             <section class="analytics-nested-content" id="analytics-authors-section" data-analytics-section="authors">
                 <div class="analytics-block" id="analytics-top-authors-block">
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <h3 style="margin:0;">Top 10 authors</h3>
+                        <h3 id="top-authors-title" style="margin:0;">Top 10 authors</h3>
                         <div style="display:flex; gap:8px; align-items:center;">
-                            <label for="author-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
+                            <label for="author-metric-select" id="author-metric-label" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
                             <select id="author-metric-select">
-                                <option value="posts">Posts</option>
-                                <option value="likes">Likes</option>
-                                <option value="views">Views</option>
+                                <option value="posts" id="author-metric-posts">Posts</option>
+                                <option value="likes" id="author-metric-likes">Likes</option>
+                                <option value="views" id="author-metric-views">Views</option>
                             </select>
                         </div>
                     </div>
@@ -293,12 +293,12 @@
             <section class="analytics-nested-content" id="analytics-posts-section" data-analytics-section="posts">
                 <div class="analytics-block" id="analytics-top-posts-block">
                     <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
-                        <h3 style="margin:0;">Top 10 posts</h3>
+                        <h3 id="top-posts-title" style="margin:0;">Top 10 posts</h3>
                         <div style="display:flex; gap:8px; align-items:center;">
-                            <label for="post-metric-select" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
+                            <label for="post-metric-select" id="post-metric-label" style="font-weight:600; color:#a9ddd3;">Sort by:</label>
                             <select id="post-metric-select">
-                                <option value="likes">Likes</option>
-                                <option value="views">Views</option>
+                                <option value="likes" id="post-metric-likes">Likes</option>
+                                <option value="views" id="post-metric-views">Views</option>
                             </select>
                         </div>
                     </div>
@@ -320,5 +320,280 @@
   <!-- Chart.js CDN for analytics charts -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="script.js"></script>
+
+  <script>
+    // Объект с переводами
+    const translations = {
+        en: {
+            welcomeTitle: "WELCOME RITUALISTS!",
+            welcomeDesc1: "This leaderboard is generated based on all posts in the <a href=\"https://x.com/i/communities/1896991026272723220\" target=\"_blank\">Ritual Community</a>.",
+            welcomeDesc2: "If your posts are not published through <a href=\"https://x.com/i/communities/1896991026272723220\" target=\"_blank\">Ritual Community</a>, they will not be visible on the leaderboard.",
+            welcomeDesc3: "By clicking on any participant, you can view their works directly on the website.",
+            welcomeDesc4: "By clicking on any metric (for example, views), you can filter by it.",
+            lastUpdatedStatic: "Updated every 2 days",
+            followDevText: "Follow Developer - ",
+            followDevLink: "@kaye_moni",
+            searchLabel: "SEARCH USER",
+            filterLabel: "FILTER BY TIME:",
+            time7: "Last 7 days",
+            time14: "Last 14 days",
+            time30: "Last 30 days",
+            timeAll: "All time",
+            prevPage: "Previous",
+            nextPage: "Next",
+            analyticsTitle: "Analytics",
+            analyticsTimeLabel: "Filter by time:",
+            analyticsTimeAll: "All time",
+            analyticsTime30: "Last 30 days",
+            analyticsTime14: "Last 14 days",
+            analyticsTime7: "Last 7 days",
+            hourLabel: "Filter by hour:",
+            hourAll: "All hours",
+            hour0: "00:00",
+            hour1: "01:00",
+            hour2: "02:00",
+            hour3: "03:00",
+            hour4: "04:00",
+            hour5: "05:00",
+            hour6: "06:00",
+            hour7: "07:00",
+            hour8: "08:00",
+            hour9: "09:00",
+            hour10: "10:00",
+            hour11: "11:00",
+            hour12: "12:00",
+            hour13: "13:00",
+            hour14: "14:00",
+            hour15: "15:00",
+            hour16: "16:00",
+            hour17: "17:00",
+            hour18: "18:00",
+            hour19: "19:00",
+            hour20: "20:00",
+            hour21: "21:00",
+            hour22: "22:00",
+            hour23: "23:00",
+            analyticsTabAverages: "Avg metrics",
+            analyticsTabAuthors: "Top 10 authors",
+            analyticsTabPosts: "Top 10 posts",
+            analyticsAveragesTitle: "Average metrics per user",
+            heatmapTitle: "Activity Heatmap (Tweets by Day & Hour)",
+            heatmapLegend: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+            exportCsvBtn: "Export CSV",
+            exportJsonBtn: "Export JSON",
+            topAuthorsTitle: "Top 10 authors",
+            authorMetricLabel: "Sort by:",
+            authorMetricPosts: "Posts",
+            authorMetricLikes: "Likes",
+            authorMetricViews: "Views",
+            topPostsTitle: "Top 10 posts",
+            postMetricLabel: "Sort by:",
+            postMetricLikes: "Likes",
+            postMetricViews: "Views",
+            tabLeaderboard: "Leaderboard",
+            tabAnalytics: "Analytics",
+            nameHeader: "User",
+            postsHeader: "Posts ▲",
+            likesHeader: "Likes",
+            retweetsHeader: "Retweets",
+            commentsHeader: "Comments",
+            viewsHeader: "Views"
+        },
+        ru: {
+            welcomeTitle: "ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!",
+            welcomeDesc1: "Этот список лидеров генерируется на основе всех постов в <a href=\"https://x.com/i/communities/1896991026272723220\" target=\"_blank\">сообществе Ritual</a>.",
+            welcomeDesc2: "Если ваши посты опубликованы не через <a href=\"https://x.com/i/communities/1896991026272723220\" target=\"_blank\">сообщество Ritual</a>, они не будут видны в списке лидеров.",
+            welcomeDesc3: "Нажав на любого участника, вы можете просмотреть его работы непосредственно на веб-сайте.",
+            welcomeDesc4: "Нажав на любую метрику (например, просмотры), вы можете отфильтровать по ней.",
+            lastUpdatedStatic: "Обновляется каждые 2 дня",
+            followDevText: "Следите за разработчиком - ",
+            followDevLink: "@kaye_moni",
+            searchLabel: "ПОИСК ПОЛЬЗОВАТЕЛЯ",
+            filterLabel: "ФИЛЬТРОВАТЬ ПО ВРЕМЕНИ:",
+            time7: "Последние 7 дней",
+            time14: "Последние 14 дней",
+            time30: "Последние 30 дней",
+            timeAll: "За всё время",
+            prevPage: "Предыдущая",
+            nextPage: "Следующая",
+            analyticsTitle: "Аналитика",
+            analyticsTimeLabel: "Фильтровать по времени:",
+            analyticsTimeAll: "За всё время",
+            analyticsTime30: "Последние 30 дней",
+            analyticsTime14: "Последние 14 дней",
+            analyticsTime7: "Последние 7 дней",
+            hourLabel: "Фильтровать по часу:",
+            hourAll: "Все часы",
+            hour0: "00:00",
+            hour1: "01:00",
+            hour2: "02:00",
+            hour3: "03:00",
+            hour4: "04:00",
+            hour5: "05:00",
+            hour6: "06:00",
+            hour7: "07:00",
+            hour8: "08:00",
+            hour9: "09:00",
+            hour10: "10:00",
+            hour11: "11:00",
+            hour12: "12:00",
+            hour13: "13:00",
+            hour14: "14:00",
+            hour15: "15:00",
+            hour16: "16:00",
+            hour17: "17:00",
+            hour18: "18:00",
+            hour19: "19:00",
+            hour20: "20:00",
+            hour21: "21:00",
+            hour22: "22:00",
+            hour23: "23:00",
+            analyticsTabAverages: "Средние метрики",
+            analyticsTabAuthors: "Топ 10 авторов",
+            analyticsTabPosts: "Топ 10 постов",
+            analyticsAveragesTitle: "Средние метрики на пользователя",
+            heatmapTitle: "Тепловая карта активности (Твиты по дням и часам)",
+            heatmapLegend: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+            exportCsvBtn: "Экспорт CSV",
+            exportJsonBtn: "Экспорт JSON",
+            topAuthorsTitle: "Топ 10 авторов",
+            authorMetricLabel: "Сортировать по:",
+            authorMetricPosts: "Посты",
+            authorMetricLikes: "Лайки",
+            authorMetricViews: "Просмотры",
+            topPostsTitle: "Топ 10 постов",
+            postMetricLabel: "Сортировать по:",
+            postMetricLikes: "Лайки",
+            postMetricViews: "Просмотры",
+            tabLeaderboard: "Лидерборд",
+            tabAnalytics: "Аналитика",
+            nameHeader: "Пользователь",
+            postsHeader: "Посты ▲",
+            likesHeader: "Лайки",
+            retweetsHeader: "Ретвиты",
+            commentsHeader: "Комментарии",
+            viewsHeader: "Просмотры"
+        }
+    };
+
+    // Функция для установки языка
+    function setLanguage(lang) {
+        const t = translations[lang];
+
+        // Обновляем тексты в элементах
+        document.getElementById('welcome-title').textContent = t.welcomeTitle;
+        document.getElementById('welcome-desc-1').innerHTML = t.welcomeDesc1;
+        document.getElementById('welcome-desc-2').innerHTML = t.welcomeDesc2;
+        document.getElementById('welcome-desc-3').textContent = t.welcomeDesc3;
+        document.getElementById('welcome-desc-4').textContent = t.welcomeDesc4;
+        document.getElementById('last-updated-static').textContent = t.lastUpdatedStatic;
+        document.getElementById('follow-dev-text').textContent = t.followDevText;
+        document.getElementById('follow-dev-link').textContent = t.followDevLink;
+
+        document.getElementById('search-label').textContent = t.searchLabel;
+        document.getElementById('filter-label').textContent = t.filterLabel;
+
+        document.getElementById('time-7').textContent = t.time7;
+        document.getElementById('time-14').textContent = t.time14;
+        document.getElementById('time-30').textContent = t.time30;
+        document.getElementById('time-all').textContent = t.timeAll;
+
+        document.getElementById('prev-page-btn').textContent = t.prevPage;
+        document.getElementById('next-page-btn').textContent = t.nextPage;
+
+        document.getElementById('tab-leaderboard-btn').textContent = t.tabLeaderboard;
+        document.getElementById('tab-analytics-btn').textContent = t.tabAnalytics;
+
+        document.getElementById('name-header').textContent = t.nameHeader;
+        document.getElementById('posts-header').textContent = t.postsHeader;
+        document.getElementById('likes-header').textContent = t.likesHeader;
+        document.getElementById('retweets-header').textContent = t.retweetsHeader;
+        document.getElementById('comments-header').textContent = t.commentsHeader;
+        document.getElementById('views-col-header').textContent = t.viewsHeader;
+
+        // Analytics
+        document.getElementById('analytics-title').textContent = t.analyticsTitle;
+        document.getElementById('analytics-time-label').textContent = t.analyticsTimeLabel;
+        document.getElementById('analytics-time-all').textContent = t.analyticsTimeAll;
+        document.getElementById('analytics-time-30').textContent = t.analyticsTime30;
+        document.getElementById('analytics-time-14').textContent = t.analyticsTime14;
+        document.getElementById('analytics-time-7').textContent = t.analyticsTime7;
+
+        document.getElementById('hour-label').textContent = t.hourLabel;
+        document.getElementById('hour-all').textContent = t.hourAll;
+        document.getElementById('hour-0').textContent = t.hour0;
+        document.getElementById('hour-1').textContent = t.hour1;
+        document.getElementById('hour-2').textContent = t.hour2;
+        document.getElementById('hour-3').textContent = t.hour3;
+        document.getElementById('hour-4').textContent = t.hour4;
+        document.getElementById('hour-5').textContent = t.hour5;
+        document.getElementById('hour-6').textContent = t.hour6;
+        document.getElementById('hour-7').textContent = t.hour7;
+        document.getElementById('hour-8').textContent = t.hour8;
+        document.getElementById('hour-9').textContent = t.hour9;
+        document.getElementById('hour-10').textContent = t.hour10;
+        document.getElementById('hour-11').textContent = t.hour11;
+        document.getElementById('hour-12').textContent = t.hour12;
+        document.getElementById('hour-13').textContent = t.hour13;
+        document.getElementById('hour-14').textContent = t.hour14;
+        document.getElementById('hour-15').textContent = t.hour15;
+        document.getElementById('hour-16').textContent = t.hour16;
+        document.getElementById('hour-17').textContent = t.hour17;
+        document.getElementById('hour-18').textContent = t.hour18;
+        document.getElementById('hour-19').textContent = t.hour19;
+        document.getElementById('hour-20').textContent = t.hour20;
+        document.getElementById('hour-21').textContent = t.hour21;
+        document.getElementById('hour-22').textContent = t.hour22;
+        document.getElementById('hour-23').textContent = t.hour23;
+
+        document.getElementById('analytics-tab-averages').textContent = t.analyticsTabAverages;
+        document.getElementById('analytics-tab-authors').textContent = t.analyticsTabAuthors;
+        document.getElementById('analytics-tab-posts').textContent = t.analyticsTabPosts;
+
+        document.getElementById('analytics-averages-title').textContent = t.analyticsAveragesTitle;
+        document.getElementById('heatmap-title').textContent = t.heatmapTitle;
+
+        // Обновляем легенду тепловой карты
+        const legendItems = document.querySelectorAll('#heatmap-legend > div');
+        t.heatmapLegend.forEach((text, index) => {
+            if (legendItems[index]) {
+                legendItems[index].textContent = text;
+            }
+        });
+
+        document.getElementById('export-csv-btn').textContent = t.exportCsvBtn;
+        document.getElementById('export-json-btn').textContent = t.exportJsonBtn;
+
+        document.getElementById('top-authors-title').textContent = t.topAuthorsTitle;
+        document.getElementById('author-metric-label').textContent = t.authorMetricLabel;
+        document.getElementById('author-metric-posts').textContent = t.authorMetricPosts;
+        document.getElementById('author-metric-likes').textContent = t.authorMetricLikes;
+        document.getElementById('author-metric-views').textContent = t.authorMetricViews;
+
+        document.getElementById('top-posts-title').textContent = t.topPostsTitle;
+        document.getElementById('post-metric-label').textContent = t.postMetricLabel;
+        document.getElementById('post-metric-likes').textContent = t.postMetricLikes;
+        document.getElementById('post-metric-views').textContent = t.postMetricViews;
+
+        // Обновляем активную кнопку языка
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+    }
+
+    // Устанавливаем язык по умолчанию (например, английский)
+    setLanguage('en');
+
+    // Добавляем обработчики для кнопок переключения языка
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const selectedLang = this.dataset.lang;
+            if (selectedLang && translations[selectedLang]) {
+                setLanguage(selectedLang);
+            }
+        });
+    });
+
+  </script>
 </body>
 </html>
