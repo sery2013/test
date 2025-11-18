@@ -114,96 +114,6 @@
         .leaderboard-table .retweets-col { width: 15%; }
         .leaderboard-table .comments-col { width: 15%; }
         .leaderboard-table .views-col { width: 20%; }
-
-        /* === СТИЛИ ДЛЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ === */
-        #profile-container {
-            display: none; /* Скрыто по умолчанию */
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #2F4F4F;
-            border-radius: 1px; /* Скругление по вашему предпочтению */
-            background-color: rgba(47, 79, 79, 0.1); /* Прозрачный фон по вашему предпочтению */
-            color: white; /* Белый текст по вашему предпочтению */
-        }
-
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .profile-avatar {
-            width: 60px; /* Размер аватара */
-            height: 60px;
-            border-radius: 50%; /* Круглый аватар */
-            object-fit: cover; /* Обрезка изображения */
-        }
-
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .profile-info h3 {
-            margin: 0;
-            font-size: 1.4rem;
-        }
-
-        .profile-bio {
-            margin: 0;
-            font-size: 0.9rem;
-            color: #ccc; /* Цвет био */
-        }
-
-        .profile-stats {
-            margin: 0;
-            font-size: 0.85rem;
-            color: #aaa; /* Цвет статистики */
-        }
-
-        .profile-link {
-            margin-top: 5px;
-            color: #6fe3d1; /* Цвет ссылки */
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .profile-link:hover {
-            text-decoration: underline;
-        }
-
-        .profile-tweets h4 {
-            margin-top: 15px;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            color: #6fe3d1; /* Цвет заголовка твитов */
-        }
-
-        .profile-tweets ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .profile-tweets li {
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .profile-tweets li:last-child {
-            border-bottom: none;
-        }
-
-        .profile-tweets a {
-            color: #ddd;
-            text-decoration: none;
-        }
-
-        .profile-tweets a:hover {
-            text-decoration: underline;
-        }
-
     </style>
 </head>
 <body>
@@ -230,6 +140,7 @@
             <p id="welcome-desc-3">By clicking on any participant, you can view their works directly on the website.</p>
             <p id="welcome-desc-4">By clicking on any metric (for example, views), you can filter by it.</p>
             <!-- --- ИЗМЕНЕНИЕ: Добавлен span id="last-updated" --- -->
+            <p><b><span id="last-updated-static" style="color:#90EE90;">Updated every 2 days</span> <span id="last-updated" style="color: #a9ddd3; font-size: 0.9rem;">Last updated: —</span></b></p>
         </div>
 
         <!-- Новый объединённый блок (вкладки и follow developer в одной строке) -->
@@ -287,11 +198,6 @@
                 <tbody id="leaderboard-body"></tbody>
             </table>
 
-            <!-- === КОНТЕЙНЕР ДЛЯ ПРОФИЛЯ ПОЛЬЗОВАТЕЛЯ === -->
-            <div id="profile-container">
-                <!-- Содержимое профиля будет вставлено здесь -->
-            </div>
-
             <!-- Пагинация -->
             <div class="pagination">
                 <button id="prev-page">Previous</button>
@@ -299,8 +205,8 @@
                 <button id="next-page">Next</button>
             </div>
 
-            <!-- Твиты выбранного пользователя (скрыты по умолчанию, когда активен профиль) -->
-            <div id="tweets-container" style="display: none; margin-top: 20px;">
+            <!-- Твиты выбранного пользователя -->
+            <div id="tweets-container" style="margin-top: 20px;">
                 <ul id="tweets-list"></ul>
             </div>
         </div>
