@@ -18,7 +18,7 @@ let currentLang = 'en'; // Язык по умолчанию
 // --- 2. Добавляем объект langData с переводами ---
 const langData = {
     en: {
-        // ... существующие переводы ...
+        // Существующие переводы для элементов интерфейса
         "leaderboard": "Leaderboard",
         "analytics": "Analytics",
         "search": "SEARCH USER",
@@ -30,8 +30,35 @@ const langData = {
         "type-handle": "Type @handle or part of name...",
         "previous": "Previous",
         "next": "Next",
-        // ... добавьте остальные переводы для EN ...
-        // --- НОВЫЕ ПЕРЕВОДЫ ---
+        "user-header": "User",
+        "posts-header": "Posts",
+        "likes-header": "Likes",
+        "retweets-header": "Retweets",
+        "comments-header": "Comments",
+        "views-col-header": "Views",
+        "total-posts": "Total Posts",
+        "total-users": "Total Users",
+        "total-views": "Total Views",
+        "avg-posts": "Avg Posts",
+        "avg-likes": "Avg Likes",
+        "avg-views": "Avg Views",
+        "avg-metrics": "Avg metrics",
+        "top-authors": "Top 10 authors",
+        "top-posts": "Top 10 posts",
+        "sort-by": "Sort by:",
+        "export-csv": "Export CSV",
+        "export-json": "Export JSON",
+        "analytics-h2": "Analytics",
+        "filter-by-time": "Filter by time:",
+        "filter-by-hour": "Filter by hour:",
+        "all-hours": "All hours",
+        "avg-metrics-per-user": "Average metrics per user",
+        "activity-heatmap": "Activity Heatmap (Tweets by Day & Hour)",
+        "no-data": "No data",
+        "share-stats-twitter": "Share {username}'s stats on Twitter", // Шаблон для подсказки
+        "tweets-per-day": "Tweets per day", // Для графика
+
+        // --- НОВЫЕ ПЕРЕВОДЫ ДЛЯ ПРИВЕТСТВЕННОГО БЛОКА И ПОД ВКЛАДКАМИ ---
         "welcome-title": "WELCOME RITUALISTS!",
         "welcome-desc-1": "This leaderboard is generated based on all posts in the <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>.",
         "welcome-desc-2": "If your posts are not published through <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>, they will not be visible on the leaderboard.",
@@ -40,10 +67,10 @@ const langData = {
         "welcome-update-text": "Updated every 2 days",
         "support-us-text": "Support us on Twitter!",
         "follow-dev-text": "Follow Developer - <a href='https://x.com/kaye_moni' target='_blank' style='color: white; text-decoration: underline;'>@kaye_moni</a>",
-        // ... остальные переводы для EN ...
+        // --- КОНЕЦ НОВЫХ ПЕРЕВОДОВ ---
     },
     ru: {
-        // ... существующие переводы ...
+        // Существующие переводы для элементов интерфейса
         "leaderboard": "Лидерборд",
         "analytics": "Аналитика",
         "search": "ПОИСК ПОЛЬЗОВАТЕЛЯ",
@@ -55,8 +82,35 @@ const langData = {
         "type-handle": "Введите @ник или часть имени...",
         "previous": "Назад",
         "next": "Вперед",
-        // ... добавьте остальные переводы для RU ...
-        // --- НОВЫЕ ПЕРЕВОДЫ ---
+        "user-header": "Пользователь",
+        "posts-header": "Посты",
+        "likes-header": "Лайки",
+        "retweets-header": "Ретвиты",
+        "comments-header": "Комментарии",
+        "views-col-header": "Просмотры",
+        "total-posts": "Всего Постов",
+        "total-users": "Всего Пользователей",
+        "total-views": "Всего Просмотров",
+        "avg-posts": "Среднее Постов",
+        "avg-likes": "Среднее Лайков",
+        "avg-views": "Среднее Просмотров",
+        "avg-metrics": "Средние метрики",
+        "top-authors": "Топ-10 авторов",
+        "top-posts": "Топ-10 постов",
+        "sort-by": "Сортировать по:",
+        "export-csv": "Экспорт CSV",
+        "export-json": "Экспорт JSON",
+        "analytics-h2": "Аналитика",
+        "filter-by-time": "Фильтр по времени:",
+        "filter-by-hour": "Фильтр по часам:",
+        "all-hours": "Все часы",
+        "avg-metrics-per-user": "Средние метрики на пользователя",
+        "activity-heatmap": "Тепловая карта активности (Твиты по дням и часам)",
+        "no-data": "Нет данных",
+        "share-stats-twitter": "Поделиться статистикой {username} в Twitter", // Шаблон для подсказки
+        "tweets-per-day": "Твиты в день", // Для графика
+
+        // --- НОВЫЕ ПЕРЕВОДЫ ДЛЯ ПРИВЕТСТВЕННОГО БЛОКА И ПОД ВКЛАДКАМИ ---
         "welcome-title": "ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!",
         "welcome-desc-1": "Этот лидерборд генерируется на основе всех постов в <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>.",
         "welcome-desc-2": "Если ваши посты не опубликованы через <a href='https://x.com/i/communities/1896991026272723220' target='_blank'>Ritual Community</a>, они не будут отображаться на лидерборде.",
@@ -65,7 +119,7 @@ const langData = {
         "welcome-update-text": "Обновляется каждые 2 дня",
         "support-us-text": "Поддержите нас в Twitter!",
         "follow-dev-text": "Подписывайтесь на разработчика - <a href='https://x.com/kaye_moni' target='_blank' style='color: white; text-decoration: underline;'>@kaye_moni</a>",
-        // ... остальные переводы для RU ...
+        // --- КОНЕЦ НОВЫХ ПЕРЕВОДОВ ---
     }
 };
 
@@ -92,36 +146,6 @@ function updateLanguage(lang) {
     // Сохраняем язык в localStorage
     localStorage.setItem('lang', lang);
 }
-
-// --- 4. Обработчики кликов для переключения языка ---
-document.addEventListener('DOMContentLoaded', () => {
-    const langEn = document.getElementById('lang-en');
-    const langRu = document.getElementById('lang-ru');
-
-    if (langEn) {
-        langEn.addEventListener('click', () => {
-            if (currentLang !== 'en') {
-                updateLanguage('en');
-            }
-        });
-    }
-    if (langRu) {
-        langRu.addEventListener('click', () => {
-            if (currentLang !== 'ru') {
-                updateLanguage('ru');
-            }
-        });
-    }
-
-    // --- 5. Загрузка сохраненного языка при запуске ---
-    const savedLang = localStorage.getItem('lang');
-    if (savedLang && (savedLang === 'en' || savedLang === 'ru')) {
-        updateLanguage(savedLang);
-    } else {
-        // Если язык не сохранен, устанавливаем язык по умолчанию (EN)
-        updateLanguage('en');
-    }
-});
 
 // - Fetch leaderboard data -
 async function fetchData() {
@@ -236,9 +260,10 @@ function normalizeData(json) {
 function updateTotals() {
   const totalPosts = data.reduce((sum, s) => sum + (Number(s.posts) || 0), 0);
   const totalViews = data.reduce((sum, s) => sum + (Number(s.views) || 0), 0);
-  document.getElementById("total-posts").textContent = `Total Posts: ${totalPosts}`;
-  document.getElementById("total-users").textContent = `Total Users: ${data.length}`;
-  document.getElementById("total-views").textContent = `Total Views: ${totalViews}`;
+  // Обновляем текст, сохраняя ключ для перевода
+  document.getElementById("total-posts").textContent = `${langData[currentLang]['total-posts']}: ${totalPosts}`;
+  document.getElementById("total-users").textContent = `${langData[currentLang]['total-users']}: ${data.length}`;
+  document.getElementById("total-views").textContent = `${langData[currentLang]['total-views']}: ${totalViews}`;
 }
 
 // - Sort, Filter, Render -
@@ -293,7 +318,7 @@ function renderTable() {
     shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: block;"> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.244 2.25H8.05l4.713 6.231zm-1.161 17.52h1.833L7.08 4.126H5.03z"/> </svg>`; // SVG иконка Twitter
     shareBtn.className = 'share-btn'; // Класс для стилей
     // - ОБНОВЛЕНИЕ ПОДСКАЗКИ shareBtn В ЗАВИСИМОСТИ ОТ ЯЗЫКА -
-    const shareBtnTitle = currentLang === 'en' ? `Share ${escapeHtml(name)}'s stats on Twitter` : `Поделиться статистикой ${escapeHtml(name)} в Twitter`;
+    const shareBtnTitle = langData[currentLang]['share-stats-twitter'].replace('{username}', escapeHtml(name));
     shareBtn.title = shareBtnTitle; // Подсказка при наведении
     // - КОНЕЦ ОБНОВЛЕНИЯ ПОДСКАЗКИ -
     shareBtn.onclick = function(e) {
@@ -738,9 +763,9 @@ function renderAnalytics() {
   const elAvgPosts = document.getElementById('avg-posts');
   const elAvgLikes = document.getElementById('avg-likes');
   const elAvgViews = document.getElementById('avg-views');
-  if (elAvgPosts) elAvgPosts.textContent = `Avg Posts: ${avgPosts.toFixed(2)}`;
-  if (elAvgLikes) elAvgLikes.textContent = `Avg Likes: ${avgLikes.toFixed(2)}`;
-  if (elAvgViews) elAvgViews.textContent = `Avg Views: ${avgViews.toFixed(2)}`;
+  if (elAvgPosts) elAvgPosts.textContent = `${langData[currentLang]['avg-posts']}: ${avgPosts.toFixed(2)}`;
+  if (elAvgLikes) elAvgLikes.textContent = `${langData[currentLang]['avg-likes']}: ${avgLikes.toFixed(2)}`;
+  if (elAvgViews) elAvgViews.textContent = `${langData[currentLang]['avg-views']}: ${avgViews.toFixed(2)}`;
 
   // Store filtered data globally for use in event handlers
   window._analyticsFilteredData = { tweets, users, period };
@@ -756,7 +781,7 @@ function renderAnalytics() {
 
     listEl.innerHTML = '';
     if (top.length === 0) {
-      listEl.innerHTML = '<li>Нет данных</li>';
+      listEl.innerHTML = `<li>${langData[currentLang]['no-data']}</li>`;
       return;
     }
     top.forEach((it, idx) => {
@@ -808,7 +833,7 @@ function renderAnalytics() {
     const top = postsArr.slice(0,10);
 
     listEl.innerHTML = '';
-    if (top.length === 0) { listEl.innerHTML = '<li>Нет данных</li>'; return; }
+    if (top.length === 0) { listEl.innerHTML = `<li>${langData[currentLang]['no-data']}</li>`; return; }
     top.forEach((p, idx) => {
       const li = document.createElement('li');
       li.className = 'top-post-item';
@@ -861,7 +886,7 @@ try {
         data: {
           labels: labels,
           datasets: [{
-            label: 'Tweets per day',
+            label: langData[currentLang]['tweets-per-day'], // Переводим название датасета
             data: counts,
             fill: false, // Не заполнять область под линией
             borderColor: '#ffffff', // Цвет линии - белый
@@ -883,7 +908,7 @@ try {
               intersect: false,
               callbacks: {
                 label: function(context) {
-                  return `Tweets: ${context.raw}`;
+                  return `${langData[currentLang]['tweets-per-day']}: ${context.raw}`;
                 }
               }
             }
@@ -977,8 +1002,38 @@ function setupAnalyticsTabs() {
   });
 }
 
-// Инициализация табов
-try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+// --- 4. Обработчики кликов для переключения языка ---
+document.addEventListener('DOMContentLoaded', () => {
+    const langEn = document.getElementById('lang-en');
+    const langRu = document.getElementById('lang-ru');
+
+    if (langEn) {
+        langEn.addEventListener('click', () => {
+            if (currentLang !== 'en') {
+                updateLanguage('en');
+            }
+        });
+    }
+    if (langRu) {
+        langRu.addEventListener('click', () => {
+            if (currentLang !== 'ru') {
+                updateLanguage('ru');
+            }
+        });
+    }
+
+    // --- 5. Загрузка сохраненного языка при запуске ---
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang && (savedLang === 'en' || savedLang === 'ru')) {
+        updateLanguage(savedLang);
+    } else {
+        // Если язык не сохранен, устанавливаем язык по умолчанию (EN)
+        updateLanguage('en');
+    }
+
+    // Инициализация табов
+    try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
+});
 
 // === SNOW EFFECT INITIALIZATION ===
 document.addEventListener('DOMContentLoaded', () => {
