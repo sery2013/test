@@ -1621,20 +1621,19 @@ a:link, a:visited {
   color: #fff !important;
 } */
 
-/* Фиксируем ширину всей таблицы */
-.leaderboard-table {
-  width: 100% !important;
-  table-layout: fixed !important; /* Важно! Фиксирует ширину столбцов */
-}
-
-/* Фиксируем скругление для всех ячеек таблицы */
-.leaderboard-table td {
+/* Фиксируем скругление для блока с твитами */
+#tweets-container {
   border-radius: 0 !important; /* Убираем скругление полностью */
-  /* ИЛИ, если хотите немного скругления, установите значение, например: */
-  /* border-radius: 4px !important; */
+  /* ИЛИ, если хотите небольшое скругление, установите значение, например: */
+  /* border-radius: 8px !important; */
 }
 
-/* Если скругление добавляется только к активной строке, используйте: */
-.leaderboard-table tr.active-row td {
+/* Также, если твиты отображаются в списке <ul>, примените стиль к нему */
+#tweets-list {
+  border-radius: 0 !important;
+}
+
+/* Или, если твиты находятся в отдельных <li> элементах */
+#tweets-list li {
   border-radius: 0 !important;
 }
