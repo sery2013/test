@@ -11,6 +11,9 @@ let analyticsChart = null;
 let analyticsPeriod = "all"; // filter for analytics: 'all', '7', '14', '30'
 let analyticsHourFilter = "all"; // filter for heatmap hour: 'all', '0', '1', ... '23'
 let currentLang = 'en'; // Глобальная переменная для текущего языка
+// --- НОВАЯ ГЛОБАЛЬНАЯ ПЕРЕМЕННАЯ ДЛЯ ПРЕДЫДУЩИХ ДАННЫХ ---
+let previousLeaderboardData = {};
+// --- КОНЕЦ НОВОЙ ПЕРЕМЕННОЙ ---
 
 // - Fetch leaderboard data -
 async function fetchData() {
@@ -18,6 +21,9 @@ async function fetchData() {
     const response = await fetch("leaderboard.json"); // <-- путь к файлу в репо
     const json = await response.json();
     rawData = json;
+    // --- НОВЫЙ КОД: Загрузка предыдущих данных ---
+    await loadPreviousLeaderboardData();
+    // --- КОНЕЦ НОВОГО КОДА ---
     normalizeData(rawData);
     sortData();
     renderTable();
@@ -27,6 +33,39 @@ async function fetchData() {
     console.error("Failed to fetch leaderboard:", err);
   }
 }
+
+// --- НОВАЯ ФУНКЦИЯ: Загрузка предыдущего leaderboard.json ---
+async function loadPreviousLeaderboardData() {
+    try {
+        const response = await fetch("leaderboard_prev.json"); // Путь к предыдущему файлу
+        if (!response.ok) {
+            // Если файл не найден (404), это не ошибка, просто пустой объект
+            if (response.status === 404) {
+                console.log("Previous leaderboard data (leaderboard_prev.json) not found. Starting fresh.");
+                previousLeaderboardData = {};
+                return;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        // Преобразуем в формат { username: { posts, likes, ... } } для быстрого поиска
+        if (Array.isArray(jsonData)) {
+            previousLeaderboardData = {};
+            jsonData.forEach(([name, stats]) => {
+                previousLeaderboardData[name] = stats;
+            });
+        } else if (jsonData && typeof jsonData === "object") {
+            previousLeaderboardData = jsonData;
+        } else {
+            console.warn("Previous leaderboard data format is unexpected, starting fresh.");
+            previousLeaderboardData = {};
+        }
+    } catch (error) {
+        console.error("Failed to load previous leaderboard data:", error);
+        previousLeaderboardData = {}; // Если ошибка, используем пустой объект
+    }
+}
+// --- КОНЕЦ НОВОЙ ФУНКЦИИ ---
 
 // - Fetch all tweets -
 async function fetchTweets() {
@@ -53,7 +92,6 @@ async function fetchTweets() {
     allTweets = [];
   }
 }
-
 // стартовые загрузки
 fetchTweets().then(() => fetchData());
 setInterval(() => {
@@ -61,7 +99,7 @@ setInterval(() => {
   fetchData();
 }, 3600000); // обновлять каждый час
 
-// - Normalize leaderboard data -
+// - Normalize leaderboard data (теперь включает и предыдущие данные) -
 function normalizeData(json) {
   data = [];
   if (Array.isArray(json) && json.length > 0 && !Array.isArray(json[0])) {
@@ -70,16 +108,23 @@ function normalizeData(json) {
     data = json.map(([name, stats]) => {
       const base = extractBaseStatsFromItem(stats || {});
       base.username = name || base.username || "";
+      // --- НОВЫЙ КОД: Добавляем предыдущие данные ---
+      base._prev = previousLeaderboardData[base.username] || {};
+      // --- КОНЕЦ НОВОГО КОДА ---
       return applyTimeFilterIfNeeded(base);
     });
   } else if (json && typeof json === "object") {
     data = Object.entries(json).map(([name, stats]) => {
       const base = extractBaseStatsFromItem(stats || {});
       base.username = name || base.username || "";
+      // --- НОВЫЙ КОД: Добавляем предыдущие данные ---
+      base._prev = previousLeaderboardData[base.username] || {};
+      // --- КОНЕЦ НОВОГО КОДА ---
       return applyTimeFilterIfNeeded(base);
     });
   }
   data = data.map(d => applyTimeFilterIfNeeded(d));
+
   function extractBaseStatsFromItem(item) {
     const username = item.username || item.user || item.name || item.screen_name || "";
     const posts = Number(item.posts || item.tweets || 0);
@@ -89,6 +134,7 @@ function normalizeData(json) {
     const views = Number(item.views || item.views_count || 0);
     return { username, posts, likes, retweets, comments, views };
   }
+
   function applyTimeFilterIfNeeded(base) {
     if (!base || !base.username) return base;
     if (timeFilter === "all") return base;
@@ -100,6 +146,7 @@ function normalizeData(json) {
       const candidate = (t.user && (t.user.screen_name || t.user.name)) || "";
       return String(candidate).toLowerCase().replace(/^@/, "") === uname;
     });
+
     let posts = 0, likes = 0, retweets = 0, comments = 0, views = 0;
     userTweets.forEach(tweet => {
       const created = tweet.tweet_created_at || tweet.created_at || tweet.created || null;
@@ -115,7 +162,14 @@ function normalizeData(json) {
         views += Number(tweet.views_count || 0);
       }
     });
-    return { username: base.username, posts, likes, retweets, comments, views };
+
+    const filteredBase = { username: base.username, posts, likes, retweets, comments, views };
+    // --- НОВЫЙ КОД: Также копируем _prev данные ---
+    if (base._prev) {
+        filteredBase._prev = base._prev;
+    }
+    // --- КОНЕЦ НОВОГО КОДА ---
+    return filteredBase;
   }
 }
 
@@ -152,26 +206,33 @@ function shareUserOnTwitter(username) {
     window.open(twitterIntentUrl, '_blank', 'width=600,height=400');
 }
 
-// - Render Table with Share Button -
+// - Render Table with Share Button and Growth Indicators -
 function renderTable() {
   const tbody = document.getElementById("leaderboard-body");
   tbody.innerHTML = "";
+
   const filtered = filterData();
   const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+
   if (currentPage > totalPages) currentPage = totalPages;
+
   const start = (currentPage - 1) * perPage;
   const pageData = filtered.slice(start, start + perPage);
+
   pageData.forEach(stats => {
     const name = stats.username || "";
     const tr = document.createElement("tr");
+
     // - НАЧАЛО ИЗМЕНЕНИЙ: Создание ячейки с именем и кнопкой -
     const nameCell = document.createElement("td");
     const nameContainer = document.createElement("div");
     nameContainer.style.display = "flex";
     nameContainer.style.alignItems = "center";
     nameContainer.style.gap = "8px";
+
     const nameSpan = document.createElement("span");
     nameSpan.textContent = escapeHtml(name);
+
     const shareBtn = document.createElement("button");
     shareBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display: block;"> <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.244 2.25H8.05l4.713 6.231zm-1.161 17.52h1.833L7.08 4.126H5.03z"/> </svg>`; // SVG иконка Twitter
     shareBtn.className = 'share-btn'; // Класс для стилей
@@ -183,19 +244,44 @@ function renderTable() {
         e.stopPropagation(); // ВАЖНО: Останавливаем всплытие, чтобы клик не сработал на строке таблицы
         shareUserOnTwitter(name); // Функция, которая откроет окно Twitter Intent
     };
+
     nameContainer.appendChild(nameSpan);
     nameContainer.appendChild(shareBtn);
     nameCell.appendChild(nameContainer);
     // - КОНЕЦ ИЗМЕНЕНИЙ -
+
     tr.appendChild(nameCell); // Добавляем ячейку с именем и кнопкой
-    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.posts || 0)}</td>`);
-    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.likes || 0)}</td>`);
-    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.retweets || 0)}</td>`);
-    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.comments || 0)}</td>`);
-    tr.insertAdjacentHTML('beforeend', `<td>${Number(stats.views || 0)}</td>`);
+
+    // --- НОВЫЕ ФУНКЦИИ: Создание ячеек с индикаторами ---
+    function createMetricCell(currentVal, prevVal, metricName) {
+        const currentNum = Number(currentVal || 0);
+        const prevNum = Number(prevVal || 0);
+        const diff = currentNum - prevNum;
+
+        let indicator = '';
+        if (diff > 0) {
+            indicator = ' <span style="color: #4CAF50;">▲</span>'; // Зелёная стрелка вверх
+        } else if (diff < 0) {
+            indicator = ' <span style="color: #F44336;">▼</span>'; // Красная стрелка вниз
+        } // Если diff === 0, индикатор пустой
+
+        return `<td>${currentNum}${indicator}</td>`;
+    }
+
+    const prevStats = stats._prev || {};
+
+    tr.insertAdjacentHTML('beforeend', createMetricCell(stats.posts, prevStats.posts, 'posts'));
+    tr.insertAdjacentHTML('beforeend', createMetricCell(stats.likes, prevStats.likes, 'likes'));
+    tr.insertAdjacentHTML('beforeend', createMetricCell(stats.retweets, prevStats.retweets, 'retweets'));
+    tr.insertAdjacentHTML('beforeend', createMetricCell(stats.comments, prevStats.comments, 'comments'));
+    tr.insertAdjacentHTML('beforeend', createMetricCell(stats.views, prevStats.views, 'views'));
+    // --- КОНЕЦ НОВЫХ ФУНКЦИЙ ---
+
     tbody.appendChild(tr);
   });
+
   document.getElementById("page-info").textContent = `Page ${currentPage} / ${totalPages}`;
+
   // Добавляем обработчики клика
   addUserClickHandlers();
 }
@@ -299,8 +385,10 @@ function toggleTweetsRow(tr, username) {
         nextRow.remove();
         return;
     }
+
     // Удаляем все остальные раскрытые строки
     document.querySelectorAll(".tweets-row").forEach(row => row.remove());
+
     // Создаем новую строку
     const tweetsRow = document.createElement("tr");
     tweetsRow.classList.add("tweets-row");
@@ -308,10 +396,12 @@ function toggleTweetsRow(tr, username) {
     td.colSpan = 6; // охватывает все колонки таблицы
     td.style.background = "#f9f9f9";
     td.style.padding = "10px";
+
     const userTweets = allTweets.filter(tweet => {
         const candidate = (tweet.user && (tweet.user.screen_name || tweet.user.name)) || "";
         return candidate.toLowerCase().replace(/^@/, "") === username.toLowerCase().replace(/^@/, "");
     });
+
     if (userTweets.length === 0) {
         td.innerHTML = "<i>У пользователя нет постов</i>";
     } else {
@@ -330,26 +420,33 @@ function toggleTweetsRow(tr, username) {
     tweetsRow.appendChild(td);
     tr.parentNode.insertBefore(tweetsRow, tr.nextElementSibling);
 }
+
 function toggleTweetsRow(tr, username) {
   const nextRow = tr.nextElementSibling;
   const isAlreadyOpen = nextRow && nextRow.classList.contains("tweets-row") &&
                         nextRow.dataset.username === username;
+
   // Убираем все предыдущие аккордеоны и подсветку
   document.querySelectorAll(".tweets-row").forEach(row => row.remove());
   document.querySelectorAll("tbody tr").forEach(row => row.classList.remove("active-row"));
+
   // Если уже был открыт — просто закрывает
   if (isAlreadyOpen) return;
+
   // Подсветить текущую строку
   tr.classList.add("active-row");
+
   const tweetsRow = document.createElement("tr");
   tweetsRow.classList.add("tweets-row");
   tweetsRow.dataset.username = username; // <-- важно для проверки дубликатов
   const td = document.createElement("td");
   td.colSpan = 6;
+
   const userTweets = allTweets.filter(tweet => {
     const candidate = (tweet.user?.screen_name || tweet.user?.name || "").toLowerCase();
     return candidate.replace(/^@/, "") === username.toLowerCase().replace(/^@/, "");
   });
+
   if (userTweets.length === 0) {
     td.innerHTML = "<i style='color:#aaa;'>У пользователя нет постов</i>";
   } else {
@@ -358,6 +455,7 @@ function toggleTweetsRow(tr, username) {
     userTweets.forEach(tweet => {
       const content = tweet.full_text || tweet.text || tweet.content || "";
       const url = tweet.url || (tweet.id_str ? `https://twitter.com/${username}/status/${tweet.id_str}` : "#");
+
       // формат даты
       let dateRaw = tweet.created_at || tweet.tweet_created_at || "";
       let date = "";
@@ -367,15 +465,18 @@ function toggleTweetsRow(tr, username) {
           ? parsed.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
           : dateRaw.split(" ")[0];
       }
+
       // media без дубликатов
       const mediaList = tweet.extended_entities?.media || tweet.entities?.media || tweet.media || [];
       const uniqueMediaUrls = [...new Set(mediaList.map(m => m.media_url_https || m.media_url).filter(Boolean))];
       let imgTag = uniqueMediaUrls.map(url => `<img src="${url}">`).join("");
+
       // fallback на ссылки в тексте
       if (!imgTag) {
         const match = content.match(/https?:\/\/\S+\.(jpg|jpeg|png|gif|webp)/i);
         if (match) imgTag = `<img src="${match[0]}">`;
       }
+
       // создаём карточку
       const card = document.createElement("div");
       card.classList.add("tweet-card");
@@ -430,12 +531,14 @@ function setupTabs() {
   });
 }
 
-// - Функция для отрисовки тепловой гистограммы -
+// - Функция для отрисовки тепловой гистограммы (с изменёнными цветами) -
 function renderHeatmap(tweets) {
   const container = document.getElementById('heatmap-container');
   if (!container) return;
+
   // Массив 7x24, инициализирован нулями
   const heatmap = Array(7).fill().map(() => Array(24).fill(0));
+
   // Подсчёт твитов по (день, час)
   tweets.forEach(t => {
     const created = t.tweet_created_at || t.created_at || t.created;
@@ -446,10 +549,13 @@ function renderHeatmap(tweets) {
     const hour = d.getUTCHours();
     heatmap[day][hour] = (heatmap[day][hour] || 0) + 1;
   });
+
   // Нахождение максимума для нормализации цвета
   const max = Math.max(...heatmap.flat());
+
   // Очистка контейнера
   container.innerHTML = '';
+
   // Создание ячеек
   for (let day = 0; day < 7; day++) {
     for (let hour = 0; hour < 24; hour++) {
@@ -460,15 +566,26 @@ function renderHeatmap(tweets) {
       cell.style.borderRadius = '3px';
       cell.title = `${count} tweet(s)
 ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]}, ${hour}:00 UTC`;
+
       if (count === 0) {
         cell.style.backgroundColor = 'rgba(255,255,255,0.03)';
       } else {
-        // Цвет от светло-бирюзового к насыщенному (#6fe3d1 → #00a896)
+        // --- НОВЫЙ КОД: Цвет от светло-оранжевого к насыщенному красному ---
         const intensity = count / (max || 1); // 0..1
-        const r = Math.floor(111 * intensity + 255 * (1 - intensity));
-        const g = Math.floor(227 * intensity + 255 * (1 - intensity));
-        const b = Math.floor(209 * intensity + 255 * (1 - intensity));
+        // Начальный цвет: светло-оранжевый (например, #FFD580)
+        const startR = 255;
+        const startG = 213;
+        const startB = 128;
+        // Конечный цвет: насыщенный красный (например, #CC0000)
+        const endR = 204;
+        const endG = 0;
+        const endB = 0;
+
+        const r = Math.floor(startR * (1 - intensity) + endR * intensity);
+        const g = Math.floor(startG * (1 - intensity) + endG * intensity);
+        const b = Math.floor(startB * (1 - intensity) + endB * intensity);
         cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        // --- КОНЕЦ НОВОГО КОДА ---
       }
       container.appendChild(cell);
     }
@@ -498,7 +615,8 @@ function exportToCSV() {
   for (const [username, stats] of Object.entries(users)) {
     rows.push([username, stats.posts, stats.likes, stats.views].map(v => `"${v}"`).join(','));
   }
-  const csvContent = rows.join('\n');
+  const csvContent = rows.join('
+');
   downloadFile('leaderboard-export.csv', csvContent, 'text/csv');
 }
 
@@ -549,6 +667,7 @@ function renderAnalytics() {
       });
     }
   }
+
   // - НОВЫЙ ФИЛЬТР: Фильтрация по часу -
   if (analyticsHourFilter !== 'all') {
       const targetHour = Number(analyticsHourFilter);
@@ -564,6 +683,7 @@ function renderAnalytics() {
       }
   }
   // - КОНЕЦ НОВОГО ФИЛЬТРА -
+
   // build per-user aggregates: posts, likes, views (from FILTERED tweets)
   const users = {}; // {uname: {posts, likes, views}}
   tweets.forEach(t => {
@@ -577,22 +697,27 @@ function renderAnalytics() {
     users[uname].likes += likes;
     users[uname].views += views;
   });
+
   const uniqueUsers = Object.keys(users).length;
   const totalPosts = tweets.length;
   const totalLikes = Object.values(users).reduce((s,u)=>s+u.likes,0);
   const totalViews = Object.values(users).reduce((s,u)=>s+u.views,0);
+
   // 1) Averages per user
   const avgPosts = uniqueUsers ? (totalPosts/uniqueUsers) : 0;
   const avgLikes = uniqueUsers ? (totalLikes/uniqueUsers) : 0;
   const avgViews = uniqueUsers ? (totalViews/uniqueUsers) : 0;
+
   const elAvgPosts = document.getElementById('avg-posts');
   const elAvgLikes = document.getElementById('avg-likes');
   const elAvgViews = document.getElementById('avg-views');
   if (elAvgPosts) elAvgPosts.textContent = `Avg Posts: ${avgPosts.toFixed(2)}`;
   if (elAvgLikes) elAvgLikes.textContent = `Avg Likes: ${avgLikes.toFixed(2)}`;
   if (elAvgViews) elAvgViews.textContent = `Avg Views: ${avgViews.toFixed(2)}`;
+
   // Store filtered data globally for use in event handlers
   window._analyticsFilteredData = { tweets, users, period };
+
   // helper to render top authors by metric (uses CURRENT stored data)
   function renderTopAuthors(metric) {
     const listEl = document.getElementById('top-authors-list');
@@ -610,11 +735,13 @@ function renderAnalytics() {
       // --- НАЧАЛО ИЗМЕНЕНИЯ: Структура элемента списка для "Top 10 authors" ---
       const li = document.createElement('li');
       li.className = 'top-author-item'; // Класс для нового CSS
+
       // Собираем строку с иконками и цифрами
       const postsStr = `<span class="metric-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline; margin-right: 2px;"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87.69 6.89L12 21.5l-5.69-1.48.69-6.89-5-4.87 6.81-1.01L12 2z"/></svg>${it.stats.posts} posts</span>`;
       const likesStr = `<span class="metric-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline; margin-right: 2px;"><path d="M12 21.35l-1.45-1.45C5.4 15.56 2 12.12 2 8.5c0-1.74.67-3.35 1.96-4.64A23.85 23.85 0 0112 0c8.25 0 15.5 5.5 15.5 15.5 0 1.74-.67 3.35-1.96 4.64l-1.45 1.45C19.5 21.35 16.5 24 12 24z"/></svg>${it.stats.likes} likes</span>`;
       const retweetsStr = `<span class="metric-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline; margin-right: 2px;"><path d="M17 7h-4v2h4v6h-4v2h4v2H7v-2h4V9H7V7h10z"/></svg>${it.stats.retweets} retweets</span>`;
       const viewsStr = `<span class="metric-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:inline; margin-right: 2px;"><path d="M12 6c3.76 0 7.08 2.06 9.07 5.33 1.99 3.27 1.99 7.24 0 10.51C19.08 25.14 15.76 27.2 12 27.2s-7.08-2.06-9.07-5.33c-1.99-3.27-1.99-7.24 0-10.51C4.92 8.06 8.24 6 12 6zm0 2c-1.66 0-3.18.7-4.25 1.81L12 14l4.25-4.19C15.18 8.7 13.66 8 12 8zm0 12c1.66 0 3.18-.7 4.25-1.81L12 18l-4.25 4.19C8.82 23.3 10.34 24 12 24z"/></svg>${it.stats.views} views</span>`;
+
       // Формируем содержимое <li>
       li.innerHTML = `
           <div class="author-info">
@@ -635,6 +762,7 @@ function renderAnalytics() {
       // --- КОНЕЦ ИЗМЕНЕНИЯ ---
     });
   }
+
   // helper to render top posts by metric (uses CURRENT stored data)
   function renderTopPosts(metric) {
     const listEl = document.getElementById('top-posts-list');
@@ -666,6 +794,7 @@ function renderAnalytics() {
       listEl.appendChild(li);
     });
   }
+
   // Tweets per day data for chart (adaptive date range based on period)
   const perDay = {}; // key YYYY-MM-DD -> count
   const chartDays = period === 'all' ? 60 : (period === '7' ? 7 : (period === '14' ? 14 : 30));
@@ -677,6 +806,7 @@ function renderAnalytics() {
     const key = d.toISOString().slice(0,10);
     perDay[key] = (perDay[key] || 0) + 1;
   });
+
   // prepare labels/data arrays for last N days
   const labels = [];
   const counts = [];
@@ -687,6 +817,7 @@ function renderAnalytics() {
     labels.push(key);
     counts.push(perDay[key] || 0);
   }
+
   // render/update Chart.js chart
 try {
   const ctx = document.getElementById('analytics-chart');
@@ -756,13 +887,16 @@ try {
 } catch (err) {
   console.warn('Chart render failed', err);
 }
+
   // initial render using default selects (if present)
   const authorMetricSelect = document.getElementById('author-metric-select');
   const postMetricSelect = document.getElementById('post-metric-select');
   const authorMetric = authorMetricSelect ? authorMetricSelect.value : 'posts';
   const postMetric = postMetricSelect ? postMetricSelect.value : 'likes';
+
   renderTopAuthors(authorMetric);
   renderTopPosts(postMetric);
+
   // attach listeners (idempotent) — these now call the stored-data versions
   if (authorMetricSelect && !authorMetricSelect._bound) {
     authorMetricSelect.addEventListener('change', e => renderTopAuthors(e.target.value));
@@ -772,6 +906,7 @@ try {
     postMetricSelect.addEventListener('change', e => renderTopPosts(e.target.value));
     postMetricSelect._bound = true;
   }
+
   // - ВЫЗОВЫ НОВЫХ ФУНКЦИЙ -
   renderHeatmap(tweets);
   bindExportButtons();
@@ -804,6 +939,7 @@ function setupAnalyticsTabs() {
       // Remove active from all buttons and sections
       btns.forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.analytics-nested-content').forEach(s => s.classList.remove('active'));
+
       // Add active to clicked button and corresponding section
       btn.classList.add('active');
       const section = btn.dataset.analyticsTab;
@@ -865,15 +1001,19 @@ function setLanguage(lang) {
         // Обновляем текст до ссылки
         const linkText = followDevLinkElement.textContent; // Сохраняем текст ссылки
         followDevTextElement.textContent = lang === 'en' ? 'Follow Developer - ' : 'Следите за разработчиком - ';
+
         // Восстанавливаем ссылку с правильным текстом и стилями
         followDevLinkElement.textContent = linkText; // Восстанавливаем текст '@kaye_moni'
+
         // Применяем стили к ссылке, как в index.html
         followDevLinkElement.style.color = 'white';
         followDevLinkElement.style.textDecoration = 'underline';
+
         // Вставляем ссылку обратно внутрь элемента follow-dev-text
         followDevTextElement.appendChild(followDevLinkElement);
     }
     // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
+
     // --- ОБНОВЛЕНИЕ ТЕКСТА "Last updated:" ---
     const lastUpdatedLabel = document.getElementById('label-last-updated');
     if (lastUpdatedLabel) {
@@ -1066,6 +1206,7 @@ shareBtn.title = currentLang === 'en' ? `Share ${escapeHtml(name)}'s stats on Tw
 document.addEventListener('DOMContentLoaded', () => {
     const langEn = document.getElementById('lang-en');
     const langRu = document.getElementById('lang-ru');
+
     if (langEn) {
         langEn.addEventListener('click', () => {
             if (currentLang !== 'en') {
@@ -1080,6 +1221,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
     // --- ЗАГРУЗКА СОХРАНЕННОГО ЯЗЫКА ПРИ ЗАГРУЗКЕ СТРАНИЦЫ ---
     const savedLang = localStorage.getItem('lang');
     if (savedLang && (savedLang === 'en' || savedLang === 'ru')) {
@@ -1102,23 +1244,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const snowflakeCount = 50; // Количество снежинок (можно регулировать плотность)
     const containerRect = snowContainer.getBoundingClientRect();
+
     for (let i = 0; i < snowflakeCount; i++) {
         const flake = document.createElement('div');
         flake.classList.add('snowflake');
+
         // Случайные размеры снежинок (например, от 2 до 6 пикселей)
         const size = Math.random() * 4 + 2;
         flake.style.width = `${size}px`;
         flake.style.height = `${size}px`;
+
         // Случайная начальная позиция X
         const startX = Math.random() * containerRect.width;
         flake.style.left = `${startX}px`;
         flake.style.top = `${Math.random() * -containerRect.height}px`; // Начинают падать сверху
+
         // Случайные параметры анимации для разнообразия
         const durationFall = Math.random() * 10 + 5; // Длительность падения (5-15 секунд)
         const durationSway = Math.random() * 4 + 3;  // Длительность колебания (3-7 секунд)
         const swayAmplitude = Math.random() * 30 + 10; // Амплитуда колебания (10-40px)
+
         // Применяем анимацию
         flake.style.animationDuration = `${durationFall}s, ${durationSway}s`;
+
         // Для анимации sway используем transform с динамической амплитудой
         // Это сложнее задать через style, лучше оставить базовую анимацию в CSS
         // и генерировать уникальные ключевые кадры при необходимости.
@@ -1129,8 +1277,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Простой способ добавить немного индивидуальности без динамических @keyframes:
         // Случайная задержка начала анимации
         flake.style.animationDelay = `${Math.random() * 5}s`; // Задержка от 0 до 5 секунд
+
         snowContainer.appendChild(flake);
     }
+
     // Опционально: пересчитать позиции при изменении размера окна
     window.addEventListener('resize', () => {
         const newRect = snowContainer.getBoundingClientRect();
@@ -1139,4 +1289,3 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
-
