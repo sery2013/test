@@ -676,18 +676,20 @@ try {
         data: {
           labels: labels,
           datasets: [{
-  label: 'Tweets per day',
-   counts, // <-- ИСПРАВЛЕНО: Это корректный сокращённый синтаксис для 'data: counts' ВНУТРИ объекта datasets[0]
-  fill: false, // Не заполнять область под линией
-  borderColor: '#2c2c2c', // Исправленный цвет для фона
-  borderWidth: 2,
-  pointBackgroundColor: '#2c2c2c',
-  pointBorderColor: '#ffffff',
-  pointBorderWidth: 2,
-  pointRadius: 4,
-  pointHoverRadius: 6,
-  tension: 0.3
-}]
+            label: 'Tweets per day',
+             counts, // --- ИСПРАВЛЕНО: Это корректный сокращённый синтаксис для 'data: counts' ---
+            fill: false, // Не заполнять область под линией
+            // --- НАЧАЛО ИЗМЕНЕНИЙ: Цвета для желтого фона ---
+            borderColor: '#2c2c2c', // Темно-серый цвет для линии
+            borderWidth: 2,
+            pointBackgroundColor: '#2c2c2c', // Темно-серый цвет для точек
+            pointBorderColor: '#ffffff', // Белая обводка для точек, чтобы они были заметны
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            tension: 0.3
+            // --- КОНЕЦ ИЗМЕНЕНИЙ ---
+          }]
         },
         options: {
           maintainAspectRatio: false,
@@ -1068,4 +1070,3 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
-
