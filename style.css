@@ -48,20 +48,22 @@ body {
 .welcome-section {
   text-align: center;
   margin-bottom: 30px;
-  color: #000; /* изменён цвет текста */
+  color: #000; /* изменен цвет текста */
 }
 .welcome-section h1 {
   font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 15px;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.6); /* изменена тень текста */
+  color: #000; /* добавлен цвет текста */
 }
 .welcome-section p {
   font-size: 1.1rem;
   margin: 8px 0;
+  color: #000; /* добавлен цвет текста */
 }
 .welcome-section a {
-  color: #000; /* изменён цвет текста */
+  color: #000; /* изменен цвет текста */
   text-decoration: underline;
 }
 /* === TEAM BOX === */
@@ -71,10 +73,11 @@ body {
   padding: 15px;
   border: 2px solid rgba(0, 0, 0, 0.5); /* изменена обводка */
   border-radius: 7.5%; /* скругление 5-10% */
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   text-align: center;
   position: relative;
   overflow: hidden;
+  color: #000; /* цвет текста */
 }
 /* Полупрозрачные магические символы для team-box */
 .team-box::before {
@@ -93,7 +96,7 @@ body {
 .team-box p {
   margin: 5px 0;
   font-weight: 600;
-  color: #000; /* чёрный цвет текста */
+  color: #000; /* цвет текста */
 }
 /* === STATS === */
 .stats {
@@ -106,14 +109,14 @@ body {
   flex: 1;
   padding: 15px;
   font-size: 1.1rem;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   border: 2px solid rgba(0, 0, 0, 0.4); /* изменена обводка */
   border-radius: 7.5%; /* скругление 5-10% */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* изменена тень */
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  color: #000; /* чёрный цвет текста */
+  color: #000; /* цвет текста */
 }
 /* Полупрозрачные магические символы для stat-box */
 .stat-box::before {
@@ -130,23 +133,23 @@ body {
   z-index: -1;
 }
 .stat-box:hover {
-  border-color: #000; /* изменён цвет обводки при наведении */
+  border-color: #000; /* изменен цвет обводки при наведении */
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.6); /* изменена тень при наведении */
   transform: scale(1.03);
 }
 /* === SEARCH BOX === */
 .search-box {
   margin-bottom: 25px;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* фон */
   padding: 10px;
-  border-radius: 7.5%; /* скругление 5-10% */
+  border-radius: 7.5%;
 }
 #search {
   width: 60%;
   padding: 10px 15px;
   font-size: 1rem;
-  color: #000; /* изменён цвет текста */
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  color: #000; /* изменен цвет текста */
+  background: #f0c500; /* изменен фон */
   border: 2px solid rgba(0, 0, 0, 0.4); /* изменена обводка */
   border-radius: 7.5%; /* скругление 5-10% */
   outline: none;
@@ -154,7 +157,7 @@ body {
   transition: all 0.3s ease;
 }
 #search:focus {
-  border-color: #000; /* изменён цвет обводки при фокусе */
+  border-color: #000; /* изменен цвет обводки при фокусе */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* изменена тень при фокусе */
   transform: scale(1.02);
 }
@@ -164,10 +167,11 @@ table {
   border-collapse: collapse;
   border-radius: 3%; /* скругление 5-10% */
   overflow: hidden;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   backdrop-filter: blur(5px);
   position: relative;
   overflow: hidden;
+  color: #000; /* цвет текста */
 }
 /* Полупрозрачные магические символы для таблицы */
 table::before {
@@ -188,7 +192,7 @@ thead th {
   text-align: center;
   font-size: 1rem;
   font-weight: 600;
-  color: #000; /* изменён цвет текста */
+  color: #000; /* изменен цвет текста */
   border-bottom: 2px solid rgba(0, 0, 0, 0.3); /* изменена обводка */
   cursor: pointer;
   user-select: none;
@@ -215,8 +219,17 @@ tbody td {
   color: #000; /* чёрный цвет текста */
 }
 tbody tr:hover {
-  background: #f0c500; /* изменён цвет фона при наведении */
+  background: rgba(0, 0, 0, 0.1); /* изменен цвет фона при наведении */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); /* изменена тень при наведении */
+}
+/* === ACTIVE ROW (User opened) === */
+tr.active-row {
+  background: #f0c500 !important; /* изменён фон */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* изменена тень */
+  transition: all 0.3s ease;
+}
+tr.active-row:hover {
+  background: #e0b500 !important; /* изменён фон при наведении */
 }
 /* === PAGINATION === */
 .pagination {
@@ -228,9 +241,9 @@ tbody tr:hover {
 }
 .pagination button {
   padding: 8px 15px;
-  color: #000; /* изменён цвет текста */
+  color: #000; /* изменен цвет текста */
   font-weight: 500;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   border: 2px solid rgba(0, 0, 0, 0.5); /* изменена обводка */
   border-radius: 7.5%; /* скругление 5-10% */
   cursor: pointer;
@@ -253,13 +266,13 @@ tbody tr:hover {
   z-index: -1;
 }
 .pagination button:hover {
-  background: linear-gradient(135deg, #d0a500, #c09500); /* изменён градиент при наведении */
+  background: linear-gradient(135deg, #d0a500, #c09500); /* изменен градиент при наведении */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* изменена тень при наведении */
   transform: scale(1.05);
 }
 #page-info {
   font-weight: 600;
-  color: #000; /* изменён цвет текста */
+  color: #000; /* изменен цвет текста */
 }
 .time-filter {
   display: flex;
@@ -267,7 +280,7 @@ tbody tr:hover {
   justify-content: center;
   gap: 10px;
   margin: 20px auto;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   padding: 10px 20px;
   border-radius: 7.5%; /* скругление 5-10% */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* изменена тень */
@@ -291,7 +304,7 @@ tbody tr:hover {
 }
 .time-filter label {
   font-weight: 600;
-  color: #000; /* изменён цвет текста */
+  color: #000; /* изменен цвет текста */
   font-size: 16px;
   letter-spacing: 0.3px;
 }
@@ -318,7 +331,7 @@ tbody tr:hover {
 }
 /* === ACCORDION (TWEETS SECTION) === */
 .tweets-row td {
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   border-top: 2px solid rgba(0, 0, 0, 0.3); /* изменена обводка */
   padding: 25px;
   animation: fadeInAccordion 0.4s ease;
@@ -361,7 +374,7 @@ tbody tr:hover {
 }
 /* Карточка твита */
 .tweet-card {
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   border: 2px solid rgba(0, 0, 0, 0.3); /* изменена обводка */
   border-radius: 5%; /* скругление 5-10% */
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.15); /* изменена тень */
@@ -393,7 +406,7 @@ tbody tr:hover {
 }
 .tweet-card:hover {
   transform: translateY(-5px);
-  border-color: #000; /* изменён цвет обводки при наведении */
+  border-color: #000; /* изменен цвет обводки при наведении */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* изменена тень при наведении */
 }
 /* Текст твита */
@@ -426,21 +439,12 @@ tbody tr:hover {
   text-align: center;
   justify-content: center;
 }
-/* === ACTIVE ROW (User opened) === */
-tr.active-row {
-  background: #f0c500 !important; /* изменён фон */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* изменена тень */
-  transition: all 0.3s ease;
-}
-tr.active-row:hover {
-  background: #e0b500 !important; /* изменён фон при наведении */
-}
 .music-player {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   border-radius: 7.5%; /* скругление 5-10% */
   padding: 10px 20px;
   margin-bottom: 20px;
@@ -513,7 +517,7 @@ tr.active-row:hover {
   padding: 8px 14px;
   border-radius: 5%; /* скругление 5-10% */
   border: 2px solid rgba(0,0,0,0.25); /* изменена обводка */
-  background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03)); /* изменён фон */
+  background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03)); /* изменен фон */
   color: #000; /* чёрный цвет текста */
   cursor: pointer;
   font-weight: 700;
@@ -551,7 +555,7 @@ tr.active-row:hover {
 #analytics-per-day li { padding: 4px 0; color: #000; /* чёрный цвет текста */ }
 /* Analytics blocks */
 .analytics-block { 
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   padding: 12px; 
   border-radius: 5%; /* скругление 5-10% */
   margin-bottom: 12px; 
@@ -576,7 +580,7 @@ tr.active-row:hover {
 }
 .analytics-row { display:flex; gap:12px; }
 .analytics-block select { 
-  background:#f0c500 !important; /* изменён фон селекта - сплошной цвет #f0c500 */
+  background:#f0c500 !important; /* изменен фон селекта - сплошной цвет #f0c500 */
   color:#000 !important; /* гарантирован чёрный цвет текста */
   border:1px solid rgba(0,0,0,0.08); 
   padding:6px 8px; 
@@ -587,7 +591,7 @@ tr.active-row:hover {
   padding:8px 10px; 
   border-radius: 5%; /* скругление 5-10% */
   margin-bottom:8px; 
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   display:flex; 
   justify-content:space-between; 
   align-items:center; 
@@ -614,20 +618,20 @@ tr.active-row:hover {
   font-weight:600; }
 /* --- UI polish for analytics --- */
 :root{
-  --bg: #f0c500; /* изменён цвет фона */
-  --muted: #000; /* изменён цвет muted */
+  --bg: #f0c500; /* изменен цвет фона */
+  --muted: #000; /* изменен цвет muted */
   --accent: #6fe3d1;
-  --card-bg: #f0c500; /* изменён цвет card-bg - сплошной цвет #f0c500 */
-  --glass: #f0c500; /* изменён цвет glass - сплошной цвет #f0c500 */
-  --glass-strong: #f0c500; /* изменён цвет glass-strong - сплошной цвет #f0c500 */
-  --radius: 5%; /* изменён радиус */
+  --card-bg: #f0c500; /* изменен цвет card-bg - сплошной цвет #f0c500 */
+  --glass: #f0c500; /* изменен цвет glass - сплошной цвет #f0c500 */
+  --glass-strong: #f0c500; /* изменен цвет glass-strong - сплошной цвет #f0c500 */
+  --radius: 5%; /* изменен радиус */
 }
 .container { max-width:1100px; margin: 140px auto 60px; padding: 28px; }
 .tab-content { transition: opacity 250ms ease, transform 250ms ease; }
 .analytics-block { 
   box-shadow: 0 6px 18px rgba(2,6,23,0.6); 
   border: 1px solid rgba(0, 0, 0, 0.08); /* изменена обводка */
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   padding:18px; 
   border-radius: 5%; /* скругление 5-10% */
   color: #000; /* гарантирован чёрный цвет текста */
@@ -637,7 +641,7 @@ tr.active-row:hover {
   padding:14px; 
   text-align:center; 
   border-radius: 5%; /* скругление 5-10% */
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   box-shadow: inset 0 -2px 6px rgba(0,0,0,0.2); 
   position: relative;
   overflow: hidden;
@@ -674,7 +678,7 @@ tr.active-row:hover {
   align-items:center; 
   padding:10px; 
   border-radius: 5%; /* скругление 5-10% */
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   margin-bottom:8px; 
   border:1px solid rgba(0,0,0,0.02); 
   position: relative;
@@ -702,7 +706,7 @@ tr.active-row:hover {
   align-items:center; 
   padding:12px; 
   border-radius: 5%; /* скругление 5-10% */
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   border:1px solid rgba(0,0,0,0.02); 
   position: relative;
   overflow: hidden;
@@ -729,7 +733,7 @@ tr.active-row:hover {
 .top-post-item .meta .author { font-weight:700; color:#000 !important; /* гарантирован чёрный цвет текста */
  }
 .top-post-item .meta .metric { 
-  background: #f0c500 !important; /* изменён фон метрики - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон метрики - сплошной цвет #f0c500 */
   color:#000 !important; /* гарантирован чёрный цвет текста */
   padding:6px 8px; 
   border-radius: 5%; /* скругление 5-10% */
@@ -743,7 +747,7 @@ tr.active-row:hover {
   padding:8px 12px; 
   border-radius: 7.5%; /* скругление 5-10% */
   border:1px solid rgba(0,0,0,0.06); 
-  background: #f0c500 !important; /* изменён фон селекта - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон селекта - сплошной цвет #f0c500 */
   color:#000 !important; /* гарантирован чёрный цвет текста */
 }
 .analytics-block select:focus { 
@@ -767,10 +771,10 @@ tr.active-row:hover {
 }
 .stat-box:hover { 
   transform: translateY(-4px); 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); /* изменена тень при наведении */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06); /* изменена тень при наведении */
 }
 /* subtle numbering style */
-#top-authors-list li::marker { color: #000; /* изменён цвет маркера */ }
+#top-authors-list li::marker { color: #000; /* изменен цвет маркера */ }
 /* ensure long excerpts wrap nicely */
 .excerpt { word-break: break-word; }
 /* === SELECT STYLING (period + metrics) === */
@@ -778,7 +782,7 @@ select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* изменён цвет стрелки */
+  background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); /* изменен цвет стрелки */
   background-repeat: no-repeat;
   background-position: right 8px center;
   background-size: 16px;
@@ -787,8 +791,8 @@ select {
 }
 /* period filter styling */
 .analytics-time-filter {
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
-  border: 1px solid rgba(0,0,0,0.15) !important; /* изменена обводка */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
+  border: 1px solid rgba(0,0,0, 0.15) !important; /* изменена обводка */
   box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
   border-radius: 5%; /* скругление 5-10% */
   position: relative;
@@ -810,7 +814,7 @@ select {
   z-index: -1;
 }
 .analytics-time-filter select {
-  background: #f0c500 !important; /* изменён фон селекта - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон селекта - сплошной цвет #f0c500 */
   border: 1px solid rgba(0,0,0,0.2) !important; /* изменена обводка */
   color: #000 !important; /* гарантирован чёрный цвет текста */
   font-weight: 600;
@@ -820,7 +824,7 @@ select {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 .analytics-time-filter select:hover {
-  border-color: rgba(0,0,0,0.4) !important; /* изменена обводка при наведении */
+  border-color: rgba(0,0,0, 0.4) !important; /* изменена обводка при наведении */
   box-shadow: 0 6px 16px rgba(0,0,0,0.1); /* изменена тень при наведении */
 }
 .analytics-time-filter select:focus {
@@ -837,7 +841,7 @@ select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background: #f0c500 !important; /* изменён фон селекта - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон селекта - сплошной цвет #f0c500 */
   border: 1px solid rgba(0,0,0,0.15) !important; /* изменена обводка */
   color: #000 !important; /* гарантирован чёрный цвет текста */
   font-weight: 600;
@@ -849,7 +853,7 @@ select {
 }
 .analytics-block select:hover {
   border-color: rgba(0,0,0,0.3) !important; /* изменена обводка при наведении */
-  background: #f0c500 !important; /* изменён фон при наведении - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон при наведении - сплошной цвет #f0c500 */
   box-shadow: 0 6px 16px rgba(0,0,0,0.08); /* изменена тень при наведении */
 }
 .analytics-block select:focus {
@@ -857,23 +861,23 @@ select {
   border-color: #000 !important; /* изменена обводка при фокусе */
   box-shadow: 0 8px 20px rgba(0,0,0,0.12); /* изменена тень при фокусе */
   transform: translateY(-1px);
-  background: #f0c500 !important; /* изменён фон при фокусе - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон при фокусе - сплошной цвет #f0c500 */
 }
 /* Dropdown options styling */
 select option {
-  background: #f0c500 !important; /* изменён фон опций - теперь цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон опций - теперь темно-серый */
   color: #000 !important; /* чёрный цвет текста */
   padding: 8px;
   border: none;
   border-radius: 5%; /* скругление 5-10% для опций */
 }
 select option:hover {
-  background: #d0a500 !important; /* изменён фон при наведении */
+  background: #d0a500 !important; /* изменен фон при наведении */
   color: #000 !important; /* чёрный цвет текста */
 }
 select option:checked {
-  background: #000 !important; /* изменён фон выбранной опции */
-  color: #f0c500 !important; /* изменён цвет текста */
+  background: #000 !important; /* изменен фон выбранной опции */
+  color: #f0c500 !important; /* изменен цвет текста */
   border-radius: 5%; /* скругление 5-10% для выбранной опции */
 }
 /* === Nested analytics tabs === */
@@ -899,16 +903,16 @@ select option:checked {
 }
 .analytics-tab-btn.active { 
   color:#000 !important; /* чёрный цвет текста */
-  border-bottom-color:#000; /* изменён цвет нижней границы активной вкладки */
+  border-bottom-color:#000; /* изменен цвет нижней границы активной вкладки */
 }
 .analytics-nested-content { 
   display: none !important; 
   animation: fadeIn 250ms ease; 
-  background: #f0c500 !important; /* изменён фон - сплошной цвет #f0c500 */
+  background: #f0c500 !important; /* изменен фон - сплошной цвет #f0c500 */
   color: #000 !important; /* гарантирован чёрный цвет текста */
   border-radius: 5%; /* скругление 5-10% */
   padding: 10px; /* добавлен внутренний отступ */
-  border: 1px solid rgba(0, 0, 0, 0.05); /* добавлена тонкая граница */
+  border: 1px solid rgba(0,0,0,0.05); /* добавлена тонкая граница */
 }
 .analytics-nested-content.active { 
   display: block !important; 
@@ -925,7 +929,7 @@ select option:checked {
 .chart-section {
   margin: 40px 0;
   padding: 20px;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с новым цветом фона */
+  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
   border: 2px solid rgba(0, 0, 0, 0.4); /* изменена обводка */
   border-radius: 5%; /* скругление 5-10% */
   text-align: center;
@@ -949,7 +953,7 @@ select option:checked {
   z-index: -1;
 }
 .chart-section:hover {
-  border-color: #000; /* изменён цвет обводки при наведении */
+  border-color: #000; /* изменен цвет обводки при наведении */
   box-shadow: 0 0 25px rgba(0, 0, 0, 0.6); /* изменена тень при наведении */
   transform: scale(1.01);
 }
@@ -983,7 +987,7 @@ select option:checked {
   justify-content: center; /* центрирует содержимое по горизонтали */
   align-items: center;     /* центрирует содержимое по вертикали */
   background: #0d1117; /* фон, если изображение не загрузится */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* изменена обводка */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   /* Убираем внутренние отступы, чтобы картинка прилегала вплотную */
 }
 .banner-link {
@@ -1032,7 +1036,7 @@ select option:checked {
   bottom: 0;
   height: 1px;
   background: #000; /* Чёрный цвет линии */
-  opacity: 0.8; /* Полупрозрачность, можно убрать или изменить */
+  opacity: 0.8; /* Полупрозрачность */
   z-index: 1; /* Помещаем линию поверх фона карточки */
 }
 /* Убираем линию у последнего элемента */
@@ -1042,24 +1046,22 @@ select option:checked {
 /* === Стили для цифр (метрик) в Top 10 authors и Top 10 posts === */
 /* Для цифр в Top 10 posts (.top-post-item .metric) - ОСТАЁТСЯ БЕЗ ИЗМЕНЕНИЙ */
 .top-post-item .meta .metric {
-  border: 1px solid rgba(0, 0, 0, 0.3); /* изменена обводка */
-  background: rgba(0, 0, 0, 0.1); /* изменён фон */
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   padding: 6px 8px;
   border-radius: 7.5%; /* скругление 5-10% */
   font-weight: 700;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* изменена тень */
-  color: #000; /* гарантирован чёрный цвет текста */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 /* Для цифр в Top 10 authors (после изменения script.js) */
 .author-metric-value {
-  border: 1px solid rgba(0, 0, 0, 0.3); /* изменена обводка */
-  background: rgba(0, 0, 0, 0.1); /* изменён фон */
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.1);
   padding: 6px 8px;
   border-radius: 7.5%; /* скругление 5-10% */
   font-weight: 700;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* изменена тень */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block; /* Убедимся, что рамка применяется */
-  color: #000; /* гарантирован чёрный цвет текста */
 }
 /* === SNOW EFFECT (для фона leaderboard'а) === */
 /* Контейнер для снежинок */
@@ -1269,9 +1271,9 @@ select option:checked {
     gap: 20px;
     margin-bottom: 25px;
     padding: 15px;
-    background: linear-gradient(135deg, #f0c500, #e0b500); /* Градиент с новым цветом фона */
+    background: linear-gradient(135deg, #f0c500, #e0b500); /* Градиент */
     border-radius: 7.5%; /* Скругление */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* изменена тень */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     position: relative;
     overflow: hidden;
 }
@@ -1297,7 +1299,7 @@ select option:checked {
 }
 .search-label {
     font-weight: 600;
-    color: #000; /* изменён цвет текста */
+    color: #000;
     font-size: 0.9rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -1306,21 +1308,21 @@ select option:checked {
     flex: 1;
     padding: 10px 15px;
     border-radius: 5%;
-    border: 1px solid rgba(0, 0, 0, 0.2); /* изменена обводка */
-    background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03)); /* изменён фон */
-    color: #000; /* изменён цвет текста */
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03));
+    color: #000;
     font-size: 1rem;
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
 }
 .search-input::placeholder {
-    color: #000; /* изменён цвет placeholder */
+    color: #a9ddd3;
 }
 .search-input:focus {
     outline: none;
-    border-color: #6fe3d1; /* изменена обводка при фокусе */
-    box-shadow: 0 0 10px rgba(111, 227, 209, 0.5); /* изменена тень при фокусе */
+    border-color: #6fe3d1;
+    box-shadow: 0 0 10px rgba(111, 227, 209, 0.5);
 }
 .filter-section {
     display: flex;
@@ -1329,7 +1331,7 @@ select option:checked {
 }
 .filter-label {
     font-weight: 600;
-    color: #000; /* изменён цвет текста */
+    color: #a9ddd3;
     font-size: 0.9rem;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -1337,13 +1339,13 @@ select option:checked {
 .time-select {
     padding: 8px 12px;
     border-radius: 5%;
-    border: 1px solid rgba(0, 0, 0, 0.15); /* изменена обводка */
-    background: #f0c500; /* изменён фон */
-    color: #000; /* изменён цвет текста */
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: #f0c500;
+    color: #000;
     font-weight: 600;
     cursor: pointer;
     transition: all 180ms ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* изменена тень */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     position: relative;
     overflow: hidden;
 }
@@ -1362,11 +1364,11 @@ select option:checked {
   z-index: -1;
 }
 .time-select:hover {
-    background: #d0a500; /* изменён фон при наведении */
-    border-color: rgba(0,0,0,0.3); /* изменена обводка при наведении */
+    background: #d0a500;
+    border-color: rgba(0,0,0,0.3);
 }
 .time-select:focus {
-    box-shadow: 0 6px 18px rgba(111,227,209,0.07); /* изменена тень при фокусе */
+    box-shadow: 0 6px 18px rgba(111,227,209,0.07);
     outline: none;
 }
 /* === СМЕЩЕНИЕ ЗАГОЛОВКА "User" ВПРАВО (на 1.5 см или 15px от левого края) === */
@@ -1412,7 +1414,7 @@ select option:checked {
     border: 1px solid #f0c500; /* Рамка цвета #f0c500, как для лидерборда */
     border-radius: 5%; /* Скругленные края, как вы предпочитаете для большинства блоков */
     padding: 20px; /* Отступы внутри блока для лучшего вида */
-    color: #000; /* Чёрный текст, как вы предпочитаете */
+    color: black; /* Чёрный текст, как вы предпочитаете */
     text-align: left; /* Выравнивание текста по левому краю */
     margin: 20px auto; /* Центрирование блока по горизонтали с отступом сверху/снизу */
     max-width: 800px; /* Ограничивает ширину для лучшего чтения на больших экранах */
@@ -1426,29 +1428,25 @@ select option:checked {
 }
 /* Это правило будет иметь тот же приоритет, что и a:link, a:visited */
 a {
-    color: #000 !important; /* !important принудительно устанавливает цвет */
+    color: black !important; /* !important принудительно устанавливает цвет */
     text-decoration: underline; /* Опционально: добавляет подчеркивание */
 }
 /* ИЛИ, если вы хотите переопределить конкретно a:link и a:visited: */
 /*
 a:link, a:visited {
-    color: #000 !important;
+    color: black !important;
     text-decoration: underline;
 }
 */
 /* Это правило применяется ко всем элементам на странице */
 * {
   color: #000 !important; /* Устанавливает чёрный цвет текста */
-  background-color: #f0c500 !important; /* Устанавливает цвет фона */
 }
 /* Альтернатива: можно применить к основному тегу body */
 /* body {
   color: #000 !important;
-  background-color: #f0c500 !important;
 } */
 /* Принудительно переопределяем скругление для всех элементов, оставляя 1-2 пикселя */
 * {
   border-radius: 8px !important; /* или 2px, если хотите чуть больше */
 }
-
-
