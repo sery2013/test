@@ -789,6 +789,7 @@ function setupAnalyticsTabs() {
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
 // === LANGUAGE SWITCHER ===
+// === LANGUAGE SWITCHER ===
 // Глобальная переменная currentLang объявлена в начале
 function setLanguage(lang) {
     currentLang = lang;
@@ -1070,3 +1071,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
