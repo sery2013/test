@@ -517,9 +517,9 @@ tr.active-row:hover {
 .tab-btn {
   padding: 8px 14px;
   border-radius: 5%; /* скругление 5-10% */
-  border: 2px solid rgba(0,0,0,0.25); /* изменена обводка */
-  background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03)); /* изменен фон */
-  color: #000; /* чёрный цвет текста */
+  border: 2px solid rgba(47, 79, 79, 0.5); /* тёмная обводка для контраста */
+  background: #fbd109; /* сплошной жёлтый фон, как у блока Follow Developer */
+  color: #2F4F4F; /* тёмно-серый цвет текста для контраста */
   cursor: pointer;
   font-weight: 700;
   position: relative;
@@ -533,17 +533,19 @@ tr.active-row:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="000" opacity="0.1">✦✧✦✧</text></svg>');
+  background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" x="50" font-size="80" text-anchor="middle" fill="477F7F" opacity="0.1">✦✧✦✧</text></svg>');
   background-repeat: repeat;
   background-size: 100px;
   pointer-events: none;
   z-index: -1;
 }
-.tab-btn:hover { box-shadow: 0 0 12px rgba(0,0,0,0.12); }
+.tab-btn:hover { 
+  box-shadow: 0 0 12px rgba(47, 79, 79, 0.6); /* тень при наведении */
+}
 .tab-btn.active {
-  background: linear-gradient(90deg, rgba(0,0,0,0.08), rgba(0,0,0,0.03));
-  color: #000;
-  border-color: rgba(0,0,0,0.6);
+  background: #fbd109; /* активная вкладка также жёлтая */
+  color: #2F4F4F; /* тёмный цвет текста */
+  border-color: #2F4F4F; /* тёмная обводка */
 }
 /* Tab content container - УБРАНО ПЕРЕОПРЕДЕЛЕНИЕ DISPLAY */
 /* .tab-content { display: none; } */
@@ -1451,4 +1453,5 @@ a:link, a:visited {
 * {
   border-radius: 8px !important; /* или 2px, если хотите чуть больше */
 }
+
 
