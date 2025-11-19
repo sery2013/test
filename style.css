@@ -32,7 +32,7 @@ body {
   display: block;
   width: 1350px;   /* фиксированная ширина изображения */
   height: 100px;   /* фиксированная высота */
-  background: url("https://i.imgur.com/IHjjhbc.png") no-repeat center center; /* <-- ССЫЛКА НА ИЗОБРАЖЕНИЕ БАННЕРА */
+  background: url("https://i.imgur.com/kgMFEjs.png") no-repeat center center; /* <-- ССЫЛКА НА ИЗОБРАЖЕНИЕ БАННЕРА */
   background-size: 1350px 100px; /* точный размер изображения */
   text-decoration: none;
   color: inherit;
@@ -1461,6 +1461,7 @@ a:link, a:visited {
 .share-btn svg {
     fill: currentColor; /* Использует цвет текста */
 }
+
 
 
 
