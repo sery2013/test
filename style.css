@@ -11,7 +11,7 @@ body {
 .background {
   position: fixed;
   inset: 0;
-  background: url("https://i.imgur.com/A5tFcTc.png") no-repeat center center / cover;
+  background: url("https://i.imgur.com/777Rrdg.png") no-repeat center center / cover;
   z-index: -1;
   /* Убраны filter и opacity для полной видимости изображения */
 }
@@ -1446,6 +1446,7 @@ a:link, a:visited {
 * {
   border-radius: 8px !important; /* или 2px, если хотите чуть больше */
 }
+
 
 
 
