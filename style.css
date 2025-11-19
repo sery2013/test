@@ -11,7 +11,7 @@ body {
 .background {
   position: fixed;
   inset: 0;
-  background: url("https://i.imgur.com/r12rU4b.png") no-repeat center center / cover;
+  background: url("https://i.imgur.com/2yWMCfm.png") no-repeat center center / cover;
   z-index: -1;
   opacity: 0.4; /* Добавляем прозрачность. 0.0 = полностью прозрачный, 1.0 = полностью непрозрачный */
 }
@@ -1463,6 +1463,7 @@ a:link, a:visited {
 .share-btn svg {
     fill: currentColor; /* Использует цвет текста */
 }
+
 
 
 
