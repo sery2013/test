@@ -668,7 +668,7 @@ try {
   if (ctx) {
     if (analyticsChart) {
       analyticsChart.data.labels = labels;
-      analyticsChart.data.datasets[0].data = counts;
+      analyticsChart.data.datasets[0].data = counts; // Исправление для обновления существующего графика
       analyticsChart.update();
     } else if (window.Chart) {
       analyticsChart = new Chart(ctx.getContext('2d'), {
@@ -677,7 +677,7 @@ try {
           labels: labels,
           datasets: [{
             label: 'Tweets per day',
-             counts,
+            data: counts, // --- ИСПРАВЛЕНО: Добавлен ключ 'data:' ---
             fill: false, // Не заполнять область под линией
             // --- НАЧАЛО ИЗМЕНЕНИЙ: Цвета для желтого фона ---
             borderColor: '#2c2c2c', // Темно-серый цвет для линии
@@ -789,7 +789,6 @@ function setupAnalyticsTabs() {
 // Инициализация табов
 try { setupTabs(); setupAnalyticsTabs(); } catch(e) { console.warn('Tabs init failed', e); }
 // === LANGUAGE SWITCHER ===
-// === LANGUAGE SWITCHER ===
 // Глобальная переменная currentLang объявлена в начале
 function setLanguage(lang) {
     currentLang = lang;
@@ -836,7 +835,7 @@ function setLanguage(lang) {
         // Вставляем ссылку обратно внутрь элемента follow-dev-text
         followDevTextElement.appendChild(followDevLinkElement);
     }
-    // --- КОНЕЦ ИСПRAВЛЕНИЯ ---
+    // --- КОНЕЦ ИСПРАВЛЕНИЯ ---
     // --- ОБНОВЛЕНИЕ ТЕКСТА "Last updated:" ---
     const lastUpdatedLabel = document.getElementById('label-last-updated');
     if (lastUpdatedLabel) {
@@ -1071,4 +1070,3 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
-
