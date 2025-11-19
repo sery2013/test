@@ -236,11 +236,11 @@ tr.active-row:hover {
 }
 .pagination button {
   padding: 8px 15px;
-  color: #000; /* изменен цвет текста */
+  color: #000; /* Изменён цвет текста на чёрный */
   font-weight: 500;
-  background: linear-gradient(135deg, #f0c500, #e0b500); /* градиент с цветом #f0c500 */
-  border: 2px solid rgba(0, 0, 0, 0.5); /* изменена обводка */
-  border-radius: 7.5%; /* скругление 5-10% */
+  background: linear-gradient(135deg, #fbd109, #e0b500); /* Градиент с цветом #fbd109 */
+  border: 2px solid rgba(0, 0, 0, 0.4); /* Тёмная обводка */
+  border-radius: 7.5%; /* Скругление */
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
@@ -261,13 +261,13 @@ tr.active-row:hover {
   z-index: -1;
 }
 .pagination button:hover {
-  background: linear-gradient(135deg, #d0a500, #c09500); /* изменен градиент при наведении */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* изменена тень при наведении */
+  background: linear-gradient(135deg, #d0a500, #c09500); /* Изменён градиент при наведении */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Тёмная тень при наведении */
   transform: scale(1.05);
 }
 #page-info {
   font-weight: 600;
-  color: #000; /* изменен цвет текста */
+  color: #000; /* Изменён цвет текста на чёрный */
 }
 .time-filter {
   display: flex;
@@ -1447,6 +1447,7 @@ a:link, a:visited {
 * {
   border-radius: 8px !important; /* или 2px, если хотите чуть больше */
 }
+
 
 
 
