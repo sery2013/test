@@ -55,7 +55,7 @@ def collect_all_tweets():
     known_ids = load_known_ids() # Загружаем историю ID
     cursor = None
     total_new = 0
-    max_new_tweets = 1700  # Лимит на случай, если API не остановится вообще
+    max_new_tweets = 2500  # Лимит на случай, если API не остановится вообще
 
     while True:
         data = fetch_tweets(cursor)
