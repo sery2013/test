@@ -1,5 +1,543 @@
 [
   {
+    "tweet_created_at": "2025-11-19T17:49:41.000000Z",
+    "id": 1991202231257841963,
+    "id_str": "1991202231257841963",
+    "type": "tweet",
+    "conversation_id_str": "1991202231257841963",
+    "community_id_str": "1902883093062574425",
+    "community_name": "Flash Markets",
+    "text": null,
+    "full_text": "You know that feeling when you see some headline, nail the outcome in your head, then do absolutely nothing with it except scroll?\n\nYeah, @kash_bot exists so that stops being a personality trait.\n\nThis isn’t some “once in a while” app. Kash is basically built for every dumb little moment your brain goes “oh I know where this is going”.\n\nI touch Kash when:\n\n• News hits out of nowhere\n\nElections getting called, surprise policy changes, earnings beats/misses, tech launches, coins sending or nuking in real time.\n\n• The timeline is on fire\n\nHashtags exploding, influencers arguing, community drama, people confidently predicting outcomes in threads with zero skin in the game.\n\n• Stuff is on the calendar\n\nFinals, playoffs, big tournaments, FOMC days, product reveals, big reviews dropping, anything where you already have a date circled mentally.\n\nWhat I like is the tempo.\n\nSome markets are pure dopamine: minutes or hours, live games, intraday moves, breaking stories that resolve fast.\n\nOthers give you days or a couple weeks to actually think, watch info drip out, adjust your positions.\nNothing drags on forever because every Kash market is capped at about a month. So you’re not stuck in prediction purgatory. It keeps liquidity cycling and attention sharp.\n\nAnd the flow is clean:\n\n• Markets appear as the AI notices something heating up.\n\n• Odds shift as info lands and people pile in or bail.\n\n• Near the end, you get that final window to size up, hedge, or double down.\n\n• Then it closes on its own, outcome gets verified, payouts hit, and you’re straight into the next take.\n\nAll of that runs 24/7. Different time zones, different news cycles, same engine humming in the background.\n\nIf you’re already glued to X, Kash is just the layer that upgrades “I called it” from a throwaway comment to a track record that either pays you… or humbles you in public. Both are kind of fun.\n\nAnd ofc I'll use this post for @EdgenTech too.",
+    "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+    "truncated": false,
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+      "id": 1820320892578107392,
+      "id_str": "1820320892578107392",
+      "name": "wjm",
+      "screen_name": "wjmdiary",
+      "location": "web3",
+      "url": null,
+      "description": "another boomer, forever lazy 🦥💤",
+      "protected": false,
+      "verified": true,
+      "followers_count": 607,
+      "friends_count": 1061,
+      "listed_count": 2,
+      "favourites_count": 2358,
+      "statuses_count": 1866,
+      "created_at": "2024-08-05T04:48:23.000000Z",
+      "profile_banner_url": "https://pbs.twimg.com/profile_banners/1820320892578107392/1762651408",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/1868685808418390016/BOgvZMj__normal.jpg",
+      "can_dm": true,
+      "affiliation_label": null
+    },
+    "quoted_status_id": null,
+    "quoted_status_id_str": null,
+    "is_quote_status": false,
+    "quoted_status": null,
+    "retweeted_status": null,
+    "quote_count": 0,
+    "reply_count": 0,
+    "retweet_count": 0,
+    "favorite_count": 0,
+    "views_count": 5,
+    "bookmark_count": 0,
+    "lang": "en",
+    "entities": {
+      "hashtags": [],
+      "media": [
+        {
+          "display_url": "pic.x.com/4CY0N79l51",
+          "expanded_url": "https://x.com/wjmdiary/status/1991202231257841963/photo/1",
+          "id_str": "1991201207986061312",
+          "indices": [
+            275,
+            298
+          ],
+          "media_key": "3_1991201207986061312",
+          "media_url_https": "https://pbs.twimg.com/media/G6Iq8uZWgAAUre2.png",
+          "type": "photo",
+          "url": "https://t.co/4CY0N79l51",
+          "ext_media_availability": {
+            "status": "Available"
+          },
+          "features": {
+            "all": {
+              "tags": [
+                {
+                  "user_id": "1902431246841499648",
+                  "name": "kash",
+                  "screen_name": "kash_bot",
+                  "type": "user"
+                }
+              ]
+            },
+            "large": {
+              "faces": []
+            },
+            "medium": {
+              "faces": []
+            },
+            "small": {
+              "faces": []
+            },
+            "orig": {
+              "faces": []
+            }
+          },
+          "sizes": {
+            "large": {
+              "h": 498,
+              "w": 1499,
+              "resize": "fit"
+            },
+            "medium": {
+              "h": 399,
+              "w": 1200,
+              "resize": "fit"
+            },
+            "small": {
+              "h": 226,
+              "w": 680,
+              "resize": "fit"
+            },
+            "thumb": {
+              "h": 150,
+              "w": 150,
+              "resize": "crop"
+            }
+          },
+          "original_info": {
+            "height": 498,
+            "width": 1499,
+            "focus_rects": [
+              {
+                "x": 305,
+                "y": 0,
+                "w": 889,
+                "h": 498
+              },
+              {
+                "x": 500,
+                "y": 0,
+                "w": 498,
+                "h": 498
+              },
+              {
+                "x": 531,
+                "y": 0,
+                "w": 437,
+                "h": 498
+              },
+              {
+                "x": 625,
+                "y": 0,
+                "w": 249,
+                "h": 498
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "w": 1499,
+                "h": 498
+              }
+            ]
+          },
+          "media_results": {
+            "result": {
+              "media_key": "3_1991201207986061312"
+            }
+          }
+        },
+        {
+          "display_url": "pic.x.com/4CY0N79l51",
+          "expanded_url": "https://x.com/wjmdiary/status/1991202231257841963/photo/1",
+          "id_str": "1991201207986061312",
+          "indices": [
+            275,
+            298
+          ],
+          "media_key": "3_1991201207986061312",
+          "media_url_https": "https://pbs.twimg.com/media/G6Iq8uZWgAAUre2.png",
+          "type": "photo",
+          "url": "https://t.co/4CY0N79l51",
+          "ext_media_availability": {
+            "status": "Available"
+          },
+          "features": {
+            "all": {
+              "tags": [
+                {
+                  "user_id": "1902431246841499648",
+                  "name": "kash",
+                  "screen_name": "kash_bot",
+                  "type": "user"
+                }
+              ]
+            },
+            "large": {
+              "faces": []
+            },
+            "medium": {
+              "faces": []
+            },
+            "small": {
+              "faces": []
+            },
+            "orig": {
+              "faces": []
+            }
+          },
+          "sizes": {
+            "large": {
+              "h": 498,
+              "w": 1499,
+              "resize": "fit"
+            },
+            "medium": {
+              "h": 399,
+              "w": 1200,
+              "resize": "fit"
+            },
+            "small": {
+              "h": 226,
+              "w": 680,
+              "resize": "fit"
+            },
+            "thumb": {
+              "h": 150,
+              "w": 150,
+              "resize": "crop"
+            }
+          },
+          "original_info": {
+            "height": 498,
+            "width": 1499,
+            "focus_rects": [
+              {
+                "x": 305,
+                "y": 0,
+                "w": 889,
+                "h": 498
+              },
+              {
+                "x": 500,
+                "y": 0,
+                "w": 498,
+                "h": 498
+              },
+              {
+                "x": 531,
+                "y": 0,
+                "w": 437,
+                "h": 498
+              },
+              {
+                "x": 625,
+                "y": 0,
+                "w": 249,
+                "h": 498
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "w": 1499,
+                "h": 498
+              }
+            ]
+          },
+          "media_results": {
+            "result": {
+              "media_key": "3_1991201207986061312"
+            }
+          }
+        }
+      ],
+      "symbols": [],
+      "timestamps": [],
+      "urls": [],
+      "user_mentions": [
+        {
+          "id_str": "1902431246841499648",
+          "name": "kash",
+          "screen_name": "kash_bot",
+          "indices": [
+            138,
+            147
+          ]
+        },
+        {
+          "id_str": "1902431246841499648",
+          "name": "kash",
+          "screen_name": "kash_bot",
+          "indices": [
+            138,
+            147
+          ]
+        },
+        {
+          "id_str": "1768506538585653248",
+          "name": "Edgen",
+          "screen_name": "EdgenTech",
+          "indices": [
+            1923,
+            1933
+          ]
+        }
+      ],
+      "display_text_range": [
+        0,
+        274
+      ]
+    },
+    "is_pinned": false
+  },
+  {
+    "tweet_created_at": "2025-11-19T17:49:26.000000Z",
+    "id": 1991202169966719071,
+    "id_str": "1991202169966719071",
+    "type": "tweet",
+    "conversation_id_str": "1991202169966719071",
+    "community_id_str": "1902883093062574425",
+    "community_name": "Flash Markets",
+    "text": null,
+    "full_text": "Every feed is emotional.\nEvery timeline is a battlefield of reactions.\nFear, hype, curiosity - they spread faster than facts.\n\nBut until now, emotions were invisible to markets.\nThey moved narratives…\n…but nothing quantified why they move.\n\nKash does. @kash_bot \n\nIt listens not just to what people say -\nbut how strongly they feel it.\n\nA sudden spike in likes?\n➡️ That's early momentum.\n\nA flood of comments?\n➡️ That's conviction clustering.\n\nA wave of reposts?\n➡️ That's a narrative spillover.\n\nEmotions shape markets.\nKash just makes the emotional layer measurable.\n\nWhen you quantify belief,\nyou start seeing patterns before they turn into trends.\n\nAnd that's how signals become alpha -\nlong before the chart shows it.\n\n🟡 Alpha here - https://t.co/zhxEf1jZp1\n\n🟡 Discord - https://t.co/HY9eXlYEbZ\n\n#kash_bot",
+    "source": "<a href=\"https://mobile.twitter.com\" rel=\"nofollow\">Twitter Web App</a>",
+    "truncated": false,
+    "in_reply_to_status_id": null,
+    "in_reply_to_status_id_str": null,
+    "in_reply_to_user_id": null,
+    "in_reply_to_user_id_str": null,
+    "in_reply_to_screen_name": null,
+    "user": {
+      "id": 1591056904188579840,
+      "id_str": "1591056904188579840",
+      "name": "Bitcoin89 🍊,💊",
+      "screen_name": "JeroldSkiles",
+      "location": "Berlin",
+      "url": null,
+      "description": "✨Web3 enthusiast | Mod @opnetbtc | Mod @brevis_zk\nRegional Mod @Jaineon0G | Mod @Gimo_Fi | Mod @zia_finance | @0G_labs Support communities | Creator content",
+      "protected": false,
+      "verified": true,
+      "followers_count": 1030,
+      "friends_count": 555,
+      "listed_count": 4,
+      "favourites_count": 55968,
+      "statuses_count": 2486,
+      "created_at": "2022-11-11T13:15:05.000000Z",
+      "profile_banner_url": "https://pbs.twimg.com/profile_banners/1591056904188579840/1758668671",
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/1970204949486125056/5AjiHizt_normal.jpg",
+      "can_dm": false,
+      "affiliation_label": null
+    },
+    "quoted_status_id": null,
+    "quoted_status_id_str": null,
+    "is_quote_status": false,
+    "quoted_status": null,
+    "retweeted_status": null,
+    "quote_count": 0,
+    "reply_count": 11,
+    "retweet_count": 2,
+    "favorite_count": 16,
+    "views_count": 58,
+    "bookmark_count": 2,
+    "lang": "en",
+    "entities": {
+      "hashtags": [
+        {
+          "indices": [
+            801,
+            810
+          ],
+          "text": "kash_bot"
+        }
+      ],
+      "media": [
+        {
+          "display_url": "pic.x.com/uWxQ7brGXm",
+          "expanded_url": "https://x.com/JeroldSkiles/status/1991202169966719071/photo/1",
+          "id_str": "1991201997383462912",
+          "indices": [
+            279,
+            302
+          ],
+          "media_key": "16_1991201997383462912",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/G6IrqrIW8AAsxbW.jpg",
+          "type": "animated_gif",
+          "url": "https://t.co/uWxQ7brGXm",
+          "ext_media_availability": {
+            "status": "Available"
+          },
+          "sizes": {
+            "large": {
+              "h": 406,
+              "w": 720,
+              "resize": "fit"
+            },
+            "medium": {
+              "h": 406,
+              "w": 720,
+              "resize": "fit"
+            },
+            "small": {
+              "h": 383,
+              "w": 680,
+              "resize": "fit"
+            },
+            "thumb": {
+              "h": 150,
+              "w": 150,
+              "resize": "crop"
+            }
+          },
+          "original_info": {
+            "height": 406,
+            "width": 720,
+            "focus_rects": []
+          },
+          "allow_download_status": {
+            "allow_download": true
+          },
+          "video_info": {
+            "aspect_ratio": [
+              360,
+              203
+            ],
+            "variants": [
+              {
+                "bitrate": 0,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/tweet_video/G6IrqrIW8AAsxbW.mp4"
+              }
+            ]
+          },
+          "media_results": {
+            "result": {
+              "media_key": "16_1991201997383462912"
+            }
+          }
+        },
+        {
+          "display_url": "pic.x.com/uWxQ7brGXm",
+          "expanded_url": "https://x.com/JeroldSkiles/status/1991202169966719071/photo/1",
+          "id_str": "1991201997383462912",
+          "indices": [
+            279,
+            302
+          ],
+          "media_key": "16_1991201997383462912",
+          "media_url_https": "https://pbs.twimg.com/tweet_video_thumb/G6IrqrIW8AAsxbW.jpg",
+          "type": "animated_gif",
+          "url": "https://t.co/uWxQ7brGXm",
+          "ext_media_availability": {
+            "status": "Available"
+          },
+          "sizes": {
+            "large": {
+              "h": 406,
+              "w": 720,
+              "resize": "fit"
+            },
+            "medium": {
+              "h": 406,
+              "w": 720,
+              "resize": "fit"
+            },
+            "small": {
+              "h": 383,
+              "w": 680,
+              "resize": "fit"
+            },
+            "thumb": {
+              "h": 150,
+              "w": 150,
+              "resize": "crop"
+            }
+          },
+          "original_info": {
+            "height": 406,
+            "width": 720,
+            "focus_rects": []
+          },
+          "allow_download_status": {
+            "allow_download": true
+          },
+          "video_info": {
+            "aspect_ratio": [
+              360,
+              203
+            ],
+            "variants": [
+              {
+                "bitrate": 0,
+                "content_type": "video/mp4",
+                "url": "https://video.twimg.com/tweet_video/G6IrqrIW8AAsxbW.mp4"
+              }
+            ]
+          },
+          "media_results": {
+            "result": {
+              "media_key": "16_1991201997383462912"
+            }
+          }
+        }
+      ],
+      "symbols": [],
+      "timestamps": [],
+      "urls": [
+        {
+          "display_url": "alpha.kash.bot",
+          "expanded_url": "https://alpha.kash.bot",
+          "url": "https://t.co/zhxEf1jZp1",
+          "indices": [
+            739,
+            762
+          ]
+        },
+        {
+          "display_url": "discord.gg/mkTH8kM3",
+          "expanded_url": "https://discord.gg/mkTH8kM3",
+          "url": "https://t.co/HY9eXlYEbZ",
+          "indices": [
+            776,
+            799
+          ]
+        }
+      ],
+      "user_mentions": [
+        {
+          "id_str": "1902431246841499648",
+          "name": "kash",
+          "screen_name": "kash_bot",
+          "indices": [
+            252,
+            261
+          ]
+        },
+        {
+          "id_str": "1902431246841499648",
+          "name": "kash",
+          "screen_name": "kash_bot",
+          "indices": [
+            252,
+            261
+          ]
+        }
+      ],
+      "display_text_range": [
+        0,
+        278
+      ]
+    },
+    "is_pinned": false
+  },
+  {
     "tweet_created_at": "2025-11-19T17:13:04.000000Z",
     "id": 1991193017492050089,
     "id_str": "1991193017492050089",
@@ -26,11 +564,11 @@
       "description": "DataHaven - Moose Creator T1 🎥 | crafting digital worlds & moose dreams.",
       "protected": false,
       "verified": true,
-      "followers_count": 1812,
-      "friends_count": 845,
+      "followers_count": 1810,
+      "friends_count": 844,
       "listed_count": 13,
-      "favourites_count": 11246,
-      "statuses_count": 5553,
+      "favourites_count": 11268,
+      "statuses_count": 5556,
       "created_at": "2015-12-28T14:12:59.000000Z",
       "profile_banner_url": "https://pbs.twimg.com/profile_banners/4633060354/1761572804",
       "profile_image_url_https": "https://pbs.twimg.com/profile_images/1979621985207431169/dHlo8l33_normal.jpg",
@@ -43,11 +581,11 @@
     "quoted_status": null,
     "retweeted_status": null,
     "quote_count": 0,
-    "reply_count": 2,
+    "reply_count": 9,
     "retweet_count": 0,
-    "favorite_count": 3,
-    "views_count": 9,
-    "bookmark_count": 0,
+    "favorite_count": 12,
+    "views_count": 61,
+    "bookmark_count": 2,
     "lang": "en",
     "entities": {
       "hashtags": [],
