@@ -451,30 +451,37 @@ function renderHeatmap(tweets) {
   // Очистка контейнера
   container.innerHTML = '';
   // Создание ячеек
-  for (let day = 0; day < 7; day++) {
+  // Создание ячеек
+for (let day = 0; day < 7; day++) {
     for (let hour = 0; hour < 24; hour++) {
-      const count = heatmap[day][hour] || 0;
-      const cell = document.createElement('div');
-      cell.style.width = '100%';
-      cell.style.aspectRatio = '1';
-      cell.style.borderRadius = '3px';
-      cell.title = `${count} tweet(s)
+        const count = heatmap[day][hour] || 0;
+        const cell = document.createElement('div');
+        cell.style.width = '100%';
+        cell.style.aspectRatio = '1';
+        cell.style.borderRadius = '3px';
+        cell.title = `${count} tweet(s)
 ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][day]}, ${hour}:00 UTC`;
-      if (count === 0) {
-        cell.style.backgroundColor = 'rgba(255,255,255,0.03)';
-      } else {
-        // Цвет от светло-бирюзового к насыщенному (#6fe3d1 → #00a896)
-        const intensity = count / (max || 1); // 0..1
-        const r = Math.floor(111 * intensity + 255 * (1 - intensity));
-        const g = Math.floor(227 * intensity + 255 * (1 - intensity));
-        const b = Math.floor(209 * intensity + 255 * (1 - intensity));
-        cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-      }
-      container.appendChild(cell);
+        if (count === 0) {
+            cell.style.backgroundColor = 'rgba(0, 0, 0, 0.05)'; // Очень темный, почти черный, но прозрачный
+        } else {
+            // Цвет от светло-оранжевого к насыщенному красному
+            const intensity = count / (max || 1); // 0..1
+            // Начальный цвет: светло-оранжевый (например, #FFD580)
+            const startR = 255;
+            const startG = 213;
+            const startB = 128;
+            // Конечный цвет: насыщенный красный (например, #CC0000)
+            const endR = 204;
+            const endG = 0;
+            const endB = 0;
+            const r = Math.floor(startR * (1 - intensity) + endR * intensity);
+            const g = Math.floor(startG * (1 - intensity) + endG * intensity);
+            const b = Math.floor(startB * (1 - intensity) + endB * intensity);
+            cell.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        }
+        container.appendChild(cell);
     }
-  }
 }
-
 // - Функция для скачивания файла -
 function downloadFile(filename, content, mimeType = 'text/plain') {
   const blob = new Blob([content], { type: mimeType });
@@ -1139,4 +1146,5 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
 
