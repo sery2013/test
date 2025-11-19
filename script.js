@@ -704,10 +704,10 @@ try {
             label: 'Tweets per day',
              counts,
             fill: false, // Не заполнять область под линией
-            borderColor: '#000000', // Цвет линии - белый
+            borderColor: '#333333', // Цвет линии - белый
             borderWidth: 2, // Толщина линии
-            pointBackgroundColor: '#000000', // Цвет точки (заполнение)
-            pointBorderColor: '#000000', // Цвет обводки точки
+            pointBackgroundColor: '#333333', // Цвет точки (заполнение)
+            pointBorderColor: '#333333', // Цвет обводки точки
             pointBorderWidth: 2, // Толщина обводки точки
             pointRadius: 4, // Размер точки
             pointHoverRadius: 6, // Размер точки при наведении
@@ -1139,6 +1139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
 
 
 
