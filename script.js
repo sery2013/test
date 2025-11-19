@@ -837,20 +837,20 @@ function setLanguage(lang) {
     }
 
     // --- ОБНОВЛЕНИЕ ТЕКСТА В .welcome-section ---
-    const h1 = document.getElementById('welcome-title');
-    if (h1) h1.textContent = lang === 'en' ? 'WELCOME RITUALISTS!' : 'ДОБРО ПОЖАЛОВАТЬ, РИТУАЛИСТЫ!';
+const h1 = document.getElementById('welcome-title');
+if (h1) h1.textContent = lang === 'en' ? 'WELCOME KASHERS!' : 'ДОБРО ПОЖАЛОВАТЬ, КЭШЕРЫ!'; // <-- Измени на нужный русский вариант
 
-    const welcomeP1 = document.getElementById('welcome-desc-1');
-    if (welcomeP1) welcomeP1.innerHTML = lang === 'en' ? 'This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>.' : 'Этот список лидеров генерируется на основе всех постов в <a href="https://x.com/i/communities/1896991026272723220" target="_blank">сообществе Ritual</a>.';
+const welcomeP1 = document.getElementById('welcome-desc-1');
+if (welcomeP1) welcomeP1.innerHTML = lang === 'en' ? 'This leaderboard is generated based on all posts in the <a href="https://x.com/i/communities/1902883093062574425" target="_blank">Flash Markets</a>.' : 'Этот список лидеров генерируется на основе всех постов в <a href="https://x.com/i/communities/1902883093062574425" target="_blank">Flash Markets</a>.'; // <-- Обновлена ссылка
 
-    const welcomeP2 = document.getElementById('welcome-desc-2');
-    if (welcomeP2) welcomeP2.innerHTML = lang === 'en' ? 'If your posts are not published through <a href="https://x.com/i/communities/1896991026272723220" target="_blank">Ritual Community</a>, they will not be visible on the leaderboard.' : 'Если ваши посты опубликованы не через <a href="https://x.com/i/communities/1896991026272723220" target="_blank">сообщество Ritual</a>, они не будут видны в списке лидеров.';
+const welcomeP2 = document.getElementById('welcome-desc-2');
+if (welcomeP2) welcomeP2.innerHTML = lang === 'en' ? 'If your posts are not published through <a href="https://x.com/i/communities/1902883093062574425" target="_blank">Flash Markets</a>, they will not be visible on the leaderboard.' : 'Если ваши посты опубликованы не через <a href="https://x.com/i/communities/1902883093062574425" target="_blank">Flash Markets</a>, они не будут видны в списке лидеров.'; // <-- Обновлена ссылка
 
-    const welcomeP3 = document.getElementById('welcome-desc-3');
-    if (welcomeP3) welcomeP3.textContent = lang === 'en' ? 'By clicking on any participant, you can view their works directly on the website.' : 'Нажав на любого участника, вы можете просмотреть его работы непосредственно на веб-сайте.';
+const welcomeP3 = document.getElementById('welcome-desc-3');
+if (welcomeP3) welcomeP3.textContent = lang === 'en' ? 'By clicking on any participant, you can view their works directly on the website.' : 'Нажав на любого участника, вы можете просмотреть его работы непосредственно на веб-сайте.';
 
-    const welcomeP4 = document.getElementById('welcome-desc-4');
-    if (welcomeP4) welcomeP4.textContent = lang === 'en' ? 'By clicking on any metric (for example, views), you can filter by it.' : 'Нажав на любую метрику (например, просмотры), вы можете отфильтровать по ней.';
+const welcomeP4 = document.getElementById('welcome-desc-4');
+if (welcomeP4) welcomeP4.textContent = lang === 'en' ? 'By clicking on any metric (for example, views), you can filter by it.' : 'Нажав на любую метрику (например, просмотры), вы можете отфильтровать по ней.';
 
     const updateInfoP = document.getElementById('last-updated-static');
     if (updateInfoP) updateInfoP.textContent = lang === 'en' ? 'Updated every 2 days' : 'Обновляется каждые 2 дня';
@@ -1139,6 +1139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
 
 
 
