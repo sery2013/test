@@ -1465,13 +1465,7 @@ a:link, a:visited {
 }
 
 
-/* Явно показываем все ссылки внутри #follow-dev-text */
-#follow-dev-text a {
-    display: inline !important;
-    visibility: visible !important;
-    color: white !important;
-    text-decoration: underline !important;
-}
+
 
 
 
