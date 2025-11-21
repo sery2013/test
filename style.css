@@ -1466,6 +1466,14 @@ a:link, a:visited {
 
 
 
+/* Более конкретный, чем просто a[href="..."] или #follow-dev-text a */
+p#follow-dev-text a[href="https://sery2013.github.io/kash-card/"] {
+    display: inline !important; /* или block */
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: black !important; /* или другой нужный цвет */
+    text-decoration: underline !important; /* или none */
+}
 
 
 
