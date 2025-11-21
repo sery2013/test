@@ -144,7 +144,7 @@ function filterData() {
 
 // - SHARE BUTTON FUNCTIONALITY -
 function shareUserOnTwitter(username) {
-    const tweetText = `Check out @${username} on the Ritual Community Leaderboard! #RitualCommunity #Leaderboard`;
+    const tweetText = `Check out @${username} on the Kash Bot Leaderboard! #KashBot #Leaderboard https://kashbot-leaderboard.online;
     const leaderboardUrl = window.location.href;
     const encodedText = encodeURIComponent(tweetText);
     const encodedUrl = encodeURIComponent(leaderboardUrl);
@@ -1139,6 +1139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Для базового эффекта пересчёт не обязателен.
     });
 });
+
 
 
 
